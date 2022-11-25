@@ -9,6 +9,6 @@
     "jsx": "preserve",
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "baseUrl": "./src",
-    "strict": true,
+    "strict": true
   }
 }

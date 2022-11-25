@@ -1,5 +1,6 @@
 import path from 'path';
 
+import suidPlugin from '@suid/vite-plugin';
 import { visualizer } from 'rollup-plugin-visualizer';
 import solid from 'solid-start/vite';
 import { defineConfig } from 'vite';
@@ -15,6 +16,7 @@ export default defineConfig({
   },
   plugins: [
     solid(),
+    // suidPlugin.default(),
     visualizer(),
     tsconfigPaths(),
     EnvironmentPlugin('all', { prefix: 'WEB_' }),
@@ -25,6 +27,7 @@ export default defineConfig({
     //   typescript: true,
     // }),
   ],
+  // ssr: { external: ['@prisma/client'] },
   server: {
     hmr: true,
     port: 3000,
