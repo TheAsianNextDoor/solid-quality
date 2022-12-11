@@ -59,6 +59,7 @@ module.exports = {
       extends: ['airbnb-typescript/base', 'plugin:@typescript-eslint/recommended', 'plugin:solid/typescript'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/consistent-type-imports': 'error',
 
         'import/no-extraneous-dependencies': [
           'error',

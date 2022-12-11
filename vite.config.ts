@@ -15,7 +15,7 @@ export default defineConfig({
     outDir: path.join(__dirname, 'dist'),
   },
   plugins: [
-    solid(),
+    solid({ ssr: false }),
     // suidPlugin.default(),
     visualizer(),
     tsconfigPaths(),
