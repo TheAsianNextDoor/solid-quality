@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { For, createEffect } from 'solid-js';
 import { useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
@@ -8,7 +8,11 @@ import { InfoSection, ActionSection } from 'features/inspection-edit';
 import styles from './inspection.module.css';
 
 export function routeData() {
-  const tasks = createServerData$(async () => prisma.task.findMany());
+  const tasks = createServerData$(async () =>
+    prisma.task.findMany({
+      include: { Links: true },
+    }),
+  );
 
   return { tasks };
 }
