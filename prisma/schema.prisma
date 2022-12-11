@@ -92,18 +92,20 @@ model Inspection {
 
 model Task {
   id           String       @id @default(uuid())
+  inspection   Inspection   @relation(fields: [inspectionId], references: [id])
   inspectionId String
-  completedBy  String
+  user         User?        @relation(fields: [completedBy], references: [id])
+  completedBy  String?      @default("")
   title        String
   description  String
+  order        Int
   status       TaskStatus?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  inspection   Inspection   @relation(fields: [inspectionId], references: [id])
-  user         User         @relation(fields: [completedBy], references: [id])
-  Comment      Comment[]
-  Photo        Photo[]
   Attachment   Attachment[]
+  Comment      Comment[]
+  Links        TaskLinks[]
+  Photo        Photo[]
 
   @@index([title, inspectionId, completedBy])
 }
@@ -114,6 +116,7 @@ model TaskLinks {
   link      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Task      Task[]
 }
 
 model Comment {

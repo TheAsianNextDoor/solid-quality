@@ -98,16 +98,13 @@ async function main() {
         description: 'Test the concrete PH',
         inspectionId: inspection?.id || '',
         completedBy: user.id,
+        order: 1,
+        status: 'PASSED',
         Links: {
           create: [
-            {
-              info: 'Test Kit Manual',
-              link: 'google.com',
-            },
-            {
-              info: 'Wet Manual',
-              link: 'pornhub.com',
-            },
+            { info: 'Test Kit Manual', link: 'google.com' },
+            { info: 'The Wet Manual', link: 'http:pornhub.com' },
+            { info: 'Ok manual', link: 'blah.com' },
           ],
         },
       },
@@ -121,6 +118,8 @@ async function main() {
         description: 'Check the moisture content on the left slab',
         inspectionId: inspection?.id || '',
         completedBy: user.id,
+        status: 'FAILED',
+        order: 2,
       },
     });
   }
@@ -131,7 +130,7 @@ async function main() {
         title: 'task3',
         description: 'Find the meaning to life',
         inspectionId: inspection?.id || '',
-        completedBy: user.id,
+        order: 3,
       },
     });
   }
@@ -142,7 +141,7 @@ async function main() {
         title: 'task4',
         description: 'Check durability by smashing with hammer',
         inspectionId: inspection?.id || '',
-        completedBy: user.id,
+        order: 4,
       },
     });
   }
