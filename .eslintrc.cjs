@@ -39,14 +39,6 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'unknown', 'object', 'type'],
       },
     ],
-
-    // misc
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: true,
-      },
-    ],
   },
   overrides: [
     /** TypeScript File Config */
@@ -61,10 +53,24 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/consistent-type-imports': 'error',
 
-        'import/no-extraneous-dependencies': [
-          'error',
+        // disable rules for '_'
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
           {
-            devDependencies: true,
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        '@typescript-eslint/naming-convention': [
+          'off',
+          {
+            selector: 'variable',
+            format: null,
+            custom: {
+              regex: '^_$',
+              match: false,
+            },
           },
         ],
       },
