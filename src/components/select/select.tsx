@@ -2,7 +2,7 @@ import Close from '@suid/icons-material/Close';
 import ExpandLess from '@suid/icons-material/ExpandLess';
 import ExpandMore from '@suid/icons-material/ExpandMore';
 import Search from '@suid/icons-material/Search';
-import { createSignal, Show, For } from 'solid-js';
+import { createSignal, Show, For, createEffect } from 'solid-js';
 
 import type { Component } from 'solid-js';
 
@@ -11,6 +11,7 @@ interface SelectProps {
   placeholder?: string;
   onChange?: (event: MouseEvent | KeyboardEvent, value: string) => void;
   loadOptions?: () => Promise<void>;
+  value?: string;
 }
 
 export const Select: Component<SelectProps> = (props) => {
@@ -20,6 +21,12 @@ export const Select: Component<SelectProps> = (props) => {
   const [isHoveringMain, setIsHoveringMain] = createSignal(false);
 
   // const [data] = createResource(props.loadOptions);
+
+  createEffect(() => {
+    if (props.value) {
+      setSelected(props.value);
+    }
+  });
 
   const isSelected = (option: string) => {
     return option.toLowerCase() === searchValue().toLowerCase();
@@ -43,7 +50,7 @@ export const Select: Component<SelectProps> = (props) => {
   const placeholder = props.placeholder || 'Select an option...';
 
   return (
-    <div class="w-72 font-medium h-80">
+    <div class="w-72 font-medium h-full">
       <div
         class={`bg-white w-full p-2 flex items-center justify-between rounded  ${!selected() && 'text-gray-700'}`}
         onClick={() => {

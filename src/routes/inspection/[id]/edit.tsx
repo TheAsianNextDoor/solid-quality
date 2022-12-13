@@ -1,4 +1,4 @@
-import { For, createEffect } from 'solid-js';
+import { For } from 'solid-js';
 import { useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
