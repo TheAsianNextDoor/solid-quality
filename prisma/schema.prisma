@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -18,6 +17,7 @@ model Organization {
   User      User[]
 
   @@index([name])
+  @@index([addressId])
 }
 
 model Site {
@@ -31,6 +31,7 @@ model Site {
   Inspection     Inspection[]
 
   @@index([organizationId])
+  @@index([addressId])
 }
 
 model Address {
@@ -62,7 +63,9 @@ model User {
   Photo          Photo[]
   Attachment     Attachment[]
 
-  @@index([email, organizationId])
+  @@index([email])
+  @@index([organizationId])
+  @@index([siteId])
 }
 
 model Permission {
@@ -87,7 +90,9 @@ model Inspection {
   Task        Task[]
   Comment     Comment[]
 
-  @@index([title, ownerId])
+  @@index([title])
+  @@index([ownerId])
+  @@index([siteId])
 }
 
 model Task {
@@ -107,7 +112,9 @@ model Task {
   Links        TaskLinks[]
   Photo        Photo[]
 
-  @@index([title, inspectionId, completedBy])
+  @@index([title])
+  @@index([inspectionId])
+  @@index([completedBy])
 }
 
 model TaskLinks {
@@ -131,7 +138,8 @@ model Comment {
   task         Task       @relation(fields: [taskId], references: [id])
   inspection   Inspection @relation(fields: [inspectionId], references: [id])
 
-  @@index([userId, taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model Photo {
@@ -144,7 +152,8 @@ model Photo {
   user      User     @relation(fields: [userId], references: [id])
   task      Task     @relation(fields: [taskId], references: [id])
 
-  @@index([userId, taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model Attachment {
@@ -157,7 +166,8 @@ model Attachment {
   user      User     @relation(fields: [userId], references: [id])
   task      Task     @relation(fields: [taskId], references: [id])
 
-  @@index([userId, taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model TaskToTaskLinks {
