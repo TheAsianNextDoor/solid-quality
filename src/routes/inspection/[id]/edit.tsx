@@ -20,10 +20,14 @@ export function routeData() {
 export default function InspectionEdit() {
   const { tasks } = useRouteData<typeof routeData>();
 
+  const orderedTasks = () =>
+    tasks()
+      ?.slice()
+      .sort((a, b) => a.order - b.order);
+
   return (
     <>
-      Edit Page
-      <For each={tasks()}>
+      <For each={orderedTasks()}>
         {(task) => (
           <div class="my-5 bg-gray-100">
             <div class={styles.grid}>

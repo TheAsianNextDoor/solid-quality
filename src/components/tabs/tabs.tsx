@@ -97,7 +97,7 @@ const Tab: Component<TabProps> = (props) => {
 };
 
 interface PanelProps {
-  children: Element | string;
+  children: JSX.Element;
 }
 
 const Panel: Component<PanelProps> = (props) => {

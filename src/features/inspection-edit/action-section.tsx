@@ -1,4 +1,5 @@
 import { Tabs } from 'components/tabs';
+import { CommentList } from 'features/inspection-actions';
 
 enum ActionTypes {
   observations = 'observations',
@@ -14,14 +15,19 @@ export const ActionSection = () => {
       <div class="h-full w-full">
         <Tabs.Provider>
           <Tabs.TabsList>
-            <Tabs.Tab>observations</Tabs.Tab>
-            <Tabs.Tab>attachments</Tabs.Tab>
-            <Tabs.Tab>comments</Tabs.Tab>
-            <Tabs.Tab>photos</Tabs.Tab>
+            <Tabs.Tab>{ActionTypes.observations}</Tabs.Tab>
+            <Tabs.Tab>{ActionTypes.attachments}</Tabs.Tab>
+            <Tabs.Tab>{ActionTypes.comments}</Tabs.Tab>
+            <Tabs.Tab>{ActionTypes.photos}</Tabs.Tab>
           </Tabs.TabsList>
           <Tabs.Panel> Panel observations</Tabs.Panel>
           <Tabs.Panel> Panel attachments</Tabs.Panel>
-          <Tabs.Panel> Panel comments</Tabs.Panel>
+          <Tabs.Panel>
+            <div>
+              Panel comments
+              <CommentList />
+            </div>
+          </Tabs.Panel>
           <Tabs.Panel> Panel photos</Tabs.Panel>
         </Tabs.Provider>
       </div>
