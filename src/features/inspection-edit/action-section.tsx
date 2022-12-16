@@ -24,7 +24,6 @@ export const ActionSection = () => {
           <Tabs.Panel> Panel attachments</Tabs.Panel>
           <Tabs.Panel>
             <div>
-              Panel comments
               <CommentList />
             </div>
           </Tabs.Panel>

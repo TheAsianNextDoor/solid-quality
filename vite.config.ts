@@ -16,7 +16,7 @@ export default defineConfig({
   },
   plugins: [
     solid({ ssr: false }),
-    // suidPlugin.default(),
+    suidPlugin(),
     visualizer(),
     tsconfigPaths(),
     EnvironmentPlugin('all', { prefix: 'WEB_' }),

@@ -12,6 +12,7 @@ interface SelectProps {
   onChange?: (event: MouseEvent | KeyboardEvent, value: string) => void;
   loadOptions?: () => Promise<void>;
   value?: string;
+  class?: string;
 }
 
 export const Select: Component<SelectProps> = (props) => {
@@ -50,7 +51,7 @@ export const Select: Component<SelectProps> = (props) => {
   const placeholder = props.placeholder || 'Select an option...';
 
   return (
-    <div class="w-72 font-medium h-full">
+    <div class={`w-60 justify-between font-medium h-19 ${props.class}`}>
       <div
         class={`bg-white w-full p-2 flex items-center justify-between rounded  ${!selected() && 'text-gray-700'}`}
         onClick={() => {
@@ -59,13 +60,13 @@ export const Select: Component<SelectProps> = (props) => {
         onMouseEnter={() => setIsHoveringMain(true)}
         onMouseLeave={() => setIsHoveringMain(false)}
       >
-        <span>
+        <span class="text-black">
           <Show when={!!selected() && isHoveringMain()} fallback={<span class="pr-5" />}>
             <Close class="cursor-pointer" fontSize="small" onClick={(evt) => handleChange(evt, '')} />
           </Show>
           {selected() || placeholder}
         </span>
-        <span class="flex items-center">
+        <span class="flex items-center text-black">
           {/* <Suspense fallback={<CircularProgress class="mr-1" color="success" size={20} />} /> */}
           <Show when={isOpen()} fallback={<ExpandMore />}>
             <ExpandLess />
@@ -86,7 +87,7 @@ export const Select: Component<SelectProps> = (props) => {
           <For each={filteredOptions()}>
             {(option) => (
               <li
-                class={`p-2 text-sm hover:bg-sky-600 hover:text-white ${
+                class={`text-black p-2 text-sm hover:bg-sky-600 hover:text-white ${
                   isSelected(option.value) && 'bg-sky-600 text-white'
                 }`}
                 onClick={(evt) => handleChange(evt, option.value)}
