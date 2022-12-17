@@ -58,11 +58,12 @@ const Provider: Component<TabsProps> = (props) => {
 
 interface TabsListProps {
   children: JSX.Element;
+  class: string;
 }
 
 const TabsList: Component<TabsListProps> = (props) => {
   const child = children(() => props.children);
-  return <div class="flex flex-row">{child()}</div>;
+  return <div class={`flex flex-row ${props.class}`}>{child()}</div>;
 };
 
 interface TabProps {

@@ -1,4 +1,4 @@
-import { Prisma, TaskStatus } from '@prisma/client';
+import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
 import { refetchRouteData } from 'solid-start';
 import { createServerAction$ } from 'solid-start/server';
@@ -6,12 +6,8 @@ import { createServerAction$ } from 'solid-start/server';
 import { Select } from 'components/select';
 import { updateStatusById } from 'db/task';
 
+import type { TaskWithLinks } from 'db/task';
 import type { Component, JSX } from 'solid-js';
-
-const taskWithLinksValidator = Prisma.validator<Prisma.TaskArgs>()({
-  include: { Links: true },
-});
-type TaskWithLinks = Prisma.TaskGetPayload<typeof taskWithLinksValidator>;
 
 type InfoItemProps = { title: string; content: JSX.Element };
 
@@ -32,7 +28,7 @@ export const InfoSection: Component<{ task: TaskWithLinks }> = (props) => {
   });
 
   return (
-    <div class="bg-cyan-100 border-r-black border-r-2 h-96 w-full p-8 flex justify-around flex-col ">
+    <div class="bg-cyan-100 border-r-black border-r-2 h-full w-full p-8 flex justify-around flex-col ">
       <div class="text-2xl">{props.task.title}</div>
       <InfoItem title="Description" content={props.task.description} />
       <InfoItem

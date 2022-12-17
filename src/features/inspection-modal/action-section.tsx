@@ -1,5 +1,5 @@
 import { Tabs } from 'components/tabs';
-import { CommentList } from 'features/inspection-actions';
+import { CommentList } from 'features/inspection-modal/inspection-actions';
 
 enum ActionTypes {
   observations = 'observations',
@@ -10,11 +10,11 @@ enum ActionTypes {
 
 export const ActionSection = () => {
   return (
-    <div class="flex flex-col gap-3 p-8">
-      <div class="text-2xl">Actions</div>
+    <div class="flex flex-col p-8 bg-orange-300 w-full h-full">
+      <div class="text-2xl pb-4">Actions</div>
       <div class="h-full w-full">
         <Tabs.Provider>
-          <Tabs.TabsList>
+          <Tabs.TabsList class="pb-4">
             <Tabs.Tab>{ActionTypes.observations}</Tabs.Tab>
             <Tabs.Tab>{ActionTypes.attachments}</Tabs.Tab>
             <Tabs.Tab>{ActionTypes.comments}</Tabs.Tab>
@@ -24,7 +24,8 @@ export const ActionSection = () => {
           <Tabs.Panel> Panel attachments</Tabs.Panel>
           <Tabs.Panel>
             <div>
-              <CommentList />
+              comments
+              {/* <CommentList /> */}
             </div>
           </Tabs.Panel>
           <Tabs.Panel> Panel photos</Tabs.Panel>

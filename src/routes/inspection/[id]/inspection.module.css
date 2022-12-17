@@ -1,7 +1,0 @@
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-auto-flow: column;
-  gap: 2em;
-  justify-items: left;
-}

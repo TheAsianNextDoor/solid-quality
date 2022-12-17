@@ -1,19 +1,18 @@
 import { TaskStatus } from '@prisma/client';
-import { For } from 'solid-js';
+import { Modal } from '@suid/material';
+import { createSignal, For } from 'solid-js';
 import { refetchRouteData, useRouteData } from 'solid-start';
 import { createServerAction$, createServerData$ } from 'solid-start/server';
 
 import { Typography } from 'components/lib/typography';
 import { Select } from 'components/select';
-import { prisma } from 'db';
+import { prismaInstance } from 'db';
 import { updateStatusById } from 'db/task';
-import { InfoSection, ActionSection } from 'features/inspection-edit';
-
-import styles from './inspection.module.css';
+import { InspectionModal } from 'features/inspection-modal';
 
 export function routeData() {
   const tasks = createServerData$(async () =>
-    prisma.task.findMany({
+    prismaInstance.task.findMany({
       include: { Links: true },
     }),
   );
@@ -23,6 +22,14 @@ export function routeData() {
 
 export default function InspectionEdit() {
   const { tasks } = useRouteData<typeof routeData>();
+  const [open, setOpen] = createSignal(false);
+  const [selectedTaskIndex, setSelectedTaskIndex] = createSignal(0);
+
+  const handleOpenModal = (index: number) => {
+    setSelectedTaskIndex(index);
+    setOpen(true);
+  };
+  const handleCloseModal = () => setOpen(false);
 
   const orderedTasks = () =>
     tasks()
@@ -39,9 +46,9 @@ export default function InspectionEdit() {
     <>
       {
         <For each={orderedTasks()}>
-          {(task) => (
+          {(task, index) => (
             <div class="bg-cyan-700 h-40 m-7 text-white flex justify-between">
-              <Typography class="pl-10 pt-5" variant="h4">
+              <Typography onClick={() => handleOpenModal(index())} class="pl-10 pt-5 cursor-pointer" variant="h4">
                 {task.title}
               </Typography>
               <Select
@@ -57,16 +64,9 @@ export default function InspectionEdit() {
           )}
         </For>
       }
-      {/* <For each={orderedTasks()}>
-        {(task) => (
-          <div class="my-5 bg-gray-100">
-            <div class={styles.grid}>
-              <InfoSection task={task} />
-              <ActionSection />
-            </div>
-          </div>
-        )}
-      </For> */}
+      <Modal open={open()} onClose={handleCloseModal}>
+        <InspectionModal tasks={orderedTasks()} selectedTaskIndex={selectedTaskIndex()} />
+      </Modal>
     </>
   );
 }

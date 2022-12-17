@@ -9,9 +9,9 @@ interface props {
 export const CommentList = (props: props) => {
   return (
     <>
-      {props.comments.map((comment) => (
+      {/* {props.comments.map((comment) => (
         <div>{comment.content}</div>
-      ))}
+      ))} */}
     </>
   );
 };
