@@ -12,13 +12,13 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
-        <ErrorBoundary>
-          <Suspense fallback={<div>Loading</div>}>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
+        {/* <ErrorBoundary> */}
+        {/* <Suspense fallback={<div>Loading</div>}> */}
+        <Routes>
+          <FileRoutes />
+        </Routes>
+        {/* </Suspense> */}
+        {/* </ErrorBoundary> */}
         <Scripts />
       </Body>
     </Html>

@@ -47,12 +47,23 @@ export default function InspectionEdit() {
       {
         <For each={orderedTasks()}>
           {(task, index) => (
-            <div class="bg-cyan-700 h-40 m-7 text-white flex justify-between">
-              <Typography onClick={() => handleOpenModal(index())} class="pl-10 pt-5 cursor-pointer" variant="h4">
-                {task.title}
-              </Typography>
+            <div class="bg-cyan-700 h-40 p-7 m-7 text-white flex items-center justify-between">
+              <div class="flex flex-col justify-center">
+                <div>
+                  <Typography
+                    onClick={() => handleOpenModal(index())}
+                    width="min-content"
+                    class="cursor-pointer hover:underline"
+                    variant="h4"
+                  >
+                    {task.title}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography variant="h6">{task.description}</Typography>
+                </div>
+              </div>
               <Select
-                class="self-center pr-7"
                 onChange={(evt, val) => {
                   const status = val as TaskStatus;
                   updateStatus({ id: task.id, status });
@@ -65,7 +76,7 @@ export default function InspectionEdit() {
         </For>
       }
       <Modal open={open()} onClose={handleCloseModal}>
-        <InspectionModal tasks={orderedTasks()} selectedTaskIndex={selectedTaskIndex()} />
+        <InspectionModal task={orderedTasks()?.[selectedTaskIndex()]} />
       </Modal>
     </>
   );

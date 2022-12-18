@@ -1,6 +1,9 @@
 import { Tabs } from 'components/tabs';
 import { CommentList } from 'features/inspection-modal/inspection-actions';
 
+import type { TaskWithLinks } from 'db/task';
+import type { Component } from 'solid-js';
+
 enum ActionTypes {
   observations = 'observations',
   comments = 'comments',
@@ -8,7 +11,11 @@ enum ActionTypes {
   photos = 'photos',
 }
 
-export const ActionSection = () => {
+interface props {
+  task?: TaskWithLinks;
+}
+
+export const ActionSection: Component<props> = (props) => {
   return (
     <div class="flex flex-col p-8 bg-orange-300 w-full h-full">
       <div class="text-2xl pb-4">Actions</div>
@@ -24,8 +31,7 @@ export const ActionSection = () => {
           <Tabs.Panel> Panel attachments</Tabs.Panel>
           <Tabs.Panel>
             <div>
-              comments
-              {/* <CommentList /> */}
+              <CommentList task={props.task} />
             </div>
           </Tabs.Panel>
           <Tabs.Panel> Panel photos</Tabs.Panel>

@@ -9,8 +9,7 @@ import type { TaskWithLinks } from 'db/task';
 import type { Component } from 'solid-js';
 
 interface props {
-  tasks: TaskWithLinks[] | undefined;
-  selectedTaskIndex: number;
+  task: TaskWithLinks | undefined;
 }
 
 export const InspectionModal: Component<props> = (props) => {
@@ -25,7 +24,7 @@ export const InspectionModal: Component<props> = (props) => {
         margin: 'auto',
         minHeight: 500,
         maxHeight: 600,
-        minWidth: 800,
+        minWidth: 700,
         maxWidth: 1000,
         bgcolor: 'white',
         border: '2px solid #000',
@@ -33,9 +32,9 @@ export const InspectionModal: Component<props> = (props) => {
       }}
     >
       <div class={`${styles.grid} w-full h-full`}>
-        <Show when={props.tasks?.[props.selectedTaskIndex] === undefined}>Cannot load task</Show>
-        <InfoSection task={props.tasks?.[props.selectedTaskIndex] as TaskWithLinks} />
-        <ActionSection />
+        <Show when={props.task === undefined}>Cannot load task</Show>
+        <InfoSection task={props.task as TaskWithLinks} />
+        <ActionSection task={props.task} />
       </div>
     </Box>
   );

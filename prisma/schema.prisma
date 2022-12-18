@@ -78,43 +78,43 @@ model Permission {
 
 model Inspection {
   id          String            @id @default(uuid())
-  ownerId     String
+  userId      String
   siteId      String
   title       String
   description String
   status      InspectionStatus? @default(NOT_STARTED)
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
-  owner       User              @relation(fields: [ownerId], references: [id])
+  owner       User              @relation(fields: [userId], references: [id])
   site        Site              @relation(fields: [siteId], references: [id])
   Task        Task[]
   Comment     Comment[]
 
   @@index([title])
-  @@index([ownerId])
+  @@index([userId])
   @@index([siteId])
 }
 
 model Task {
   id           String       @id @default(uuid())
-  inspection   Inspection   @relation(fields: [inspectionId], references: [id])
   inspectionId String
-  user         User?        @relation(fields: [completedBy], references: [id])
-  completedBy  String?      @default("")
+  userId       String?      @default("")
   title        String
   description  String
   order        Int
   status       TaskStatus?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  Attachment   Attachment[]
+  user         User?        @relation(fields: [userId], references: [id])
+  inspection   Inspection   @relation(fields: [inspectionId], references: [id])
   Comment      Comment[]
   Links        TaskLinks[]
   Photo        Photo[]
+  Attachment   Attachment[]
 
   @@index([title])
   @@index([inspectionId])
-  @@index([completedBy])
+  @@index([userId])
 }
 
 model TaskLinks {
@@ -123,7 +123,8 @@ model TaskLinks {
   link      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Task      Task[]
+  Task      Task?    @relation(fields: [taskId], references: [id])
+  taskId    String?
 }
 
 model Comment {
@@ -140,6 +141,7 @@ model Comment {
 
   @@index([userId])
   @@index([taskId])
+  @@index([inspectionId])
 }
 
 model Photo {

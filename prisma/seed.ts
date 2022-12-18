@@ -68,7 +68,7 @@ async function main() {
   if (!getInspection) {
     inspection = await prisma.inspection.create({
       data: {
-        ownerId: user.id,
+        userId: user.id,
         title: 'Wind Tower 1',
         description: 'Inspect the wind tower in the west end',
         status: 'PENDING',
@@ -97,7 +97,7 @@ async function main() {
         title: 'task1',
         description: 'Test the concrete PH',
         inspectionId: inspection?.id || '',
-        completedBy: user.id,
+        userId: user.id,
         order: 1,
         status: 'PASSED',
         Links: {
@@ -111,13 +111,14 @@ async function main() {
     });
   }
 
+  let task2;
   if (!getTask2) {
-    await prisma.task.create({
+    task2 = await prisma.task.create({
       data: {
         title: 'task2',
         description: 'Check the moisture content on the left slab',
         inspectionId: inspection?.id || '',
-        completedBy: user.id,
+        userId: user.id,
         status: 'FAILED',
         order: 2,
       },
@@ -194,6 +195,42 @@ async function main() {
         message: 'You both wildin` in these comments',
         parentId: comment2?.id || '',
         taskId: task1?.id || '',
+        inspectionId: inspection?.id || '',
+      },
+    });
+  }
+
+  const getComment4 = await prisma.comment.findFirst({
+    where: { message: 'I think we should redo the whole project' },
+  });
+  const getComment5 = await prisma.comment.findFirst({
+    where: { message: 'I agree fire and ice' },
+  });
+
+  let comment4;
+  if (!getComment4) {
+    comment4 = await prisma.comment.upsert({
+      where: { id: '4' },
+      update: {},
+      create: {
+        userId: user.id,
+        message: 'I think we should redo the whole project',
+        taskId: task2?.id || '',
+        inspectionId: inspection?.id || '',
+      },
+    });
+  }
+
+  let comment5;
+  if (!getComment5) {
+    comment5 = await prisma.comment.upsert({
+      where: { id: '5' },
+      update: {},
+      create: {
+        userId: user.id,
+        message: 'I agree fire and ice',
+        parentId: comment4?.id || '',
+        taskId: task2?.id || '',
         inspectionId: inspection?.id || '',
       },
     });

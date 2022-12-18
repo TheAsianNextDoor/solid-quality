@@ -20,7 +20,11 @@ const InfoItem: Component<InfoItemProps> = (props) => {
   );
 };
 
-export const InfoSection: Component<{ task: TaskWithLinks }> = (props) => {
+interface props {
+  task: TaskWithLinks;
+}
+
+export const InfoSection: Component<props> = (props) => {
   const [_, updateStatus] = createServerAction$(async ({ id, status }: { id: string; status: TaskStatus }) => {
     await updateStatusById(id, status);
 
