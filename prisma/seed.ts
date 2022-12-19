@@ -53,8 +53,8 @@ async function main() {
     update: {},
     create: {
       email: 'aaron.scherling@gmail.com',
-      first: 'aaron',
-      last: 'scherling',
+      firstName: 'aaron',
+      lastName: 'scherling',
       organizationId: organization.id,
       siteId: site?.id || '',
     },

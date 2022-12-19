@@ -16,6 +16,7 @@ specifiers:
   '@vitest/ui': ^0.25.3
   autoprefixer: ^10.4.13
   concurrently: ^7.6.0
+  dayjs: ^1.11.7
   dotenv: ^16.0.3
   eslint: ^8.28.0
   eslint-config-airbnb-base: ^15.0.0
@@ -57,6 +58,7 @@ dependencies:
   '@solidjs/router': 0.5.1_solid-js@1.6.2
   '@suid/icons-material': 0.5.1_solid-js@1.6.2
   '@suid/material': 0.8.0_solid-js@1.6.2
+  dayjs: 1.11.7
   prisma: 4.7.0
   solid-js: 1.6.2
   solid-start: 0.2.6_i2cnpwj3ojjdnkycik5yjsstli
@@ -2952,6 +2954,10 @@ packages:
     resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
     engines: {node: '>=0.11'}
     dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
