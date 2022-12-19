@@ -5,14 +5,16 @@ import { ActionSection } from './action-section';
 import { InfoSection } from './info-section';
 import styles from './inspection-modal.module.css';
 
+import type { Comment } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
 import type { Component } from 'solid-js';
 
 interface props {
-  task: TaskWithLinks | undefined;
+  task: TaskWithLinks;
+  comments: Comment[];
 }
 
-export const InspectionModal: Component<props> = (props) => {
+export const TaskModal: Component<props> = (props) => {
   return (
     <Box
       sx={{
@@ -34,7 +36,7 @@ export const InspectionModal: Component<props> = (props) => {
       <div class={`${styles.grid} w-full h-full`}>
         <Show when={props.task === undefined}>Cannot load task</Show>
         <InfoSection task={props.task as TaskWithLinks} />
-        <ActionSection task={props.task} />
+        <ActionSection task={props.task} comments={props.comments} />
       </div>
     </Box>
   );

@@ -1,1 +1,1 @@
-export { InspectionModal } from './inspection-modal';
+export { TaskModal as InspectionModal } from './inspection-modal';

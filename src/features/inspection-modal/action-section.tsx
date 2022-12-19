@@ -1,8 +1,9 @@
 import { Tabs } from 'components/tabs';
 import { CommentList } from 'features/inspection-modal/inspection-actions';
 
+import type { Comment } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
-import type { Component } from 'solid-js';
+import type { Accessor, Component } from 'solid-js';
 
 enum ActionTypes {
   observations = 'observations',
@@ -12,7 +13,8 @@ enum ActionTypes {
 }
 
 interface props {
-  task?: TaskWithLinks;
+  task: TaskWithLinks;
+  comments: Comment[];
 }
 
 export const ActionSection: Component<props> = (props) => {
@@ -31,7 +33,7 @@ export const ActionSection: Component<props> = (props) => {
           <Tabs.Panel> Panel attachments</Tabs.Panel>
           <Tabs.Panel>
             <div>
-              <CommentList task={props.task} />
+              <CommentList task={props.task} comments={props.comments} />
             </div>
           </Tabs.Panel>
           <Tabs.Panel> Panel photos</Tabs.Panel>

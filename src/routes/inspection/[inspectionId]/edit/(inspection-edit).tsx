@@ -1,35 +1,18 @@
 import { TaskStatus } from '@prisma/client';
-import { Modal } from '@suid/material';
-import { createSignal, For } from 'solid-js';
-import { refetchRouteData, useRouteData } from 'solid-start';
-import { createServerAction$, createServerData$ } from 'solid-start/server';
+import { For } from 'solid-js';
+import { refetchRouteData, useLocation, useNavigate, useRouteData } from 'solid-start';
+import { createServerAction$ } from 'solid-start/server';
 
 import { Typography } from 'components/lib/typography';
 import { Select } from 'components/select';
-import { prismaInstance } from 'db';
 import { updateStatusById } from 'db/task';
-import { InspectionModal } from 'features/inspection-modal';
 
-export function routeData() {
-  const tasks = createServerData$(async () =>
-    prismaInstance.task.findMany({
-      include: { Links: true },
-    }),
-  );
-
-  return { tasks };
-}
+import type { routeDataType } from '../edit';
 
 export default function InspectionEdit() {
-  const { tasks } = useRouteData<typeof routeData>();
-  const [open, setOpen] = createSignal(false);
-  const [selectedTaskIndex, setSelectedTaskIndex] = createSignal(0);
-
-  const handleOpenModal = (index: number) => {
-    setSelectedTaskIndex(index);
-    setOpen(true);
-  };
-  const handleCloseModal = () => setOpen(false);
+  const { tasks } = useRouteData<routeDataType>();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const orderedTasks = () =>
     tasks()
@@ -46,15 +29,15 @@ export default function InspectionEdit() {
     <>
       {
         <For each={orderedTasks()}>
-          {(task, index) => (
+          {(task) => (
             <div class="bg-cyan-700 h-40 p-7 m-7 text-white flex items-center justify-between">
               <div class="flex flex-col justify-center">
                 <div>
                   <Typography
-                    onClick={() => handleOpenModal(index())}
                     width="min-content"
                     class="cursor-pointer hover:underline"
                     variant="h4"
+                    onClick={() => navigate(`${pathname}/task/${task.id}`)}
                   >
                     {task.title}
                   </Typography>
@@ -75,9 +58,6 @@ export default function InspectionEdit() {
           )}
         </For>
       }
-      <Modal open={open()} onClose={handleCloseModal}>
-        <InspectionModal task={orderedTasks()?.[selectedTaskIndex()]} />
-      </Modal>
     </>
   );
 }

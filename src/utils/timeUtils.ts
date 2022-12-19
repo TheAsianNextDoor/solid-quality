@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 
-// eslint-disable-next-line consistent-return
-export const formatCommentTimeStamp = (date: Date) => {
-  const now = new Date();
+export const formatCommentTimeStamp = (date: Date, now: Date) => {
   const diffInMinutes = dayjs(now).diff(date, 'minutes');
 
   if (diffInMinutes <= 0) {
@@ -30,5 +28,8 @@ export const formatCommentTimeStamp = (date: Date) => {
     return dayjs(date).format('M/D/YY');
   }
 
+  // eslint-disable-next-line no-console
   console.error(`Unable to handle date, ${date}`);
+
+  return '';
 };

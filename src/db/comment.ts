@@ -1,8 +1,12 @@
 import { prismaInstance } from 'db';
 
-export { Comment } from '@prisma/client';
+export type { Comment } from '@prisma/client';
 
-export const getCommentsByTaskId = (taskId: string) => {
+export const getCommentsByTaskId = (taskId: string | undefined) => {
+  if (!taskId) {
+    return [];
+  }
+
   return prismaInstance.comment.findMany({
     where: { taskId },
     include: { task: true, user: true },
@@ -12,7 +16,7 @@ export const getCommentsByTaskId = (taskId: string) => {
 export interface createCommentProps {
   message: string;
   userId: string;
-  parentId: string;
+  parentId?: string;
   taskId: string;
   inspectionId: string;
 }
