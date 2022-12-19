@@ -1,30 +1,46 @@
-import { For } from 'solid-js';
-import { createServerAction$, createServerData$ } from 'solid-start/server';
+import { For, mapArray, createEffect, on } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import { createServerAction$ } from 'solid-start/server';
 
 import { Avatar } from 'components/lib/avatar';
 import { TextField } from 'components/lib/text-field';
-import { createComment, getCommentsByTaskId } from 'db/comment';
+import { createComment } from 'db/comment';
 import { computeFullName } from 'db/user';
 
 import { formatCommentTimeStamp } from '../../../../utils/timeUtils';
 
-import type { createCommentProps } from 'db/comment';
+import type { createCommentProps, Comment } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
-import type { Component } from 'solid-js';
+import type { Component, Accessor } from 'solid-js';
 
 interface props {
-  task?: TaskWithLinks;
+  task: TaskWithLinks;
+  comments: Comment[];
 }
 
 export const CommentList: Component<props> = (props) => {
-  const comments = createServerData$((taskId) => getCommentsByTaskId(taskId), {
-    key: () => props.task?.id,
-  });
+  const [timeStamps, setTimeStamps] = createStore<string[]>([]);
 
   const orderedComments = () =>
-    comments()
-      ?.slice()
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    props.comments.slice().sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+  createEffect(
+    on(orderedComments, () => {
+      const formattedTimestamps = mapArray(orderedComments, (comment) =>
+        formatCommentTimeStamp(comment.createdAt, new Date()),
+      );
+      setTimeStamps(formattedTimestamps());
+    }),
+  );
+
+  createEffect(() => {
+    setInterval(() => {
+      const formattedTimestamps = mapArray(orderedComments, (comment) =>
+        formatCommentTimeStamp(comment.createdAt, new Date()),
+      );
+      setTimeStamps(formattedTimestamps());
+    }, 1000 * 60);
+  });
 
   const [_, addComment] = createServerAction$(async (params: createCommentProps) => {
     await createComment(params);
@@ -32,27 +48,36 @@ export const CommentList: Component<props> = (props) => {
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      addComment({
-        inspectionId: props.task?.inspectionId,
-        message: e?.target?.value,
-        parentId: orderedComments()[orderedComments()?.length - 1]?.id,
-        taskId: props.task?.id,
-        userId: props.task?.userId,
-      });
-      console.log('hi');
+      if (!orderedComments().length) {
+        addComment({
+          inspectionId: props.task?.inspectionId,
+          message: e?.target?.value,
+          taskId: props.task?.id,
+          userId: props.task?.userId,
+        });
+      } else {
+        addComment({
+          inspectionId: props.task.inspectionId,
+          message: e?.target?.value,
+          parentId: orderedComments()[orderedComments()?.length - 1]?.id,
+          taskId: props.task.id,
+          userId: props.task.userId,
+        });
+      }
     }
   };
 
   return (
     <>
       <For each={orderedComments()}>
-        {(comment) => (
+        {(comment, index) => (
           <div class="bg-red-300 p-2 m-5 flex items-center">
             <Avatar>h</Avatar>
             <div class="pl-3">
               <div class="flex items-center space-x-2 pb-3">
                 <div>{computeFullName(comment.user)}</div>
-                <div>{formatCommentTimeStamp(comment.createdAt)}</div>
+                <div>•</div>
+                <div>{timeStamps[index()]}</div>
               </div>
               <div>{comment.message}</div>
             </div>
