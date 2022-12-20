@@ -5,13 +5,13 @@ import { ActionSection } from './action-section';
 import { InfoSection } from './info-section';
 import styles from './inspection-modal.module.css';
 
-import type { Comment } from 'db/comment';
+import type { CommentWithUser } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
 import type { Component } from 'solid-js';
 
 interface props {
   task: TaskWithLinks;
-  comments: Comment[];
+  comments: CommentWithUser[];
 }
 
 export const TaskModal: Component<props> = (props) => {

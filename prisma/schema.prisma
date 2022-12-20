@@ -88,7 +88,6 @@ model Inspection {
   owner       User              @relation(fields: [userId], references: [id])
   site        Site              @relation(fields: [siteId], references: [id])
   Task        Task[]
-  Comment     Comment[]
 
   @@index([title])
   @@index([userId])
@@ -128,20 +127,17 @@ model TaskLinks {
 }
 
 model Comment {
-  id           String     @id @default(uuid())
-  userId       String
-  taskId       String
-  inspectionId String
-  message      String
-  parentId     String?
-  createdAt    DateTime   @default(now())
-  user         User       @relation(fields: [userId], references: [id])
-  task         Task       @relation(fields: [taskId], references: [id])
-  inspection   Inspection @relation(fields: [inspectionId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  message   String
+  parentId  String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
 
   @@index([userId])
   @@index([taskId])
-  @@index([inspectionId])
 }
 
 model Photo {

@@ -9,13 +9,13 @@ import { computeFullName } from 'db/user';
 
 import { formatCommentTimeStamp } from '../../../../utils/timeUtils';
 
-import type { createCommentProps, Comment } from 'db/comment';
+import type { createCommentProps, CommentWithUser } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
-import type { Component, Accessor } from 'solid-js';
+import type { Component } from 'solid-js';
 
 interface props {
   task: TaskWithLinks;
-  comments: Comment[];
+  comments: CommentWithUser[];
 }
 
 export const CommentList: Component<props> = (props) => {
@@ -47,21 +47,20 @@ export const CommentList: Component<props> = (props) => {
   });
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    const target = e.target as HTMLInputElement;
     if (e.key === 'Enter') {
       if (!orderedComments().length) {
         addComment({
-          inspectionId: props.task?.inspectionId,
-          message: e?.target?.value,
-          taskId: props.task?.id,
-          userId: props.task?.userId,
+          message: target.value,
+          taskId: props.task.id,
+          userId: props.task.userId as string,
         });
       } else {
         addComment({
-          inspectionId: props.task.inspectionId,
-          message: e?.target?.value,
-          parentId: orderedComments()[orderedComments()?.length - 1]?.id,
+          message: target.value,
+          parentId: orderedComments()[orderedComments().length - 1]?.id,
           taskId: props.task.id,
-          userId: props.task.userId,
+          userId: props.task.userId as string,
         });
       }
     }

@@ -1,9 +1,9 @@
 import { Tabs } from 'components/tabs';
 import { CommentList } from 'features/inspection-modal/inspection-actions';
 
-import type { Comment } from 'db/comment';
+import type { CommentWithUser } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
-import type { Accessor, Component } from 'solid-js';
+import type { Component } from 'solid-js';
 
 enum ActionTypes {
   observations = 'observations',
@@ -14,7 +14,7 @@ enum ActionTypes {
 
 interface props {
   task: TaskWithLinks;
-  comments: Comment[];
+  comments: CommentWithUser[];
 }
 
 export const ActionSection: Component<props> = (props) => {

@@ -6,7 +6,7 @@ import { getCommentsByTaskId } from 'db/comment';
 import { TaskModal } from 'features/inspection-modal/inspection-modal';
 
 import type { routeDataReturn } from '../../edit';
-import type { Comment } from 'db/comment';
+import type { CommentWithUser } from 'db/comment';
 import type { TaskWithLinks } from 'db/task';
 import type { RouteDataArgs } from 'solid-start';
 
@@ -33,7 +33,7 @@ export default function EditTaskActions() {
   return (
     <>
       <Show when={!!comments()} fallback={<>Loading...</>}>
-        <TaskModal task={selectedTask() as TaskWithLinks} comments={comments() as Comment[]} />
+        <TaskModal task={selectedTask() as TaskWithLinks} comments={comments() as CommentWithUser[]} />
       </Show>
     </>
   );

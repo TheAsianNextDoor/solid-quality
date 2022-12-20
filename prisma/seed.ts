@@ -166,7 +166,6 @@ async function main() {
         userId: user.id,
         message: 'I think the metal is bent',
         taskId: task1?.id || '',
-        inspectionId: inspection?.id || '',
       },
     });
   }
@@ -181,7 +180,6 @@ async function main() {
         message: 'You must be blind, the metal looks fine',
         parentId: comment1?.id || '',
         taskId: task1?.id || '',
-        inspectionId: inspection?.id || '',
       },
     });
   }
@@ -195,7 +193,6 @@ async function main() {
         message: 'You both wildin` in these comments',
         parentId: comment2?.id || '',
         taskId: task1?.id || '',
-        inspectionId: inspection?.id || '',
       },
     });
   }
@@ -216,7 +213,6 @@ async function main() {
         userId: user.id,
         message: 'I think we should redo the whole project',
         taskId: task2?.id || '',
-        inspectionId: inspection?.id || '',
       },
     });
   }
@@ -231,7 +227,6 @@ async function main() {
         message: 'I agree fire and ice',
         parentId: comment4?.id || '',
         taskId: task2?.id || '',
-        inspectionId: inspection?.id || '',
       },
     });
   }
