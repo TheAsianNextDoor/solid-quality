@@ -28,20 +28,20 @@ export interface createCommentProps {
   taskId: string;
 }
 
-export const createComment = ({ message, userId, parentId, taskId }: createCommentProps) => {
-  // z.object({
-  //   message: z.string(),
+export const createComment = (data: createCommentProps) => {
+  // const schema = z.object({
+  //   message: z.number(),
   //   userId: z.string(),
   //   parentId: z.string().optional(),
   //   taskId: z.string(),
   // });
 
-  return prismaInstance.comment.create({
-    data: {
-      message,
-      userId,
-      parentId,
-      taskId,
-    },
-  });
+  // const parse = schema.parse(data);
+
+  // if (!parse.success) {
+  //   console.log('hi');
+  //   return new Response(JSON.stringify(parse.error), { status: 422 });
+  // }
+
+  return prismaInstance.comment.create({ data });
 };

@@ -51,6 +51,7 @@ specifiers:
   vite-plugin-solid: ^2.4.0
   vite-tsconfig-paths: ^3.6.0
   vitest: ^0.25.3
+  zod: ^3.20.2
 
 dependencies:
   '@prisma/client': 4.7.0_prisma@4.7.0
@@ -63,6 +64,7 @@ dependencies:
   solid-js: 1.6.2
   solid-start: 0.2.6_i2cnpwj3ojjdnkycik5yjsstli
   undici: 5.13.0
+  zod: 3.20.2
 
 devDependencies:
   '@suid/vite-plugin': 0.1.0_vite@3.2.4
@@ -7992,3 +7994,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false
