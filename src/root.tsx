@@ -1,6 +1,8 @@
 // @refresh reload
 import { Suspense } from 'solid-js';
 import { Body, ErrorBoundary, FileRoutes, Head, Html, Meta, Routes, Scripts, Title } from 'solid-start';
+import { Toaster } from 'solid-toast';
+
 import './root.css';
 
 export default function Root() {
@@ -12,13 +14,14 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
-        <ErrorBoundary fallback={() => <>An error occurred...</>}>
-          {/* <Suspense fallback={<div>Loading</div>}> */}
-          <Routes>
-            <FileRoutes />
-          </Routes>
-          {/* </Suspense> */}
-        </ErrorBoundary>
+        <Toaster position="top-right" />
+        {/* <ErrorBoundary fallback={() => <>An error occurred...</>}> */}
+        {/* <Suspense fallback={<div>Loading</div>}> */}
+        <Routes>
+          <FileRoutes />
+        </Routes>
+        {/* </Suspense> */}
+        {/* </ErrorBoundary> */}
         <Scripts />
       </Body>
     </Html>

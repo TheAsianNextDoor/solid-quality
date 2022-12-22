@@ -28,7 +28,7 @@ export interface createCommentProps {
   taskId: string;
 }
 
-export const createComment = (data: createCommentProps) => {
+export const createComment = async (data: createCommentProps) => {
   // const schema = z.object({
   //   message: z.number(),
   //   userId: z.string(),

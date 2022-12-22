@@ -6,6 +6,7 @@ import { Avatar } from 'components/lib/avatar';
 import { TextField } from 'components/lib/text-field';
 import { createComment } from 'db/comment';
 import { computeFullName } from 'db/user';
+import { useToastRequest } from 'hooks/use-toast-request';
 
 import { formatCommentTimeStamp } from '../../../../utils/timeUtils';
 
@@ -42,27 +43,23 @@ export const CommentList: Component<props> = (props) => {
     }, 1000 * 60);
   });
 
-  const [_, addComment] = createServerAction$(async (params: createCommentProps) => {
+  const [addCommentState, addComment] = createServerAction$(async (params: createCommentProps) => {
     await createComment(params);
   });
 
+  useToastRequest(addCommentState);
+
   const handleKeyDown = (e: KeyboardEvent) => {
     const target = e.target as HTMLInputElement;
+    const lastComment = () => orderedComments()[orderedComments().length - 1]?.id;
+
     if (e.key === 'Enter') {
-      if (!orderedComments().length) {
-        addComment({
-          message: target.value,
-          taskId: props.task.id,
-          userId: props.task.userId as string,
-        });
-      } else {
-        addComment({
-          message: target.value,
-          parentId: orderedComments()[orderedComments().length - 1]?.id,
-          taskId: props.task.id,
-          userId: props.task.userId as string,
-        });
-      }
+      addComment({
+        message: target.value,
+        taskId: props.task.id,
+        userId: props.task.userId as string,
+        ...(lastComment() && { parentId: lastComment() }),
+      });
     }
   };
 
