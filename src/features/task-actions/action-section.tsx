@@ -1,7 +1,8 @@
 import { Tabs } from 'components/tabs';
-import { CommentList } from 'features/inspection-modal/inspection-actions';
 
-import type { CommentWithUser } from 'db/comment';
+import { CommentsPanel } from './task-comments/comments-panel';
+
+import type { CommentWithUser } from 'db/comment/comment';
 import type { TaskWithLinks } from 'db/task';
 import type { Component } from 'solid-js';
 
@@ -32,9 +33,7 @@ export const ActionSection: Component<props> = (props) => {
           <Tabs.Panel> Panel observations</Tabs.Panel>
           <Tabs.Panel> Panel attachments</Tabs.Panel>
           <Tabs.Panel>
-            <div>
-              <CommentList task={props.task} comments={props.comments} />
-            </div>
+            <CommentsPanel task={props.task} comments={props.comments} />
           </Tabs.Panel>
           <Tabs.Panel> Panel photos</Tabs.Panel>
         </Tabs.Provider>

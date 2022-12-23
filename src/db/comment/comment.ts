@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 import { prismaInstance } from 'db';
 
+import { sortCommentsFromOldToNew } from './comment-utils';
+
 import type { Prisma } from '@prisma/client';
 
 export type { Comment } from '@prisma/client';
@@ -10,15 +12,17 @@ export type CommentWithUser = Prisma.CommentGetPayload<{
   include: { user: true };
 }>;
 
-export const getCommentsByTaskId = (taskId: string | undefined) => {
+export const getCommentsByTaskId = async (taskId: string | undefined) => {
   if (!taskId) {
     return [];
   }
 
-  return prismaInstance.comment.findMany({
+  const comments = await prismaInstance.comment.findMany({
     where: { taskId },
     include: { user: true },
   });
+
+  return sortCommentsFromOldToNew(comments);
 };
 
 export interface createCommentProps {

@@ -2,11 +2,14 @@ import { Show } from 'solid-js';
 import { useParams, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
-import { getCommentsByTaskId } from 'db/comment';
-import { TaskModal } from 'features/inspection-modal/inspection-modal';
+import { getCommentsByTaskId } from 'db/comment/comment';
+import { ActionSection } from 'features/task-actions';
+import { InfoSection } from 'features/task-info';
+
+import styles from './styles.module.css';
 
 import type { routeDataReturn } from '../../edit';
-import type { CommentWithUser } from 'db/comment';
+import type { CommentWithUser } from 'db/comment/comment';
 import type { TaskWithLinks } from 'db/task';
 import type { RouteDataArgs } from 'solid-start';
 
@@ -33,7 +36,10 @@ export default function EditTaskActions() {
   return (
     <>
       <Show when={!!comments()} fallback={<>Loading...</>}>
-        <TaskModal task={selectedTask() as TaskWithLinks} comments={comments() as CommentWithUser[]} />
+        <div class={`${styles.grid} w-full min-h-screen`}>
+          <InfoSection task={selectedTask() as TaskWithLinks} />
+          <ActionSection task={selectedTask() as TaskWithLinks} comments={comments() as CommentWithUser[]} />
+        </div>
       </Show>
     </>
   );
