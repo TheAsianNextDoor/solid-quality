@@ -113,7 +113,7 @@ const Panel: Component<PanelProps> = (props) => {
   const child = children(() => props.children);
 
   return (
-    <div ref={refFunction}>
+    <div class={`${isSelected(id()) && 'w-full h-full'}`} ref={refFunction}>
       <Show when={isSelected(id())} fallback={<></>}>
         {child()}
       </Show>

@@ -1,3 +1,4 @@
+import { createSignal } from 'solid-js';
 import { createServerAction$ } from 'solid-start/server';
 
 import { TextField } from 'components/lib/text-field';
@@ -17,6 +18,7 @@ export const CommentInput: Component<props> = (props) => {
   const [addCommentState, addComment] = createServerAction$(async (params: createCommentProps) => {
     await createComment(params);
   });
+  const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
   const handleKeyDown = (e: KeyboardEvent) => {
     const target = e.target as HTMLInputElement;
@@ -31,8 +33,10 @@ export const CommentInput: Component<props> = (props) => {
         userId: props.task.userId as string,
         ...(lastComment() && { parentId: lastComment() }),
       });
+
+      inputRef().value = '';
     }
   };
 
-  return <TextField class="w-full" onKeyDown={handleKeyDown} placeholder="Enter a comment..." />;
+  return <TextField inputRef={(el) => setInputRef(el)} onKeyDown={handleKeyDown} placeholder="Enter a comment..." />;
 };

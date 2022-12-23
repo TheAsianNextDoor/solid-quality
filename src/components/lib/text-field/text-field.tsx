@@ -4,5 +4,5 @@ import type { TextFieldProps } from '@suid/material/TextField';
 import type { Component } from 'solid-js';
 
 export const TextField: Component<TextFieldProps> = (props) => {
-  return <MuiTextField {...props} />;
+  return <MuiTextField fullWidth {...props} />;
 };

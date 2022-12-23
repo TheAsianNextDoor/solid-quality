@@ -13,8 +13,12 @@ interface props {
 export const CommentsPanel: Component<props> = (props) => {
   return (
     <>
-      <CommentList task={props.task} comments={props.comments} />
-      <CommentInput task={props.task} comments={props.comments} />
+      <div class="flex justify-between content-between flex-col h-full">
+        <CommentList task={props.task} comments={props.comments} />
+        <div class="mb-10">
+          <CommentInput task={props.task} comments={props.comments} />
+        </div>
+      </div>
     </>
   );
 };

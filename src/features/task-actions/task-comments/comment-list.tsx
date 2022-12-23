@@ -1,4 +1,4 @@
-import { For, mapArray, createEffect, on } from 'solid-js';
+import { For, mapArray, createEffect, on, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { Avatar } from 'components/lib/avatar';
@@ -18,31 +18,38 @@ interface props {
 export const CommentList: Component<props> = (props) => {
   const [timeStamps, setTimeStamps] = createStore<string[]>([]);
 
+  let divRef: HTMLInputElement | undefined;
+
   createEffect(
     on(
-      () => props.comments,
+      () => props.comments.length,
       () => {
-        const formattedTimestamps = mapArray(
-          () => props.comments,
-          (comment) => formatCommentTimeStamp(comment.createdAt, new Date()),
-        );
-        setTimeStamps(formattedTimestamps());
+        // @ts-ignore refs don't play well with TS
+        divRef.scrollTop = divRef?.scrollHeight || 0;
       },
     ),
   );
 
   createEffect(() => {
-    setInterval(() => {
-      const formattedTimestamps = mapArray(
-        () => props.comments,
-        (comment) => formatCommentTimeStamp(comment.createdAt, new Date()),
-      );
-      setTimeStamps(formattedTimestamps());
-    }, 1000 * 60);
+    const formattedTimestamps = mapArray(
+      () => props.comments,
+      (comment) => formatCommentTimeStamp(comment.createdAt, new Date()) || '1s',
+    );
+    setTimeStamps(formattedTimestamps());
   });
 
+  const timestampInterval = setInterval(() => {
+    const formattedTimestamps = mapArray(
+      () => props.comments,
+      (comment) => formatCommentTimeStamp(comment.createdAt, new Date()),
+    );
+    setTimeStamps(formattedTimestamps());
+  }, 1000 * 10);
+
+  onCleanup(() => clearInterval(timestampInterval));
+
   return (
-    <div class="overflow-y-auto">
+    <div ref={divRef} class="overflow-y-auto" style={{ height: '700px' }}>
       <For each={props.comments}>
         {(comment, index) => (
           <div class="bg-red-300 p-2 m-5 flex items-center">

@@ -7,13 +7,13 @@ import './root.css';
 
 export default function Root() {
   return (
-    <Html lang="en">
+    <Html lang="en" class="w-full h-full">
       <Head>
         <Title>Solid Quality</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Body class="min-h-screen">
+      <Body class="w-full h-full">
         <Toaster position="top-right" />
         {/* <ErrorBoundary fallback={() => <>An error occurred...</>}> */}
         {/* <Suspense fallback={<div>Loading</div>}> */}
