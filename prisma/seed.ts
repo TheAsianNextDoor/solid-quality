@@ -103,7 +103,7 @@ async function main() {
         Links: {
           create: [
             { info: 'Test Kit Manual', link: 'google.com' },
-            { info: 'The Wet Manual', link: 'http:pornhub.com' },
+            { info: 'The Wet Manual', link: 'manual.com' },
             { info: 'Ok manual', link: 'blah.com' },
           ],
         },
@@ -131,6 +131,7 @@ async function main() {
         title: 'task3',
         description: 'Find the meaning to life',
         inspectionId: inspection?.id || '',
+        userId: user.id,
         order: 3,
       },
     });
