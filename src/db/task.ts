@@ -14,7 +14,7 @@ export const getTaskById = (id: string) => {
   return prismaInstance.task.findFirst({ where: { id } });
 };
 
-export const updateStatusById = async (id: string, status: TaskStatus) => {
+export const updateTaskStatusById = async (id: string, status: TaskStatus) => {
   await prismaInstance.task.update({
     where: { id },
     data: {

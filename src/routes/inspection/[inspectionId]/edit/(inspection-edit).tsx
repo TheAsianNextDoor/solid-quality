@@ -5,7 +5,7 @@ import { createServerAction$ } from 'solid-start/server';
 
 import { Typography } from 'components/lib/typography';
 import { Select } from 'components/select';
-import { updateStatusById } from 'db/task';
+import { updateTaskStatusById } from 'db/task';
 
 import type { routeDataType } from '../edit';
 
@@ -20,7 +20,7 @@ export default function InspectionEdit() {
       .sort((a, b) => a.order - b.order);
 
   const [_, updateStatus] = createServerAction$(async ({ id, status }: { id: string; status: TaskStatus }) => {
-    await updateStatusById(id, status);
+    await updateTaskStatusById(id, status);
 
     refetchRouteData(['tasks', { id }]);
   });
