@@ -2,14 +2,16 @@ import { Show } from 'solid-js';
 import { Outlet, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
-import { prismaInstance } from 'db';
+import { getTaskByInspectionId } from 'db/task';
 
-export function routeData() {
-  const tasks = createServerData$(async () =>
-    prismaInstance.task.findMany({
-      include: { Links: true },
+import type { RouteDataArgs } from 'solid-start';
+
+export function routeData({ params }: RouteDataArgs) {
+  const tasks = createServerData$(async ({ inspectionId }) => getTaskByInspectionId(inspectionId), {
+    key: () => ({
+      inspectionId: params.inspectionId,
     }),
-  );
+  });
 
   return { tasks };
 }

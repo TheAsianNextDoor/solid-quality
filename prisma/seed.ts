@@ -60,17 +60,36 @@ async function main() {
     },
   });
 
-  const getInspection = await prisma.inspection.findFirst({
+  const getInspection1 = await prisma.inspection.findFirst({
     where: { title: 'Wind Tower 1' },
   });
 
-  let inspection;
-  if (!getInspection) {
-    inspection = await prisma.inspection.create({
+  const getInspection2 = await prisma.inspection.findFirst({
+    where: { title: 'Building 2 Plumbing' },
+  });
+
+  let inspection1;
+  if (!getInspection1) {
+    inspection1 = await prisma.inspection.create({
       data: {
+        id: '1',
         userId: user.id,
         title: 'Wind Tower 1',
         description: 'Inspect the wind tower in the west end',
+        status: 'PENDING',
+        siteId: site?.id || '',
+      },
+    });
+  }
+
+  let inspection2;
+  if (!getInspection2) {
+    inspection2 = await prisma.inspection.create({
+      data: {
+        id: '2',
+        userId: user.id,
+        title: 'Building 2 Plumbing',
+        description: 'Ensure the pipes are up to spec',
         status: 'PENDING',
         siteId: site?.id || '',
       },
@@ -96,7 +115,7 @@ async function main() {
       data: {
         title: 'task1',
         description: 'Test the concrete PH',
-        inspectionId: inspection?.id || '',
+        inspectionId: inspection1?.id || '',
         userId: user.id,
         order: 1,
         status: 'PASSED',
@@ -117,7 +136,7 @@ async function main() {
       data: {
         title: 'task2',
         description: 'Check the moisture content on the left slab',
-        inspectionId: inspection?.id || '',
+        inspectionId: inspection1?.id || '',
         userId: user.id,
         status: 'FAILED',
         order: 2,
@@ -130,7 +149,7 @@ async function main() {
       data: {
         title: 'task3',
         description: 'Find the meaning to life',
-        inspectionId: inspection?.id || '',
+        inspectionId: inspection1?.id || '',
         userId: user.id,
         order: 3,
       },
@@ -142,8 +161,49 @@ async function main() {
       data: {
         title: 'task4',
         description: 'Check durability by smashing with hammer',
-        inspectionId: inspection?.id || '',
+        inspectionId: inspection1?.id || '',
         order: 4,
+      },
+    });
+  }
+
+  const getTask5 = await prisma.task.findFirst({
+    where: { title: 'task5' },
+  });
+  const getTask6 = await prisma.task.findFirst({
+    where: { title: 'task6' },
+  });
+
+  let task5;
+  if (!getTask5) {
+    task1 = await prisma.task.create({
+      data: {
+        title: 'task5',
+        description: 'Push water through pipes',
+        inspectionId: inspection2?.id || '',
+        userId: user.id,
+        order: 1,
+        status: 'PASSED',
+        Links: {
+          create: [
+            { info: 'Pipe guys', link: 'PipeItUp.com' },
+            { info: 'some random manual', link: 'google.com' },
+          ],
+        },
+      },
+    });
+  }
+
+  let task6;
+  if (!getTask6) {
+    task1 = await prisma.task.create({
+      data: {
+        title: 'task6',
+        description: 'Push water through pipes',
+        inspectionId: inspection2?.id || '',
+        userId: user.id,
+        order: 2,
+        status: 'PASSED',
       },
     });
   }

@@ -22,3 +22,10 @@ export const updateStatusById = async (id: string, status: TaskStatus) => {
     },
   });
 };
+
+export const getTaskByInspectionId = async (inspectionId: string) => {
+  return prismaInstance.task.findMany({
+    where: { inspectionId },
+    include: { Links: true },
+  });
+};
