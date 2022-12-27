@@ -2,8 +2,8 @@ import { Tabs } from 'components/tabs';
 
 import { CommentsPanel } from './task-comments/comments-panel';
 
-import type { CommentWithUser } from 'db/comment/comment';
 import type { TaskWithLinks } from 'db/task';
+import type { CommentWithUser } from 'server/comment/comment-types';
 import type { Component } from 'solid-js';
 
 enum ActionTypes {

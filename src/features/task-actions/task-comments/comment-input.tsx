@@ -1,12 +1,12 @@
 import { createSignal } from 'solid-js';
-import { ResponseError, createServerAction$ } from 'solid-start/server';
+import { createServerAction$ } from 'solid-start/server';
 
 import { TextField } from 'components/lib/text-field';
-import { createComment } from 'db/comment/comment';
 import { useToastRequest } from 'hooks/use-toast-request';
+import { createComment } from 'server/comment/comment-service';
 
-import type { createCommentProps, CommentWithUser } from 'db/comment/comment';
 import type { TaskWithLinks } from 'db/task';
+import type { CommentCreateData, CommentWithUser } from 'server/comment/comment-types';
 import type { Component } from 'solid-js';
 
 interface props {
@@ -15,7 +15,7 @@ interface props {
 }
 
 export const CommentInput: Component<props> = (props) => {
-  const [addCommentState, addComment] = createServerAction$(async (params: createCommentProps) => {
+  const [addCommentState, addComment] = createServerAction$(async (params: CommentCreateData) => {
     await createComment(params);
   });
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
