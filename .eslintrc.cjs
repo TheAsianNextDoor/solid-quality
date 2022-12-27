@@ -53,6 +53,8 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/consistent-type-imports': 'error',
 
+        '@typescript-eslint/no-throw-literal': 'off', // turn off for solid server response errors
+
         // disable rules for '_'
         '@typescript-eslint/no-unused-vars': [
           'warn',

@@ -33,19 +33,18 @@ export interface createCommentProps {
 }
 
 export const createComment = async (data: createCommentProps) => {
-  // const schema = z.object({
-  //   message: z.number(),
-  //   userId: z.string(),
-  //   parentId: z.string().optional(),
-  //   taskId: z.string(),
-  // });
+  const schema = z.object({
+    message: z.string(),
+    userId: z.string(),
+    parentId: z.string().optional(),
+    taskId: z.string(),
+  });
 
-  // const parse = schema.parse(data);
+  const parse = schema.safeParse(data);
 
-  // if (!parse.success) {
-  //   console.log('hi');
-  //   return new Response(JSON.stringify(parse.error), { status: 422 });
-  // }
+  if (!parse.success) {
+    throw new Response(JSON.stringify(parse.error), { status: 422 });
+  }
 
   return prismaInstance.comment.create({ data });
 };
