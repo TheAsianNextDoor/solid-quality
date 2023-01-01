@@ -176,7 +176,7 @@ async function main() {
 
   let task5;
   if (!getTask5) {
-    task1 = await prisma.task.create({
+    task5 = await prisma.task.create({
       data: {
         title: 'task5',
         description: 'Push water through pipes',
@@ -196,7 +196,7 @@ async function main() {
 
   let task6;
   if (!getTask6) {
-    task1 = await prisma.task.create({
+    task6 = await prisma.task.create({
       data: {
         title: 'task6',
         description: 'Push water through pipes',
@@ -220,10 +220,8 @@ async function main() {
 
   let comment1;
   if (!getComment1) {
-    comment1 = await prisma.comment.upsert({
-      where: { id: '1' },
-      update: {},
-      create: {
+    comment1 = await prisma.comment.create({
+      data: {
         userId: user.id,
         message: 'I think the metal is bent',
         taskId: task1?.id || '',
@@ -233,10 +231,8 @@ async function main() {
 
   let comment2;
   if (!getComment2) {
-    comment2 = await prisma.comment.upsert({
-      where: { id: '2' },
-      update: {},
-      create: {
+    comment2 = await prisma.comment.create({
+      data: {
         userId: user.id,
         message: 'You must be blind, the metal looks fine',
         parentId: comment1?.id || '',
@@ -246,10 +242,8 @@ async function main() {
   }
 
   if (!getComment3) {
-    await prisma.comment.upsert({
-      where: { id: '3' },
-      update: {},
-      create: {
+    await prisma.comment.create({
+      data: {
         userId: user.id,
         message: 'You both wildin` in these comments',
         parentId: comment2?.id || '',
@@ -267,10 +261,8 @@ async function main() {
 
   let comment4;
   if (!getComment4) {
-    comment4 = await prisma.comment.upsert({
-      where: { id: '4' },
-      update: {},
-      create: {
+    comment4 = await prisma.comment.create({
+      data: {
         userId: user.id,
         message: 'I think we should redo the whole project',
         taskId: task2?.id || '',
@@ -280,10 +272,8 @@ async function main() {
 
   let comment5;
   if (!getComment5) {
-    comment5 = await prisma.comment.upsert({
-      where: { id: '5' },
-      update: {},
-      create: {
+    comment5 = await prisma.comment.create({
+      data: {
         userId: user.id,
         message: 'I agree fire and ice',
         parentId: comment4?.id || '',
