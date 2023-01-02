@@ -60,7 +60,7 @@ module.exports = {
           'warn',
           {
             argsIgnorePattern: '^_',
-            varsIgnorePattern: '^_',
+            varsIgnorePdbattern: '^_',
             caughtErrorsIgnorePattern: '^_',
           },
         ],
@@ -73,6 +73,14 @@ module.exports = {
               regex: '^_$',
               match: false,
             },
+          },
+        ],
+
+        'import/no-extraneous-dependencies': [
+          'error',
+          {
+            peerDependencies: ['**/test/**/*', '**/*.test.*', '**/*.spec.*'],
+            devDependencies: ['**/test/**/*', '**/*.test.*', '**/*.spec.*'],
           },
         ],
       },
