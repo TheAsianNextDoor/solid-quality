@@ -7,6 +7,9 @@
 [![SolidJS](https://img.shields.io/badge/SolidJS-2c4f7c?style=for-the-badge&logo=solid&logoColor=c8c9cb)](https://www.solidjs.com/)
 [![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![EsLint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org)
 [![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://prettier.io)
 
@@ -93,19 +96,21 @@ Your default browser should open the running application at http://localhost:300
 
 ## Scripts
 
+`build` - Runs Vite in build mode and outputs to dist folder
+
 `check-updates` - Checks for updates on all npm modules that don't match the ncurc.json file
 
 `clean` - Removes node_modules and package-lock.json for a clean install
 
-`coverage` - Runs Vitest in coverage mode
+`coverage` - Runs Vite in coverage mode
 
 `coverage:view` - View the coverage html file for more granular details
 
-`build` - Runs Vitest in build mode and outputs to dist folder
+`db:reset` - Resets db through prisma
 
-`dev` - Runs Vitest in dev
+`dev` - Starts local docker MySQL DB and starts solid project
 
-`fix` - Runs prettier and eslint on repo
+`format` - Runs a fix prettier and eslint on repo
 
 `playwright:test` - Runs all playwright files
 
@@ -127,15 +132,18 @@ Your default browser should open the running application at http://localhost:300
 
 | Name            | Website                                           |
 | :-------------- | :------------------------------------------------ |
-| concurrently    | https://www.npmjs.com/package/concurrently        |
+| dayjs           | https://day.js.org/                               |
 | dotenv          | https://www.npmjs.com/package/dotenv              |
 | eslint          | https://eslint.org                                |
 | husky           | https://typicode.github.io/husky                  |
 | lint staged     | https://github.com/okonet/lint-staged#readme      |
 | msw             | https://mswjs.io                                  |
 | ncu             | https://github.com/raineorshine/npm-check-updates |
+| npm-run-all     | https://www.npmjs.com/package/npm-run-all         |
+| mysql           | https://www.mysql.com/                            |
 | playwright      | https://playwright.dev                            |
 | prettier        | https://prettier.io                               |
+| prisma          | https://www.prisma.io/                            |
 | solid           | https://www.solidjs.com/                          |
 | tailwind css    | https://tailwindcss.com/                          |
 | testing library | https://testing-library.com                       |
