@@ -2,7 +2,7 @@ import { For, mapArray, createEffect, on, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { Avatar } from 'components/lib/avatar';
-import { computeFullName } from 'db/user';
+import { computeFullName } from 'server/user/user-utils';
 
 import { formatCommentTimeStamp } from '../../../utils/timeUtils';
 
