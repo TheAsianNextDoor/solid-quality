@@ -5,8 +5,8 @@ import { TextField } from 'components/lib/text-field';
 import { useToastRequest } from 'hooks/use-toast-request';
 import { createComment } from 'server/comment/comment-service';
 
-import type { TaskWithLinks } from 'db/task';
 import type { CommentCreateData, CommentWithUser } from 'server/comment/comment-types';
+import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component } from 'solid-js';
 
 interface props {

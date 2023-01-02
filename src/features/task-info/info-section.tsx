@@ -4,9 +4,9 @@ import { refetchRouteData } from 'solid-start';
 import { createServerAction$ } from 'solid-start/server';
 
 import { Select } from 'components/select';
-import { updateTaskStatusById } from 'db/task';
+import { updateTaskStatusById } from 'server/task/task-service';
 
-import type { TaskWithLinks } from 'db/task';
+import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component, JSX } from 'solid-js';
 
 type InfoItemProps = { title: string; content: JSX.Element };

@@ -5,7 +5,7 @@ import { createServerAction$ } from 'solid-start/server';
 
 import { Typography } from 'components/lib/typography';
 import { Select } from 'components/select';
-import { updateTaskStatusById } from 'db/task';
+import { updateTaskStatusById } from 'server/task/task-service';
 
 import type { routeDataType } from '../edit';
 

@@ -6,8 +6,8 @@ import { computeFullName } from 'db/user';
 
 import { formatCommentTimeStamp } from '../../../utils/timeUtils';
 
-import type { TaskWithLinks } from 'db/task';
 import type { CommentWithUser } from 'server/comment/comment-types';
+import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component } from 'solid-js';
 
 interface props {

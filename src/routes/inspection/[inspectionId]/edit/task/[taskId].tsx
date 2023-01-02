@@ -9,8 +9,8 @@ import { getCommentsByTaskId } from 'server/comment/comment-service';
 import styles from './styles.module.css';
 
 import type { routeDataReturn } from '../../edit';
-import type { TaskWithLinks } from 'db/task';
 import type { CommentWithUser } from 'server/comment/comment-types';
+import type { TaskWithLinks } from 'server/task/task-types';
 import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ data, params }: RouteDataArgs<routeDataReturn>) {

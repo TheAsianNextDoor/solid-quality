@@ -2,7 +2,7 @@ import { Show } from 'solid-js';
 import { Outlet, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
-import { getTaskByInspectionId } from 'db/task';
+import { getTaskByInspectionId } from 'server/task/task-service';
 
 import type { RouteDataArgs } from 'solid-start';
 
