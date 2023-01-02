@@ -1,4 +1,6 @@
-import { prismaInstance } from 'db';
+import { prismaInstance } from 'server';
+
+import type { TaskStatus } from '@prisma/client';
 
 export const getTaskById = (id: string) => {
   return prismaInstance.task.findFirst({ where: { id } });

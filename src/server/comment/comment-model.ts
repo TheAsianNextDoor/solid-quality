@@ -1,4 +1,4 @@
-import { prismaInstance } from 'db';
+import { prismaInstance } from 'server';
 
 import type { Prisma } from '@prisma/client';
 
