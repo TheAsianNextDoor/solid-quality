@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { parseResponseParams } from '../utils/parseUtils';
 import { CommentModel } from './comment-model';
 
 import type { Prisma } from '@prisma/client';
@@ -24,11 +25,7 @@ export const createComment = async (data: Prisma.CommentUncheckedCreateInput) =>
     taskId: z.string(),
   });
 
-  const parse = schema.safeParse(data);
-
-  if (!parse.success) {
-    throw new Response(JSON.stringify(parse.error), { status: 422 });
-  }
+  parseResponseParams(schema, data);
 
   return CommentModel.create({ data });
 };
