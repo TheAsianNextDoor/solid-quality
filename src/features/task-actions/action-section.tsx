@@ -1,6 +1,7 @@
 import { Tabs } from 'components/tabs';
 
 import { CommentsPanel } from './task-comments/comments-panel';
+import { PhotosPanel } from './task-photos/photos-panel';
 
 import type { CommentWithUser } from 'server/comment/comment-types';
 import type { TaskWithLinks } from 'server/task/task-types';
@@ -35,7 +36,9 @@ export const ActionSection: Component<props> = (props) => {
           <Tabs.Panel>
             <CommentsPanel task={props.task} comments={props.comments} />
           </Tabs.Panel>
-          <Tabs.Panel> Panel photos</Tabs.Panel>
+          <Tabs.Panel>
+            <PhotosPanel task={props.task} />
+          </Tabs.Panel>
         </Tabs.Provider>
       </div>
     </div>
