@@ -78,7 +78,7 @@ module.exports = {
           'error',
           {
             peerDependencies: ['**/test/**/*', '**/*.test.*', '**/*.spec.*'],
-            devDependencies: ['**/test/**/*', '**/*.test.*', '**/*.spec.*'],
+            devDependencies: ['**/test/**/*', '**/*.test.*', '**/*.spec.*', 'vite.config.ts'],
           },
         ],
       },
