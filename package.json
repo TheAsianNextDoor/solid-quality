@@ -11,6 +11,7 @@
     "dev": "run-p -l dev:*",
     "dev:db": "docker compose -f ./configs/docker/docker-compose.yml up",
     "dev:solid": "solid-start dev",
+    "docker:reset": "docker compose -f ./configs/docker/docker-compose.yml down ",
     "format": "run-p -l format:*",
     "format:eslint": "eslint --fix .",
     "format:prettier": "prettier --write . '!**/*.{js,jsx,ts,tsx}'",
