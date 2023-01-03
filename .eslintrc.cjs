@@ -60,8 +60,6 @@ module.exports = {
           'warn',
           {
             argsIgnorePattern: '^_',
-            varsIgnorePdbattern: '^_',
-            caughtErrorsIgnorePattern: '^_',
           },
         ],
         '@typescript-eslint/naming-convention': [
