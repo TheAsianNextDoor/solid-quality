@@ -26,6 +26,8 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.241.0",
+    "@aws-sdk/s3-request-presigner": "^3.241.0",
     "@prisma/client": "^4.6.1",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.5.1",
