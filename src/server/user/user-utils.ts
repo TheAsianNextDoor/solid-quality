@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from 'utils/stringUtils';
+import { capitalizeFirstLetter } from 'utils/string-utils';
 
 import type { User } from '@prisma/client';
 

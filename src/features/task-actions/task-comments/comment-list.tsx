@@ -4,7 +4,7 @@ import { createStore } from 'solid-js/store';
 import { Avatar } from 'components/lib/avatar';
 import { computeFullName } from 'server/user/user-utils';
 
-import { formatCommentTimeStamp } from '../../../utils/timeUtils';
+import { formatCommentTimeStamp } from '../../../utils/time-utils';
 
 import type { CommentWithUser } from 'server/comment/comment-types';
 import type { TaskWithLinks } from 'server/task/task-types';
