@@ -1,13 +1,13 @@
+// import { useQueryClient } from '@tanstack/solid-query';
 import { createSignal } from 'solid-js';
-import { createServerAction$ } from 'solid-start/server';
 
-import { TextField } from 'components/lib/text-field';
-import { useToastRequest } from 'hooks/use-toast-request';
-import { createComment } from 'server/comment/comment-service';
+// import { queryClient, trpc } from '~/utils/trpc';
+import { TextField } from '~/components/lib/text-field';
+import { trpc } from '~/utils/trpc';
 
-import type { CommentCreateData, CommentWithUser } from 'server/comment/comment-types';
-import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component } from 'solid-js';
+import type { CommentWithUser } from '~/server/db/types/comment-types';
+import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 interface props {
   task: TaskWithLinks;
@@ -15,9 +15,12 @@ interface props {
 }
 
 export const CommentInput: Component<props> = (props) => {
-  const [addCommentState, addComment] = createServerAction$(async (params: CommentCreateData) => {
-    await createComment(params);
+  const { mutate: addComment, error: addCommentError } = trpc.createComment.useMutation({
+    onSuccess: async () => {
+      //   return useQueryClient().invalidateQueries(['getCommentsByTask']);
+    },
   });
+
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
   const handleKeyDown = async (e: KeyboardEvent) => {
@@ -32,9 +35,7 @@ export const CommentInput: Component<props> = (props) => {
         ...(lastComment() && { parentId: lastComment() }),
       });
 
-      useToastRequest(addCommentState);
-
-      if (!addCommentState.error) {
+      if (!addCommentError) {
         inputRef().value = '';
       }
     }

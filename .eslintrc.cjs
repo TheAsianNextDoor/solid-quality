@@ -36,7 +36,7 @@ module.exports = {
           caseInsensitive: true,
         },
         'newlines-between': 'always',
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'unknown', 'object', 'type'],
+        groups: ['builtin', 'external', ['internal', 'parent', 'sibling'], 'unknown', 'object', 'type'],
       },
     ],
   },

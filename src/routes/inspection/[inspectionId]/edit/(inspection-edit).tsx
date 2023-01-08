@@ -1,11 +1,10 @@
 import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
-import { refetchRouteData, useLocation, useNavigate, useRouteData } from 'solid-start';
-import { createServerAction$ } from 'solid-start/server';
+import { useLocation, useNavigate, useRouteData } from 'solid-start';
 
-import { Typography } from 'components/lib/typography';
-import { Select } from 'components/select';
-import { updateTaskStatusById } from 'server/task/task-service';
+import { Typography } from '~/components/lib/typography';
+import { Select } from '~/components/select';
+import { trpc } from '~/utils/trpc';
 
 import type { routeDataType } from '../edit';
 
@@ -16,14 +15,10 @@ export default function InspectionEdit() {
 
   const orderedTasks = () =>
     tasks()
-      ?.slice()
-      .sort((a, b) => a.order - b.order);
+      ?.data?.slice()
+      ?.sort((a, b) => a.order - b.order);
 
-  const [_, updateStatus] = createServerAction$(async ({ id, status }: { id: string; status: TaskStatus }) => {
-    await updateTaskStatusById(id, status);
-
-    refetchRouteData(['tasks', { id }]);
-  });
+  const { mutate: updateStatus } = trpc.updateTaskStatus.useMutation();
 
   return (
     <>
@@ -49,7 +44,7 @@ export default function InspectionEdit() {
               <Select
                 onChange={(evt, val) => {
                   const status = val as TaskStatus;
-                  updateStatus({ id: task.id, status });
+                  updateStatus({ taskId: task.id, status });
                 }}
                 options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
                 value={task.status as string}

@@ -1,4 +1,3 @@
-
 dist
 .solid
 .output
@@ -22,7 +21,7 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
-.env.local
-npm-debug.log*
+
+.env
 .eslintcache
 stats.html

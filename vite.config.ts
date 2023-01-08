@@ -1,7 +1,9 @@
+/// <reference types="vitest" />
+
 import path from 'path';
 
 import suidPlugin from '@suid/vite-plugin';
-import { visualizer } from 'rollup-plugin-visualizer';
+// import { visualizer } from 'rollup-plugin-visualizer';
 import solid from 'solid-start/vite';
 import { defineConfig } from 'vite';
 // import checker from 'vite-plugin-checker'; // add when solid start adds strict ts config
@@ -17,7 +19,7 @@ export default defineConfig({
   plugins: [
     solid({ ssr: false }),
     suidPlugin(),
-    visualizer(),
+    // visualizer(),
     tsconfigPaths(),
     EnvironmentPlugin('all', { prefix: 'WEB_' }),
     // checker({

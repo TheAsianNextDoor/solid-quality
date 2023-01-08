@@ -70,7 +70,7 @@ const generatePreSignedGetUrl = async (pathToFileArray: string[]) => {
 };
 
 const getObjectsFromFolder = async (folderPath: string) => {
-  const data = await s3Client.send(new ListObjectsV2Command({ Bucket: process.env.WEB_S3_BUCKET, Prefix: folderPath }));
+  const data = await s3Client.send(new ListObjectsV2Command({ Bucket, Prefix: folderPath }));
 
   return data;
 };

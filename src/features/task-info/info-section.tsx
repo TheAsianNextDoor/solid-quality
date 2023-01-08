@@ -3,11 +3,10 @@ import { For } from 'solid-js';
 import { refetchRouteData } from 'solid-start';
 import { createServerAction$ } from 'solid-start/server';
 
-import { Select } from 'components/select';
-import { updateTaskStatusById } from 'server/task/task-service';
+import { Select } from '~/components/select';
 
-import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component, JSX } from 'solid-js';
+import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 type InfoItemProps = { title: string; content: JSX.Element };
 
@@ -26,7 +25,7 @@ interface props {
 
 export const InfoSection: Component<props> = (props) => {
   const [_, updateStatus] = createServerAction$(async ({ id, status }: { id: string; status: TaskStatus }) => {
-    await updateTaskStatusById(id, status);
+    // await updateTaskStatusById(id, status);
 
     refetchRouteData(['tasks', { id }]);
   });

@@ -1,9 +1,9 @@
 import { CommentInput } from './comment-input';
 import { CommentList } from './comment-list';
 
-import type { CommentWithUser } from 'server/comment/comment-types';
-import type { TaskWithLinks } from 'server/task/task-types';
 import type { Component } from 'solid-js';
+import type { CommentWithUser } from '~/server/db/types/comment-types';
+import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 interface props {
   task: TaskWithLinks;

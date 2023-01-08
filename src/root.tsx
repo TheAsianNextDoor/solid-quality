@@ -16,13 +16,13 @@ export default function Root() {
       </Head>
       <Body class="w-full h-full">
         <Toaster position="top-right" />
-        {/* <ErrorBoundary fallback={() => <>An error occurred...</>}> */}
-        {/* <Suspense fallback={<div>Loading</div>}> */}
-        <Routes>
-          <FileRoutes />
-        </Routes>
-        {/* </Suspense> */}
-        {/* </ErrorBoundary> */}
+        <ErrorBoundary fallback={() => <>An error occurred...</>}>
+          <Suspense fallback={<div>Loading</div>}>
+            <Routes>
+              <FileRoutes />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
         <Scripts />
       </Body>
     </Html>

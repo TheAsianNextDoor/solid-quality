@@ -1,16 +1,13 @@
 import { Show } from 'solid-js';
-import { Outlet, useRouteData } from 'solid-start';
-import { createServerData$ } from 'solid-start/server';
+import { Outlet, createRouteData, useRouteData } from 'solid-start';
 
-import { getTaskByInspectionId } from 'server/task/task-service';
+import { trpc } from '~/utils/trpc';
 
 import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ params }: RouteDataArgs) {
-  const tasks = createServerData$(async ({ inspectionId }) => getTaskByInspectionId(inspectionId), {
-    key: () => ({
-      inspectionId: params.inspectionId,
-    }),
+  const tasks = createRouteData(async () => {
+    return trpc.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
   });
 
   return { tasks };
@@ -23,7 +20,7 @@ export default function Inspection() {
   const { tasks } = useRouteData<routeDataType>();
 
   return (
-    <Show when={!!tasks} fallback={<>Loading...</>}>
+    <Show when={!!tasks()?.data} fallback={<>Loading...</>}>
       <Outlet />
     </Show>
   );

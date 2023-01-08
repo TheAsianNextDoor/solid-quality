@@ -1,8 +1,8 @@
 import { For, Show } from 'solid-js';
 import { createServerData$ } from 'solid-start/server';
 
-import { Spinner } from 'components/lib/spinner';
-import { AWS_SDK } from 'utils/aws-sdk';
+import { Spinner } from '~/components/lib/spinner';
+import { AWS_SDK } from '~/utils/aws-sdk';
 
 export const PhotoList = () => {
   const images = createServerData$(
