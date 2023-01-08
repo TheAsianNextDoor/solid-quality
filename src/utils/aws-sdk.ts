@@ -1,9 +1,11 @@
 import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-const accessKeyId = process.env.ACCESS_KEY_ID as string;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY as string;
-const Bucket = process.env.S3_BUCKET as string;
+import { serverEnv } from '~/env/server';
+
+const accessKeyId = serverEnv.AWS_ACCESS_KEY_ID;
+const secretAccessKey = serverEnv.AWS_SECRET_ACCESS_KEY;
+const Bucket = serverEnv.AWS_S3_BUCKET;
 
 const s3Client = new S3Client({
   region: 'us-east-1',
