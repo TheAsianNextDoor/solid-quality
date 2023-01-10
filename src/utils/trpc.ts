@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/solid-query';
-import { createWSClient, httpBatchLink, wsLink } from '@trpc/client';
+import { createWSClient, httpBatchLink, splitLink, wsLink } from '@trpc/client';
 import IsomorphicWebSocket from 'isomorphic-ws';
 import { createTRPCSolid } from 'solid-trpc';
 
@@ -20,13 +20,20 @@ const wsClient = createWSClient({
 });
 
 export const trpc = createTRPCSolid<IAppRouter>();
+export const trpcContext = trpc.useContext();
 export const client = trpc.createClient({
   links: [
-    httpBatchLink({
-      url: `${getBaseUrl()}/api/trpc`,
-    }),
-    wsLink({
-      client: wsClient,
+    splitLink({
+      condition(op) {
+        // console.log('haha: ', op);
+        return op.type === 'subscription';
+      },
+      true: wsLink({
+        client: wsClient,
+      }),
+      false: httpBatchLink({
+        url: `${getBaseUrl()}/api/trpc`,
+      }),
     }),
   ],
 });

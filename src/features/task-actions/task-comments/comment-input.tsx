@@ -21,6 +21,8 @@ export const CommentInput: Component<props> = (props) => {
     },
   });
 
+  const add = trpc.add.useMutation();
+
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
   const handleKeyDown = async (e: KeyboardEvent) => {
@@ -28,7 +30,9 @@ export const CommentInput: Component<props> = (props) => {
     const lastComment = () => props.comments[props.comments.length - 1]?.id;
 
     if (e.key === 'Enter') {
-      await addComment({
+      add.mutate({ id: '1', text: 'hello' });
+
+      addComment({
         message: target.value,
         taskId: props.task.id,
         userId: props.task.userId as string,

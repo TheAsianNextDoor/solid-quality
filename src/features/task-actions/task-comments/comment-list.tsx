@@ -20,7 +20,19 @@ export const CommentList: Component<props> = (props) => {
 
   trpc.observedComments.useSubscription(undefined, {
     onData(data) {
-      console.log(data);
+      console.log('bro:', data);
+    },
+    onError(err) {
+      console.error(err);
+    },
+    onStarted() {
+      console.log('start');
+    },
+  });
+
+  trpc.onAdd.useSubscription(undefined, {
+    onData(data) {
+      console.log('bro:', data);
     },
     onError(err) {
       console.error(err);

@@ -12,12 +12,12 @@ import type ws from 'ws';
 export const createContextInner = async (
   opts: createSolidAPIHandlerContext | NodeHTTPCreateContextFnOptions<IncomingMessage, ws>,
 ) => {
-  const session = await getSession(opts.req, authOpts);
+  // const session = await getSession(opts.req, authOpts);
 
   return {
     ...opts,
     prisma,
-    session,
+    // session,
   };
 };
 
