@@ -4,6 +4,7 @@ import { createStore } from 'solid-js/store';
 import { formatCommentTimeStamp } from '../../../utils/time-utils';
 import { Avatar } from '~/components/lib/avatar';
 import { computeFullName } from '~/server/user/user-utils';
+import { trpc } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
@@ -16,6 +17,18 @@ interface props {
 
 export const CommentList: Component<props> = (props) => {
   const [timeStamps, setTimeStamps] = createStore<string[]>([]);
+
+  trpc.observedComments.useSubscription(undefined, {
+    onData(data) {
+      console.log(data);
+    },
+    onError(err) {
+      console.error(err);
+    },
+    onStarted() {
+      console.log('start');
+    },
+  });
 
   let divRef: HTMLInputElement | undefined;
 

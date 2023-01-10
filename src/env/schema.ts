@@ -27,4 +27,5 @@ export const serverScheme = z.object({
 export const clientScheme = z.object({
   WEB_MODE: z.enum(['development', 'production', 'test']).default('development'),
   WEB_PORT: z.number().default(3000),
+  WEB_WS_PORT: z.number().default(3001),
 });
