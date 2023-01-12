@@ -4,14 +4,13 @@
   "scripts": {
     "build": "NODE_ENV=production solid-start build",
     "check-updates": "ncu",
-    "clean": "rm -rf ./node_modules & rm ./package-lock.json",
+    "clean": "rm -rf ./node_modules & rm ./pnpm-lock.yaml",
     "coverage": "NODE_ENV=test node_modules/.bin/vitest run --coverage",
     "coverage:view": "NODE_ENV=test npm run coverage && open ./reports/index.html",
     "db:reset": "npx prisma db push --force-reset && npx prisma generate && npx prisma db seed",
     "dev": "run-p -l dev:*",
     "dev:db": "docker compose -f ./configs/docker/docker-compose.yml up",
     "dev:solid": "solid-start dev",
-    "dev:wss": "cross-env PORT=3001 tsx watch ./src/server/trpc/wssDevServer.ts --tsconfig tsconfig.server.json",
     "docker:reset": "docker compose -f ./configs/docker/docker-compose.yml down ",
     "format": "run-p -l format:*",
     "format:eslint": "eslint --fix .",
@@ -43,15 +42,15 @@
     "@trpc/client": "^10.8.1",
     "@trpc/server": "^10.8.1",
     "dayjs": "^1.11.7",
-    "isomorphic-ws": "^5.0.0",
     "node-fetch": "^3.3.0",
+    "pusher": "^5.1.2",
+    "pusher-js": "^8.0.0",
     "solid-js": "^1.6.8",
     "solid-start": "^0.2.11",
     "solid-start-trpc": "^0.0.16",
     "solid-toast": "^0.4.0",
     "solid-trpc": "^0.0.11-rc.2",
     "undici": "5.14.0",
-    "ws": "^8.12.0",
     "zod": "^3.20.2"
   },
   "devDependencies": {
@@ -61,12 +60,10 @@
     "@types/node": "^18.11.18",
     "@types/node-fetch": "^2.6.2",
     "@types/testing-library__jest-dom": "^5.14.5",
-    "@types/ws": "^8.5.4",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
     "@vitest/ui": "^0.26.3",
     "autoprefixer": "^10.4.13",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.31.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -102,5 +99,8 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

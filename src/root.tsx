@@ -5,6 +5,12 @@ import { Toaster } from 'solid-toast';
 
 import './root.css';
 
+const errorBoundaryFallback = (err: Error) => {
+  console.error(err);
+
+  return <>An error occurred...</>;
+};
+
 export default function Root() {
   return (
     <Html lang="en" class="w-full h-full">
@@ -16,7 +22,7 @@ export default function Root() {
       </Head>
       <Body class="w-full h-full">
         <Toaster position="top-right" />
-        <ErrorBoundary fallback={() => <>An error occurred...</>}>
+        <ErrorBoundary fallback={errorBoundaryFallback}>
           <Suspense fallback={<div>Loading</div>}>
             <Routes>
               <FileRoutes />

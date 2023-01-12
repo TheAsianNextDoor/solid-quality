@@ -1,7 +1,5 @@
-// import { useQueryClient } from '@tanstack/solid-query';
 import { createSignal } from 'solid-js';
 
-// import { queryClient, trpc } from '~/utils/trpc';
 import { TextField } from '~/components/lib/text-field';
 import { trpc } from '~/utils/trpc';
 
@@ -15,14 +13,7 @@ interface props {
 }
 
 export const CommentInput: Component<props> = (props) => {
-  const { mutate: addComment, error: addCommentError } = trpc.createComment.useMutation({
-    onSuccess: async () => {
-      //   return useQueryClient().invalidateQueries(['getCommentsByTask']);
-    },
-  });
-
-  const add = trpc.add.useMutation();
-
+  const { mutate: addComment, error: addCommentError } = trpc.createComment.useMutation();
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
   const handleKeyDown = async (e: KeyboardEvent) => {
@@ -30,8 +21,6 @@ export const CommentInput: Component<props> = (props) => {
     const lastComment = () => props.comments[props.comments.length - 1]?.id;
 
     if (e.key === 'Enter') {
-      add.mutate({ id: '1', text: 'hello' });
-
       addComment({
         message: target.value,
         taskId: props.task.id,
