@@ -8,7 +8,7 @@ import { protectedProcedure, router, t } from '~/server/trpc/utils';
 const typingUsers: Record<string, { uuid: string; userName: string }> = {};
 
 export const commentRouter = router({
-  getCommentsByTask: protectedProcedure.input(z.object({ taskId: z.string() })).query(({ input }) => {
+  getByTaskId: protectedProcedure.input(z.object({ taskId: z.string() })).query(({ input }) => {
     const { taskId } = input;
 
     if (!taskId) {
@@ -46,7 +46,7 @@ export const commentRouter = router({
 
       pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
     }),
-  createComment: protectedProcedure
+  create: protectedProcedure
     .input(
       z.object({
         message: z.string(),

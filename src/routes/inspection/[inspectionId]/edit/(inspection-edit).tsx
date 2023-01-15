@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useRouteData } from 'solid-start';
 
 import { Typography } from '~/components/lib/typography';
 import { Select } from '~/components/select';
-import { trpc } from '~/utils/trpc';
+import { api } from '~/utils/trpc';
 
 import type { routeDataType } from '../edit';
 
@@ -18,7 +18,7 @@ export default function InspectionEdit() {
       ?.data?.slice()
       ?.sort((a, b) => a.order - b.order);
 
-  const { mutate: updateStatus } = trpc.updateTaskStatus.useMutation();
+  const { mutate: updateStatus } = api.task.updateTaskStatus.useMutation();
 
   return (
     <>

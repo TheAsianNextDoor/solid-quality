@@ -1,13 +1,13 @@
 import { Show } from 'solid-js';
 import { Outlet, createRouteData, useRouteData } from 'solid-start';
 
-import { trpc } from '~/utils/trpc';
+import { api } from '~/utils/trpc';
 
 import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ params }: RouteDataArgs) {
   const tasks = createRouteData(async () => {
-    return trpc.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
+    return api.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
   });
 
   return { tasks };

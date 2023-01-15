@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 
 import { TextField } from '~/components/lib/text-field';
-import { trpc } from '~/utils/trpc';
+import { api } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
@@ -14,8 +14,8 @@ interface props {
 }
 
 export const CommentInput: Component<props> = (props) => {
-  const { mutate: addComment, error: addCommentError } = trpc.createComment.useMutation();
-  const { mutate: typingUser } = trpc.userTyping.useMutation();
+  const { mutate: addComment, error: addCommentError } = api.comment.create.useMutation();
+  const { mutate: typingUser } = api.comment.userTyping.useMutation();
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
   const channel = pusherClient.subscribe('typing-users');

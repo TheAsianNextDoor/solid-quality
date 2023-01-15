@@ -11,9 +11,9 @@ const getBaseUrl = () => {
   return `http://localhost:${clientEnv.WEB_PORT}`;
 };
 
-export const trpc = createTRPCSolid<IAppRouter>();
-export const trpcContext = trpc.useContext();
-export const client = trpc.createClient({
+export const api = createTRPCSolid<IAppRouter>();
+export const trpcContext = api.useContext();
+export const client = api.createClient({
   links: [
     httpBatchLink({
       url: `${getBaseUrl()}/api/trpc`,
