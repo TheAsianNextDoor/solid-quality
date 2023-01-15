@@ -1,0 +1,8 @@
+/coverage/
+/dist/
+/node_modules/
+/src/__mocks__/
+/src/common/constants/regex.const.js
+/src/common/constants/regex.const.ts
+*.snap
+/src/assets/
