@@ -38,7 +38,7 @@ export const commentRouter = router({
       };
 
       setTimeout(() => {
-        if (uuid === typingUsers[typingUsersKey].uuid) {
+        if (uuid === typingUsers[typingUsersKey]?.uuid) {
           delete typingUsers[typingUsersKey];
           pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
         }
@@ -58,6 +58,10 @@ export const commentRouter = router({
     .mutation(async ({ input }) => {
       const comment = await CommentModel.create({ data: input, include: { user: true } });
 
+      const typingUsersKey = `${input.userId}-${input.taskId}`;
+      delete typingUsers[typingUsersKey];
+
+      pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
       pusherClient.trigger('create-task-comment', `create-task-comment-${input.taskId}`, comment);
 
       return comment;

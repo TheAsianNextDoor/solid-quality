@@ -1,12 +1,12 @@
 import { mount, StartClient } from 'solid-start/entry-client';
 
-import { client, queryClient, trpc } from './utils/trpc';
+import { client, Provider, queryClient } from './utils/trpc';
 
 mount(
   () => (
-    <trpc.Provider client={client} queryClient={queryClient}>
+    <Provider client={client} queryClient={queryClient}>
       <StartClient />
-    </trpc.Provider>
+    </Provider>
   ),
   document,
 );

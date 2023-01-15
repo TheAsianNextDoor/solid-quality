@@ -4,7 +4,7 @@ import { createRouteData, useParams, useRouteData } from 'solid-start';
 import styles from './styles.module.css';
 import { ActionSection } from '~/features/task-actions';
 import { InfoSection } from '~/features/task-info';
-import { trpc } from '~/utils/trpc';
+import { trpcClient } from '~/utils/trpc';
 
 import type { routeDataReturn } from '../../edit';
 import type { RouteDataArgs } from 'solid-start';
@@ -13,8 +13,8 @@ import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 export function routeData({ data, params }: RouteDataArgs<routeDataReturn>) {
   const comments = createRouteData(() => {
-    return trpc.getCommentsByTask.useQuery(() => ({ taskId: params.taskId }), {
-      queryKey: () => ['getCommentsByTask', { taskId: params.taskId }],
+    return trpcClient.comment.getByTaskId.useQuery(() => ({ taskId: params.taskId }), {
+      queryKey: () => ['comment.getByTaskId', { taskId: params.taskId }],
     });
   });
 
