@@ -4,6 +4,7 @@ import { CommentList } from './comment-list';
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
+import { CommentTypingUser } from './comment-typing-user';
 
 interface props {
   task: TaskWithLinks;
@@ -17,6 +18,9 @@ export const CommentsPanel: Component<props> = (props) => {
         <CommentList task={props.task} comments={props.comments} />
         <div class="mb-10">
           <CommentInput task={props.task} comments={props.comments} />
+          <div class="mt-3">
+            <CommentTypingUser task={props.task} />
+          </div>
         </div>
       </div>
     </>

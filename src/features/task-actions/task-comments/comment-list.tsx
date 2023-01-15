@@ -1,4 +1,3 @@
-import Pusher from 'pusher-js';
 import { For, mapArray, createEffect, on, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
@@ -9,7 +8,7 @@ import { computeFullName } from '~/server/user/user-utils';
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
-import { Comment } from '@prisma/client';
+import { pusherClient } from '~/utils/pusher';
 
 interface props {
   task: TaskWithLinks;
@@ -26,8 +25,7 @@ export const CommentList: Component<props> = (props) => {
 
   let divRef: HTMLInputElement | undefined;
 
-  const pusher = new Pusher('88de8c4680421d149378', { cluster: 'us2' });
-  const channel = pusher.subscribe('create-task-comment');
+  const channel = pusherClient.subscribe('create-task-comment');
 
   channel.bind(`create-task-comment-${props.task.id}`, (data: CommentWithUser) => {
     setPusherComments([...pusherComments, data]);
@@ -58,7 +56,7 @@ export const CommentList: Component<props> = (props) => {
 
   onCleanup(() => {
     clearInterval(timestampInterval);
-    pusher.unbind(`create-comment-${props.task.id}`);
+    pusherClient.unbind(`create-comment-${props.task.id}`);
   });
 
   return (
