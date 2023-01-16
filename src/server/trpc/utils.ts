@@ -8,13 +8,12 @@ export const { router } = t;
 export const { procedure } = t;
 export const protectedProcedure = t.procedure.use(
   t.middleware(async ({ ctx, next }) => {
-    // if (!ctx.session || !ctx.session.user) {
-    //   throw new TRPCError({
-    //     code: 'UNAUTHORIZED',
-    //     message: 'You are not authorized to access this resource',
-    //   });
-    // }
-    // return next({ ctx: { ...ctx, session: { ...ctx.session, user: ctx.session.user } } });
-    return next(ctx);
+    if (!ctx.session || !ctx.session.user) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'You are not authorized to access this resource',
+      });
+    }
+    return next({ ctx: { ...ctx, session: { ...ctx.session, user: ctx.session.user } } });
   }),
 );

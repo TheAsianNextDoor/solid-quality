@@ -1,234 +1,236 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?
-    access_token      String?
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String? @db.VarChar(400)
+  expires_at        Int?
+  expires_in        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.VarChar(1500)
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
+  @@index([userId])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model Organization {
-    id        String  @id @default(uuid())
-    addressId String
-    name      String  @unique
-    address   Address @relation(fields: [addressId], references: [id])
-    Site      Site[]
-    User      User[]
+  id        String  @id @default(uuid())
+  addressId String
+  name      String  @unique
+  address   Address @relation(fields: [addressId], references: [id])
+  Site      Site[]
+  User      User[]
 
-    @@index([name])
-    @@index([addressId])
+  @@index([name])
+  @@index([addressId])
 }
 
 model Site {
-    id             String       @id @default(uuid())
-    organizationId String
-    addressId      String
-    name           String
-    organization   Organization @relation(fields: [organizationId], references: [id])
-    address        Address      @relation(fields: [addressId], references: [id])
-    User           User[]
-    Inspection     Inspection[]
+  id             String       @id @default(uuid())
+  organizationId String
+  addressId      String
+  name           String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  address        Address      @relation(fields: [addressId], references: [id])
+  User           User[]
+  Inspection     Inspection[]
 
-    @@index([organizationId])
-    @@index([addressId])
+  @@index([organizationId])
+  @@index([addressId])
 }
 
 model Address {
-    id           String         @id @default(uuid())
-    street       String
-    city         String
-    state        String
-    zip          String
-    Organization Organization[]
-    Site         Site[]
+  id           String         @id @default(uuid())
+  street       String
+  city         String
+  state        String
+  zip          String
+  Organization Organization[]
+  Site         Site[]
 
-    @@unique([street, city, state])
+  @@unique([street, city, state])
 }
 
 model User {
-    id             String        @id @default(uuid())
-    organizationId String?
-    siteId         String?
-    email          String?       @unique
-    firstName      String?
-    lastName       String?
-    name           String?
-    emailVerified  DateTime?
-    image          String?
-    createdAt      DateTime      @default(now())
-    organization   Organization? @relation(fields: [organizationId], references: [id])
-    site           Site?         @relation(fields: [siteId], references: [id])
-    Permission     Permission?
-    Inspection     Inspection[]
-    Task           Task[]
-    Comment        Comment[]
-    Photo          Photo[]
-    Attachment     Attachment[]
-    accounts       Account[]
-    sessions       Session[]
+  id             String        @id @default(uuid())
+  organizationId String?
+  siteId         String?
+  email          String?       @unique
+  firstName      String?
+  lastName       String?
+  name           String?
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  createdAt      DateTime      @default(now())
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  site           Site?         @relation(fields: [siteId], references: [id])
+  Permission     Permission?
+  Inspection     Inspection[]
+  Task           Task[]
+  Comment        Comment[]
+  Photo          Photo[]
+  Attachment     Attachment[]
+  accounts       Account[]
+  sessions       Session[]
 
-    @@index([email])
-    @@index([organizationId])
-    @@index([siteId])
+  @@index([email])
+  @@index([organizationId])
+  @@index([siteId])
 }
 
 model Permission {
-    id        String   @id @default(uuid())
-    userId    String   @unique
-    level     Int
-    createdAt DateTime @default(now())
-    user      User     @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  level     Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Inspection {
-    id          String            @id @default(uuid())
-    userId      String
-    siteId      String
-    title       String
-    description String
-    status      InspectionStatus? @default(NOT_STARTED)
-    createdAt   DateTime          @default(now())
-    updatedAt   DateTime          @updatedAt
-    owner       User              @relation(fields: [userId], references: [id])
-    site        Site              @relation(fields: [siteId], references: [id])
-    Task        Task[]
+  id          String            @id @default(uuid())
+  userId      String
+  siteId      String
+  title       String
+  description String
+  status      InspectionStatus? @default(NOT_STARTED)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  owner       User              @relation(fields: [userId], references: [id])
+  site        Site              @relation(fields: [siteId], references: [id])
+  Task        Task[]
 
-    @@index([title])
-    @@index([userId])
-    @@index([siteId])
+  @@index([title])
+  @@index([userId])
+  @@index([siteId])
 }
 
 model Task {
-    id           String       @id @default(uuid())
-    inspectionId String
-    userId       String?      @default("")
-    title        String
-    description  String
-    order        Int
-    status       TaskStatus?
-    createdAt    DateTime     @default(now())
-    updatedAt    DateTime     @updatedAt
-    user         User?        @relation(fields: [userId], references: [id])
-    inspection   Inspection   @relation(fields: [inspectionId], references: [id])
-    Comment      Comment[]
-    Links        TaskLinks[]
-    Photo        Photo[]
-    Attachment   Attachment[]
+  id           String       @id @default(uuid())
+  inspectionId String
+  userId       String?      @default("")
+  title        String
+  description  String
+  order        Int
+  status       TaskStatus?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  user         User?        @relation(fields: [userId], references: [id])
+  inspection   Inspection   @relation(fields: [inspectionId], references: [id])
+  Comment      Comment[]
+  Links        TaskLinks[]
+  Photo        Photo[]
+  Attachment   Attachment[]
 
-    @@index([title])
-    @@index([inspectionId])
-    @@index([userId])
+  @@index([title])
+  @@index([inspectionId])
+  @@index([userId])
 }
 
 model TaskLinks {
-    id        String   @id @default(uuid())
-    info      String
-    link      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    Task      Task?    @relation(fields: [taskId], references: [id])
-    taskId    String?
+  id        String   @id @default(uuid())
+  info      String
+  link      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Task      Task?    @relation(fields: [taskId], references: [id])
+  taskId    String?
 }
 
 model Comment {
-    id        String   @id @default(uuid())
-    userId    String
-    taskId    String
-    message   String
-    parentId  String?
-    createdAt DateTime @default(now())
-    user      User     @relation(fields: [userId], references: [id])
-    task      Task     @relation(fields: [taskId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  message   String
+  parentId  String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
 
-    @@index([userId])
-    @@index([taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model Photo {
-    id        String   @id @default(uuid())
-    userId    String
-    taskId    String
-    mimeType  String
-    image     Bytes
-    createdAt DateTime @default(now())
-    user      User     @relation(fields: [userId], references: [id])
-    task      Task     @relation(fields: [taskId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  mimeType  String
+  image     Bytes
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
 
-    @@index([userId])
-    @@index([taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model Attachment {
-    id        String   @id @default(uuid())
-    userId    String
-    taskId    String
-    mimeType  String
-    file      Bytes
-    createdAt DateTime @default(now())
-    user      User     @relation(fields: [userId], references: [id])
-    task      Task     @relation(fields: [taskId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  mimeType  String
+  file      Bytes
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
 
-    @@index([userId])
-    @@index([taskId])
+  @@index([userId])
+  @@index([taskId])
 }
 
 model TaskToTaskLinks {
-    A String
-    B String
+  A String
+  B String
 
-    @@unique([A, B], map: "_TaskToTaskLinks_AB_unique")
-    @@index([B], map: "_TaskToTaskLinks_B_index")
-    @@map("_TaskToTaskLinks")
+  @@unique([A, B], map: "_TaskToTaskLinks_AB_unique")
+  @@index([B], map: "_TaskToTaskLinks_B_index")
+  @@map("_TaskToTaskLinks")
 }
 
 enum InspectionStatus {
-    NOT_STARTED
-    PENDING
-    COMPLETED
-    SKIPPED
+  NOT_STARTED
+  PENDING
+  COMPLETED
+  SKIPPED
 }
 
 enum TaskStatus {
-    PASSED
-    ACCEPTABLE
-    FAILED
-    SKIPPED
+  PASSED
+  ACCEPTABLE
+  FAILED
+  SKIPPED
 }

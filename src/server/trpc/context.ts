@@ -5,14 +5,26 @@ import { prisma } from '~/server/db/client';
 
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { createSolidAPIHandlerContext } from 'solid-start-trpc';
+import { UserModel } from '~/server/db/models/user-model';
 
 export const createContextInner = async (opts: createSolidAPIHandlerContext) => {
-  // const session = await getSession(opts.req, authOpts);
+  const authSession = await getSession(opts.req, authOpts);
+  let user;
+
+  if (authSession?.user?.email) {
+    user = await UserModel.findUnique({ select: { id: true }, where: { email: authSession.user.email } });
+  }
 
   return {
     ...opts,
     prisma,
-    // session,
+    session: {
+      expires: authSession?.expires,
+      user: {
+        id: user?.id,
+        ...authSession?.user,
+      },
+    },
   };
 };
 

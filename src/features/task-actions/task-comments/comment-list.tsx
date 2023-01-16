@@ -1,14 +1,15 @@
 import { For, mapArray, createEffect, on, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { formatCommentTimeStamp } from '../../../utils/time-utils';
 import { Avatar } from '~/components/lib/avatar';
 import { computeFullName } from '~/server/user/user-utils';
+import { pusherClient } from '~/utils/pusher';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
-import { pusherClient } from '~/utils/pusher';
+
+import { formatCommentTimeStamp } from '../../../utils/time-utils';
 
 interface props {
   task: TaskWithLinks;

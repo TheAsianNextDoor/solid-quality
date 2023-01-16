@@ -1,9 +1,10 @@
-import { z } from 'zod';
 import { randomUUID } from 'crypto';
+
+import { z } from 'zod';
 
 import { CommentModel } from '~/server/db/models/comment-model';
 import { pusherClient } from '~/server/pusher';
-import { protectedProcedure, router, t } from '~/server/trpc/utils';
+import { protectedProcedure, router } from '~/server/trpc/utils';
 
 const typingUsers: Record<string, { uuid: string; userName: string }> = {};
 
@@ -24,17 +25,18 @@ export const commentRouter = router({
   userTyping: protectedProcedure
     .input(
       z.object({
-        userId: z.string(),
         taskId: z.string(),
-        userName: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id as string;
+      const userName = ctx.session.user.name as string;
+
       const uuid = randomUUID();
-      const typingUsersKey = `${input.userId}-${input.taskId}`;
+      const typingUsersKey = `${userId}-${input.taskId}`;
       typingUsers[typingUsersKey] = {
         uuid,
-        userName: input.userName,
+        userName,
       };
 
       setTimeout(() => {
@@ -50,15 +52,16 @@ export const commentRouter = router({
     .input(
       z.object({
         message: z.string(),
-        userId: z.string(),
         parentId: z.string().optional(),
         taskId: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
-      const comment = await CommentModel.create({ data: input, include: { user: true } });
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id as string;
 
-      const typingUsersKey = `${input.userId}-${input.taskId}`;
+      const comment = await CommentModel.create({ data: { ...input, userId }, include: { user: true } });
+
+      const typingUsersKey = `${userId}-${input.taskId}`;
       delete typingUsers[typingUsersKey];
 
       pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
