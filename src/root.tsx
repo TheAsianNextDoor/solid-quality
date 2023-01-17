@@ -6,6 +6,7 @@ import { Toaster } from 'solid-toast';
 import './root.css';
 
 const errorBoundaryFallback = (err: Error) => {
+  // eslint-disable-next-line no-console
   console.error(err);
 
   return <>An error occurred...</>;

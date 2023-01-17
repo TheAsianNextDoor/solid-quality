@@ -4,10 +4,10 @@ import { Switch, Match, createEffect } from 'solid-js';
 import { Title, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
-import type { VoidComponent } from 'solid-js';
-
 import { authOpts } from '~/routes/api/auth/[...solidauth]';
 import { trpcClient } from '~/utils/trpc';
+
+import type { VoidComponent } from 'solid-js';
 
 export const routeData = () => {
   return createServerData$(async (_, { request }) => {
@@ -21,10 +21,6 @@ const Home: VoidComponent = () => {
     get enabled() {
       return !!session()?.user;
     },
-  });
-
-  createEffect(() => {
-    console.log(res.data);
   });
 
   return (

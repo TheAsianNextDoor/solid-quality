@@ -1,6 +1,7 @@
+import { Tabs } from '~/components/tabs';
+
 import { CommentsPanel } from './task-comments/comments-panel';
 import { PhotosPanel } from './task-photos/photos-panel';
-import { Tabs } from '~/components/tabs';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';

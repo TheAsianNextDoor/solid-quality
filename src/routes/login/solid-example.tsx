@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import { getSession } from '@auth/solid-start';
 import { Show } from 'solid-js';
 import { useRouteData, useParams } from 'solid-start';
@@ -60,7 +63,6 @@ export default function Login() {
 
     switch (loginType) {
       case 'login': {
-        debugger;
         const user = await login({ email, password });
         if (!user) {
           throw new FormError('email/Password combination is incorrect', {

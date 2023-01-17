@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { redirect } from 'solid-start/server';
 import { createCookieSessionStorage } from 'solid-start/session';
 
@@ -7,8 +9,6 @@ type LoginForm = {
   email: string;
   password: string;
 };
-
-const sessionSecret = import.meta.env.SESSION_SECRET;
 
 const storage = createCookieSessionStorage({
   cookie: {
@@ -26,7 +26,6 @@ const storage = createCookieSessionStorage({
 
 export function getUserSession(request: Request) {
   const session = storage.getSession(request.headers.get('Cookie'));
-  debugger;
 
   return session;
 }

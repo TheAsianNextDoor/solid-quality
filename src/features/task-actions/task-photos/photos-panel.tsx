@@ -2,11 +2,13 @@ import { LinearProgress } from '@suid/material';
 import { Show, createSignal } from 'solid-js';
 import { createServerAction$ } from 'solid-start/server';
 
-import { PhotoList } from './photo-list';
 import { Button } from '~/components/lib/button';
 import { AWS_SDK } from '~/utils/aws-sdk';
 
 import type { Component } from 'solid-js';
+
+import { PhotoList } from './photo-list';
+
 import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 interface props {

@@ -176,6 +176,7 @@ async function main() {
 
   let task5;
   if (!getTask5) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     task5 = await prisma.task.create({
       data: {
         title: 'task5',
@@ -196,6 +197,7 @@ async function main() {
 
   let task6;
   if (!getTask6) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     task6 = await prisma.task.create({
       data: {
         title: 'task6',
@@ -272,6 +274,7 @@ async function main() {
 
   let comment5;
   if (!getComment5) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     comment5 = await prisma.comment.create({
       data: {
         userId: user.id,

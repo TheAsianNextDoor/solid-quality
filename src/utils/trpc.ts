@@ -13,7 +13,7 @@ const getBaseUrl = () => {
 
 export const trpcClient = createTRPCSolid<IAppRouter>();
 export const trpcContext = trpcClient.useContext();
-export const Provider = trpcClient.Provider;
+export const { Provider } = trpcClient;
 export const client = trpcClient.createClient({
   links: [
     httpBatchLink({

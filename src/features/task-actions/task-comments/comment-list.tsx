@@ -28,8 +28,10 @@ export const CommentList: Component<props> = (props) => {
 
   const channel = pusherClient.subscribe('create-task-comment');
 
-  channel.bind(`create-task-comment-${props.task.id}`, (data: CommentWithUser) => {
-    setPusherComments([...pusherComments, data]);
+  createEffect(() => {
+    channel.bind(`create-task-comment-${props.task.id}`, (data: CommentWithUser) => {
+      setPusherComments([...pusherComments, data]);
+    });
   });
 
   createEffect(

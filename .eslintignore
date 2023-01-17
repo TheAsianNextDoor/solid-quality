@@ -6,3 +6,4 @@
 /src/common/constants/regex.const.ts
 *.snap
 /src/assets/
+.solid

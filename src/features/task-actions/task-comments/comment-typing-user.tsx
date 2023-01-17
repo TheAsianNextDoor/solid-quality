@@ -1,3 +1,4 @@
+import { createEffect } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { pusherClient } from '~/utils/pusher';
@@ -10,7 +11,7 @@ interface props {
   task: TaskWithLinks;
 }
 
-const createTypingUserMessage = (typingUsers: TypingUsers[], myUserId: string) => {
+const createTypingUserMessage = (typingUsers: TypingUsers[], myUserId: string | undefined) => {
   const notMeTypingUsers = typingUsers.filter((typingUser) => typingUser.userId !== myUserId);
   if (!notMeTypingUsers.length) return '';
 
@@ -33,9 +34,11 @@ export const CommentTypingUser: Component<props> = (props) => {
 
   const channel = pusherClient.subscribe('typing-users');
 
-  channel.bind(`typing-users-task-${props.task.id}`, (data: TypingUsers[]) => {
-    const userNames = Object.values(data).map(({ userName, userId }) => ({ userName, userId }));
-    setTypingUsers(userNames);
+  createEffect(() => {
+    channel.bind(`typing-users-task-${props.task.id}`, (data: TypingUsers[]) => {
+      const userNames = Object.values(data).map(({ userName, userId }) => ({ userName, userId }));
+      setTypingUsers(userNames);
+    });
   });
 
   return <div>{createTypingUserMessage(typingUsers, userIdQuery.data)}</div>;

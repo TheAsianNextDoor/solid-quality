@@ -2,10 +2,10 @@ import { getSession } from '@auth/solid-start';
 
 import { authOpts } from '~/routes/api/auth/[...solidauth]';
 import { prisma } from '~/server/db/client';
+import { UserModel } from '~/server/db/models/user-model';
 
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { createSolidAPIHandlerContext } from 'solid-start-trpc';
-import { UserModel } from '~/server/db/models/user-model';
 
 export const createContextInner = async (opts: createSolidAPIHandlerContext) => {
   const authSession = await getSession(opts.req, authOpts);
