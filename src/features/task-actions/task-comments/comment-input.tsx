@@ -12,6 +12,9 @@ interface props {
   comments: CommentWithUser[];
 }
 
+let canPublish = true;
+const throttleTime = 1000; // 1 second
+
 export const CommentInput: Component<props> = (props) => {
   const createCommentMutation = trpcClient.comment.create.useMutation();
   const typingUserMutation = trpcClient.comment.userTyping.useMutation();
@@ -23,9 +26,15 @@ export const CommentInput: Component<props> = (props) => {
     const lastComment = () => props.comments[props.comments.length - 1]?.id;
 
     if (e.key !== 'Enter') {
-      typingUserMutation.mutate({
-        taskId: props.task.id,
-      });
+      if (canPublish) {
+        typingUserMutation.mutate({
+          taskId: props.task.id,
+        });
+        canPublish = false;
+        setTimeout(() => {
+          canPublish = true;
+        }, throttleTime);
+      }
     }
     if (e.key === 'Enter') {
       createCommentMutation.mutate({
