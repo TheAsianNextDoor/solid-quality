@@ -1,7 +1,7 @@
 import { createEffect } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { pusherClient } from '~/utils/pusher';
+import { EventNameFactory, pusherClient } from '~/utils/pusher';
 import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -32,10 +32,8 @@ export const CommentTypingUser: Component<props> = (props) => {
 
   const userIdQuery = trpcClient.session.userId.useQuery();
 
-  const channel = pusherClient.subscribe('typing-users');
-
   createEffect(() => {
-    channel.bind(`typing-users-task-${props.task.id}`, (data: TypingUsers[]) => {
+    pusherClient.bind('typing-users', EventNameFactory.typingUsers(props.task.id), (data: TypingUsers[]) => {
       const userNames = Object.values(data).map(({ userName, userId }) => ({ userName, userId }));
       setTypingUsers(userNames);
     });

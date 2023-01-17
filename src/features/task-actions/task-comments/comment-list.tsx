@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store';
 
 import { Avatar } from '~/components/lib/avatar';
 import { computeFullName } from '~/server/user/user-utils';
-import { pusherClient } from '~/utils/pusher';
+import { EventNameFactory, pusherClient } from '~/utils/pusher';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
@@ -26,10 +26,8 @@ export const CommentList: Component<props> = (props) => {
 
   let divRef: HTMLInputElement | undefined;
 
-  const channel = pusherClient.subscribe('create-task-comment');
-
   createEffect(() => {
-    channel.bind(`create-task-comment-${props.task.id}`, (data: CommentWithUser) => {
+    pusherClient.bind('create-comment-task', EventNameFactory.createComment(props.task.id), (data: CommentWithUser) => {
       setPusherComments([...pusherComments, data]);
     });
   });
@@ -59,7 +57,6 @@ export const CommentList: Component<props> = (props) => {
 
   onCleanup(() => {
     clearInterval(timestampInterval);
-    pusherClient.unbind(`create-comment-${props.task.id}`);
   });
 
   return (

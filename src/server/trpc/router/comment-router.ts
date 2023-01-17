@@ -45,7 +45,7 @@ export const commentRouter = router({
           delete typingUsers[typingUsersKey];
           pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
         }
-      }, 3000);
+      }, 1500);
 
       pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
     }),
@@ -66,7 +66,7 @@ export const commentRouter = router({
       delete typingUsers[typingUsersKey];
 
       pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
-      pusherClient.trigger('create-task-comment', `create-task-comment-${input.taskId}`, comment);
+      pusherClient.trigger('create-comment-task', `create-comment-task-${input.taskId}`, comment);
 
       return comment;
     }),
