@@ -6,7 +6,7 @@ import { CommentModel } from '~/server/db/models/comment-model';
 import { pusherClient } from '~/server/pusher';
 import { protectedProcedure, router } from '~/server/trpc/utils';
 
-const typingUsers: Record<string, { uuid: string; userName: string }> = {};
+const typingUsers: Record<string, { uuid: string; userName: string; userId: string }> = {};
 
 export const commentRouter = router({
   getByTaskId: protectedProcedure.input(z.object({ taskId: z.string() })).query(({ input }) => {
@@ -37,6 +37,7 @@ export const commentRouter = router({
       typingUsers[typingUsersKey] = {
         uuid,
         userName,
+        userId,
       };
 
       setTimeout(() => {
@@ -44,7 +45,7 @@ export const commentRouter = router({
           delete typingUsers[typingUsersKey];
           pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
         }
-      }, 1000);
+      }, 3000);
 
       pusherClient.trigger('typing-users', `typing-users-task-${input.taskId}`, typingUsers);
     }),

@@ -1,28 +1,42 @@
-import { Component } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { TaskWithLinks } from '~/server/db/types/task-types';
+
 import { pusherClient } from '~/utils/pusher';
+import { trpcClient } from '~/utils/trpc';
+
+import type { Component } from 'solid-js';
+import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 interface props {
   task: TaskWithLinks;
 }
 
-const createTypingUserMessage = (typingUsers: string[]) => {
-  if (!typingUsers.length) return '';
+const createTypingUserMessage = (typingUsers: TypingUsers[], myUserId: string) => {
+  const notMeTypingUsers = typingUsers.filter((typingUser) => typingUser.userId !== myUserId);
+  if (!notMeTypingUsers.length) return '';
 
-  const joinedString = typingUsers.join(', ');
+  const notMeUserNames = notMeTypingUsers.map(({ userName }) => userName);
 
-  return `${joinedString} ${typingUsers.length === 1 ? 'is' : 'are'} typing`;
+  const joinedString = notMeUserNames.join(', ');
+
+  return `${joinedString} ${notMeUserNames.length === 1 ? 'is' : 'are'} typing`;
 };
 
+interface TypingUsers {
+  userName: string;
+  userId: string;
+}
+
 export const CommentTypingUser: Component<props> = (props) => {
-  const [typingUsers, setTypingUsers] = createStore<string[]>([]);
+  const [typingUsers, setTypingUsers] = createStore<TypingUsers[]>([]);
+
+  const userIdQuery = trpcClient.session.userId.useQuery();
+
   const channel = pusherClient.subscribe('typing-users');
 
-  channel.bind(`typing-users-task-${props.task.id}`, (data) => {
-    const userNames = Object.values(data).map((item) => item.userName);
+  channel.bind(`typing-users-task-${props.task.id}`, (data: TypingUsers[]) => {
+    const userNames = Object.values(data).map(({ userName, userId }) => ({ userName, userId }));
     setTypingUsers(userNames);
   });
 
-  return <div>{createTypingUserMessage(typingUsers)}</div>;
+  return <div>{createTypingUserMessage(typingUsers, userIdQuery.data)}</div>;
 };

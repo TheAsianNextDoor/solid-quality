@@ -19,7 +19,7 @@ export const authOpts: SolidAuthConfig = {
     // @ts-ignore types error
     Google({
       clientId: serverEnv.GOOGLE_CLIENT_ID,
-      clientSecret: serverEnv.GITHUB_CLIENT_SECRET,
+      clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
     }),
   ],
   session: {

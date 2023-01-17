@@ -7,4 +7,7 @@ export const sessionRouter = router({
   userName: protectedProcedure.query(({ ctx }) => {
     return ctx?.session?.user?.name || '';
   }),
+  userId: protectedProcedure.query(({ ctx }) => {
+    return ctx?.session?.user?.id || '';
+  }),
 });

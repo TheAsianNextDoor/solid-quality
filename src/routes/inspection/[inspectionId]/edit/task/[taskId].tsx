@@ -1,7 +1,6 @@
 import { Show } from 'solid-js';
 import { createRouteData, useParams, useRouteData } from 'solid-start';
 
-import styles from './styles.module.css';
 import { ActionSection } from '~/features/task-actions';
 import { InfoSection } from '~/features/task-info';
 import { trpcClient } from '~/utils/trpc';
@@ -10,6 +9,8 @@ import type { routeDataReturn } from '../../edit';
 import type { RouteDataArgs } from 'solid-start';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
+
+import styles from './styles.module.css';
 
 export function routeData({ data, params }: RouteDataArgs<routeDataReturn>) {
   const comments = createRouteData(() => {
