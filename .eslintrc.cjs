@@ -28,6 +28,18 @@ module.exports = {
     // import
     'import/no-unresolved': 'error',
     'import/prefer-default-export': 'off',
+
+    'import/order': [
+      'error',
+      {
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'unknown', 'object', 'type'],
+      },
+    ],
   },
   overrides: [
     /** TypeScript File Config */
