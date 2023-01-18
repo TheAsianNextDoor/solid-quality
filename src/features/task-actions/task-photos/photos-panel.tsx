@@ -1,29 +1,46 @@
 import { LinearProgress } from '@suid/material';
 import { Show, createSignal } from 'solid-js';
-import { createServerAction$ } from 'solid-start/server';
 
 import { Button } from '~/components/lib/button';
-import { AWS_SDK } from '~/utils/aws-sdk';
-
-import type { Component } from 'solid-js';
+import { queryClient, trpcClient } from '~/utils/trpc';
 
 import { PhotoList } from './photo-list';
 
+import type { Component } from 'solid-js';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 interface props {
   task: TaskWithLinks;
 }
 
-const user = 'aaron';
-
 export const PhotosPanel: Component<props> = (props) => {
   const [selectedFiles, setSelectedFiles] = createSignal<FileList>();
   const [progress, setProgress] = createSignal(0);
 
-  const [uploadUrl, getUploadUrl] = createServerAction$(async (params: string[]) => {
-    return AWS_SDK.s3.generatePreSignedPutUrl(params);
-  });
+  const fileNames = () => {
+    if (!selectedFiles()?.length) return [];
+
+    const uploadArray = [];
+    const fileList = selectedFiles() as FileList;
+
+    for (let i = 0; i < fileList.length; i += 1) {
+      const file = fileList.item(i) as File;
+
+      uploadArray[i] = file.name;
+    }
+
+    return uploadArray;
+  };
+
+  const uploadUrlQuery = trpcClient.aws.getTaskPhotoUploadUrls.useQuery(
+    () => ({
+      taskId: props.task.id,
+      fileNames: fileNames(),
+    }),
+    {
+      enabled: false,
+    },
+  );
 
   const photoSelectHandler = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -35,23 +52,17 @@ export const PhotosPanel: Component<props> = (props) => {
   };
 
   const handleUpload = async () => {
-    if (!selectedFiles() && !selectedFiles()?.length) {
-      return;
-    }
+    await uploadUrlQuery.refetch();
 
-    const fileList = selectedFiles() as FileList;
-    const uploadArray = [];
+    const signedUrls = uploadUrlQuery.data as string[];
+    const files = selectedFiles() as FileList;
 
-    for (let i = 0; i < fileList.length; i += 1) {
-      const file = fileList.item(i) as File;
+    const urlPromises = signedUrls.map((url, i) => fetch(url, { method: 'PUT', body: files[i] }));
 
-      uploadArray[i] = `images/${user}/${file.name}`;
-    }
+    await Promise.all(urlPromises);
 
-    await getUploadUrl(uploadArray);
-
-    const signedUrls = uploadUrl.result as string[];
-    signedUrls.forEach((url, i) => fetch(url, { method: 'PUT', body: fileList[i] }));
+    // @ts-ignore bad types
+    queryClient.invalidateQueries({ queryKey: () => ['aws.getTaskImageUrls', { taskId: props.task.id }] });
   };
 
   return (
@@ -69,7 +80,7 @@ export const PhotosPanel: Component<props> = (props) => {
         </Button>
       </div>
       <div>
-        <PhotoList />
+        <PhotoList taskId={props.task.id} />
       </div>
     </>
   );
