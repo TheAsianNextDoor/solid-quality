@@ -1,6 +1,7 @@
 import { For, Show } from 'solid-js';
 
 import { Spinner } from '~/components/lib/spinner';
+import { ProgressiveImg } from '~/components/progressive-img';
 import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -16,11 +17,17 @@ export const PhotoList: Component<Props> = (props) => {
   });
 
   return (
-    <>
-      <div class="pt-10">Taken Photos</div>
+    <div class="overflow-y-scroll h-1/6 flex items-center flex-col">
+      <div class="pt-10 self-start">Taken Photos</div>
       <Show when={getImagesQuery?.data} fallback={<Spinner />}>
-        <For each={getImagesQuery.data}>{(url) => <img src={url as string} />}</For>
+        <div class="w-3/4">
+          <div class="grid grid-cols-3 items-center gap-4">
+            <For each={getImagesQuery.data}>
+              {(url) => <ProgressiveImg width={300} height={300} src={url as string} />}
+            </For>
+          </div>
+        </div>
       </Show>
-    </>
+    </div>
   );
 };

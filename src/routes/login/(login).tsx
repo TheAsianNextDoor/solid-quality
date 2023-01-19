@@ -1,6 +1,6 @@
 import { getSession } from '@auth/solid-start';
 import { signIn, signOut } from '@auth/solid-start/client';
-import { Switch, Match, createEffect } from 'solid-js';
+import { Switch, Match } from 'solid-js';
 import { Title, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 
