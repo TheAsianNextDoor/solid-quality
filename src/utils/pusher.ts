@@ -1,9 +1,11 @@
 import PusherJs from 'pusher-js';
 import { onCleanup } from 'solid-js';
 
+import { clientEnv } from '~/env/client';
+
 import type { Channel } from 'pusher-js';
 
-const pusher = new PusherJs('88de8c4680421d149378', { cluster: 'us2' });
+const pusher = new PusherJs(clientEnv.WEB_PUSHER_APP_KEY, { cluster: clientEnv.WEB_PUSHER_CLUSTER });
 
 type ChannelNames = 'typing-users' | 'create-comment-task';
 
@@ -32,7 +34,7 @@ const bind = (channelName: ChannelNames, eventName: string, callback: (data: any
 export const EventNameFactory = {
   typingUsers: (taskId: string) => `typing-users-task-${taskId}`,
   createComment: (taskId: string) => `create-comment-task-${taskId}`,
-} as const;
+};
 
 export const pusherClient = {
   subscribe,

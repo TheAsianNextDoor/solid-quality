@@ -1,4 +1,4 @@
-import { clientScheme } from './schema';
+import { clientSchema } from './schema';
 
 import type { ZodFormattedError } from 'zod';
 
@@ -11,7 +11,7 @@ export const formatErrors = (errors: ZodFormattedError<Map<string, string>, stri
     })
     .filter(Boolean);
 
-const env = clientScheme.safeParse(import.meta.env);
+const env = clientSchema.safeParse(import.meta.env);
 
 if (env.success === false) {
   // eslint-disable-next-line no-console

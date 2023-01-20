@@ -21,7 +21,7 @@ export default defineConfig({
     suidPlugin(),
     // visualizer(),
     tsconfigPaths(),
-    EnvironmentPlugin('all', { prefix: 'WEB_' }),
+    EnvironmentPlugin('all', { prefix: 'WEB_', defineOn: 'import.meta.env' }),
     // checker({
     //   eslint: {
     //     lintCommand: 'eslint --ignore-pattern "**/*.test.*"  --cache --ext ts,tsx "./src/"',

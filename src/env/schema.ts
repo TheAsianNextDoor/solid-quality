@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const serverScheme = z.object({
+export const serverSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
   // Auth Config
@@ -32,8 +32,12 @@ export const serverScheme = z.object({
   PUSHER_CLUSTER: z.string(),
 });
 
-export const clientScheme = z.object({
+export const clientSchema = z.object({
   WEB_NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  WEB_PORT: z.number().default(3000),
-  WEB_WS_PORT: z.number().default(3001),
+  WEB_PORT: z
+    .string()
+    .default('3000')
+    .transform((v) => parseInt(v, 10)),
+  WEB_PUSHER_APP_KEY: z.string(),
+  WEB_PUSHER_CLUSTER: z.string(),
 });
