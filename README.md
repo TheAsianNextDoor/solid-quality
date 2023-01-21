@@ -147,6 +147,7 @@ Your default browser should open the running application at http://localhost:300
 | solid           | https://www.solidjs.com/                          |
 | tailwind css    | https://tailwindcss.com/                          |
 | testing library | https://testing-library.com                       |
+| tRPC            | https://trpc.io/                                  |
 | typescript      | https://www.typescriptlang.org                    |
 | vite            | https://vitejs.dev                                |
 | vitest          | https://vitest.dev                                |
