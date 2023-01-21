@@ -19,7 +19,7 @@
 - [About](#about)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+  - [Local Setup](#local-setup)
   - [Scripts](#scripts)
   - [Built With](#built-with)
   - [Developer Tools](#developer-tools)
@@ -51,19 +51,16 @@ A quality management system for the construction management industry
 
 ## Prerequisites
 
-Mac OS X with:
-
-- [Homebrew](https://brew.sh/) Package Manager
 - [nvm](https://github.com/nvm-sh/nvm) recommended to manage nodejs version
-- [nodejs/npm](https://nodejs.org/tr/download/package-manager/#macos) (run `nvm use` or see .nvmrc for correct version)
+- [pnpm](https://pnpm.io/) package manager of choice
+- [nodejs](https://nodejs.org/tr/download/package-manager/#macos) (run `nvm use` or see .nvmrc for correct Node version)
+- [docker](https://www.docker.com/get-started/)
 
-## Installation
+## Local Setup
 
-Install nvm if you don't have it already:
+Ask team member for .env.development file
 
-```shell
-brew install nvm
-```
+Add admin user to docker group: https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo
 
 The node version in the project's .nvmrc file will be the default when calling nvm commands without a version.
 
@@ -72,21 +69,27 @@ nvm install
 nvm use
 ```
 
-If you're using nvm across multiple repos with different versions it's recommended to set up a deeper shell integration so that when changing into this directory nvm will automatically switch versions. Instructions can be found [here](https://github.com/nvm-sh/nvm#deeper-shell-integration)
-
-Install pnpm
+Create Docker container by running package script:
 
 ```shell
-brew install pnpm
+pnpm run docker:reset
 ```
 
-Then install npm dependencies:
+Start MySQL + Prisma container (keep running in terminal):
 
 ```shell
-pnpm install
+pnpm run dev:db
 ```
 
-Finally, start the app in development mode:
+Populate MySQL tables:
+
+```shell
+pnpm run db:reset
+```
+
+Kill all terminals
+
+Start dev environment:
 
 ```shell
 pnpm run dev
@@ -108,7 +111,9 @@ Your default browser should open the running application at http://localhost:300
 
 `db:reset` - Resets db through prisma
 
-`dev` - Starts local docker MySQL DB and starts solid project
+`dev` - Starts local docker MySQL DB and solid project
+
+`docker:reset` - Resets docker container
 
 `format` - Runs a fix prettier and eslint on repo
 
