@@ -11,6 +11,7 @@
     "coverage": "NODE_ENV=test node_modules/.bin/vitest run --coverage",
     "coverage:view": "NODE_ENV=test npm run coverage && open ./reports/index.html",
     "db:reset": "dotenv -e .env.development -- prisma db push --force-reset && npx prisma generate && npx prisma db seed",
+    "db:studio": "dotenv -e env.development -- prisma studio",
     "dev": "dotenv -e .env.development -- run-p -l dev:*",
     "dev:db": "docker compose -f ./configs/docker/docker-compose.yml up",
     "dev:solid": "dotenv -e .env.development -- solid-start dev",
