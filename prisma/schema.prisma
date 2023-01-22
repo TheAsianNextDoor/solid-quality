@@ -187,12 +187,13 @@ model Comment {
 model Photo {
   id        String   @id @default(uuid())
   userId    String
-  taskId    String
+  taskId    String?
+  path      String
   mimeType  String
   image     Bytes
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  task      Task     @relation(fields: [taskId], references: [id])
+  task      Task?    @relation(fields: [taskId], references: [id])
 
   @@index([userId])
   @@index([taskId])

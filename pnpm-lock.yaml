@@ -26,6 +26,7 @@ specifiers:
   autoprefixer: ^10.4.13
   dayjs: ^1.11.7
   dotenv: ^16.0.3
+  dotenv-cli: ^7.0.0
   eslint: ^8.31.0
   eslint-config-airbnb-base: ^15.0.0
   eslint-config-airbnb-typescript: ^17.0.0
@@ -106,6 +107,7 @@ devDependencies:
   '@vitest/ui': 0.26.3
   autoprefixer: 10.4.13_postcss@8.4.21
   dotenv: 16.0.3
+  dotenv-cli: 7.0.0
   eslint: 8.32.0
   eslint-config-airbnb-base: 15.0.0_yx6e7nyocrpjlofwba2pq5a2ny
   eslint-config-airbnb-typescript: 17.0.0_xdtyvx7l2ikkoglzdi2mkdgmve
@@ -4478,6 +4480,21 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /dotenv-cli/7.0.0:
+    resolution: {integrity: sha512-XfMzVdpdDTRnlcgvFLg3lSyiLXqFxS4tH7RbK5IxkC4XIUuxPyrGoDufkfLjy/dA28EILzEu+mros6h8aQmyGg==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.7
+    dev: true
+
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
     dev: true
 
   /dotenv/16.0.3:

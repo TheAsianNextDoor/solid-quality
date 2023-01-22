@@ -9,6 +9,7 @@ import { prisma } from '~/server/db/client';
 export const authOpts: SolidAuthConfig = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   adapter: PrismaAdapter(prisma) as any,
+  secret: serverEnv.AUTH_SECRET,
   providers: [
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore types error
