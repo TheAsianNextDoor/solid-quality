@@ -7,7 +7,23 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug on Chrome",
+      "name": "Debug Solid",
+      "url": "http://localhost:3000/",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "npm: dev:solid",
+      "postDebugTask": "Terminate Task",
+      "smartStep": true,
+      "enableContentValidation": false,
+      "userDataDir": "${workspaceFolder}/.vscode/chrome-userdatadir",
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
+      "presentation": {
+        "group": "app",
+      }
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Dev Stack",
       "url": "http://localhost:3000/",
       "webRoot": "${workspaceFolder}/src",
       "preLaunchTask": "npm: dev",
@@ -15,7 +31,10 @@
       "smartStep": true,
       "enableContentValidation": false,
       "userDataDir": "${workspaceFolder}/.vscode/chrome-userdatadir",
-      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
+      "presentation": {
+        "group": "app",
+      }
     },
     {
       "type": "node",
@@ -23,7 +42,10 @@
       "name": "Test and Watch Current File",
       "runtimeArgs": ["run-script", "test", "${file}"],
       "runtimeExecutable": "npm",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "test",
+      }
     }
   ]
 }

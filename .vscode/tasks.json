@@ -21,6 +21,25 @@
       }
     },
     {
+    "label": "npm: dev:solid",
+    "type": "shell",
+    "command": "npm",
+    "args": ["run", "dev:solid", "--", "--open=false"],
+    "detail": "vite",
+    "isBackground": true,
+    "problemMatcher": {
+      "owner": "custom",
+      "pattern": {
+        "regexp": "^$"
+      },
+      "background": {
+        "activeOnStart": true,
+        "beginsPattern": "vite",
+        "endsPattern": "ready in*"
+      }
+    }
+  },
+    {
       "label": "Terminate Task",
       "type": "shell",
       "command": "echo ${input:terminate}",
