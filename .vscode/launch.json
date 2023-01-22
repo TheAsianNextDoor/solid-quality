@@ -14,7 +14,7 @@
       "postDebugTask": "Terminate Task",
       "smartStep": true,
       "enableContentValidation": false,
-      "userDataDir": "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
+      "userDataDir": "${workspaceFolder}/.vscode/chrome-userdatadir",
       "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
     },
     {

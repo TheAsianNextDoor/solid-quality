@@ -30,3 +30,4 @@ Thumbs.db
 # Dev tools
 .eslintcache
 stats.html
+.vscode/chrome-userdatadir
