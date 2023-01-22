@@ -17,7 +17,7 @@ export const PhotoList: Component<Props> = (props) => {
   });
 
   return (
-    <div class="overflow-y-scroll h-1/6 flex items-center flex-col">
+    <div class="overflow-y-auto h-1/6 flex items-center flex-col">
       <div class="pt-10 self-start">Taken Photos</div>
       <Show when={getImagesQuery?.data} fallback={<Spinner />}>
         <div class="w-3/4">
