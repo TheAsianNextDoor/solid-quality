@@ -2,6 +2,7 @@ import { LinearProgress } from '@suid/material';
 import { Show, createSignal } from 'solid-js';
 
 import { Button } from '~/components/lib/button';
+import { wait } from '~/utils/time-utils';
 import { queryClient, trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -13,6 +14,10 @@ interface props {
 export const PhotoUpload: Component<props> = (props) => {
   const [selectedFiles, setSelectedFiles] = createSignal<FileList>();
   const [progress, setProgress] = createSignal(0);
+
+  let inputRef: HTMLInputElement;
+
+  const uploadPhotoMutation = trpcClient.photo.uploadByTask.useMutation();
 
   const fileNames = () => {
     if (!selectedFiles()?.length) return [];
@@ -29,7 +34,7 @@ export const PhotoUpload: Component<props> = (props) => {
     return uploadArray;
   };
 
-  const uploadUrlQuery = trpcClient.aws.getTaskPhotoUploadUrls.useQuery(
+  const signedPutQuery = trpcClient.photo.signedPutUrlsByTask.useQuery(
     () => ({
       taskId: props.taskId,
       fileNames: fileNames(),
@@ -49,29 +54,43 @@ export const PhotoUpload: Component<props> = (props) => {
   };
 
   const handleUpload = async () => {
-    await uploadUrlQuery.refetch();
+    await signedPutQuery.refetch();
 
-    const signedUrls = uploadUrlQuery.data as string[];
+    const signedUrls = signedPutQuery.data as string[];
     const files = selectedFiles() as FileList;
 
-    const urlPromises = signedUrls.map((url, i) => fetch(url, { method: 'PUT', body: files[i] }));
+    const urlPromises = signedUrls.map(async (url, i) => {
+      const file = files[i];
+
+      await wait(i);
+
+      try {
+        await fetch(url, { method: 'PUT', body: file });
+        uploadPhotoMutation.mutate({ taskId: props.taskId, mimeType: file.type, fileName: file.name });
+        inputRef.value = '';
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    });
 
     await Promise.all(urlPromises);
 
     // @ts-ignore bad types
-    queryClient.invalidateQueries({ queryKey: () => ['aws.getTaskImageUrls', { taskId: props.taskId }] });
+    queryClient.invalidateQueries({ queryKey: () => ['photo.signedGetUrlsByTask', { taskId: props.taskId }] });
   };
 
   return (
     <>
       <div>
-        <input type="file" accept="image/*" multiple name="photoUpload" onChange={photoSelectHandler} />
+        {/** @ts-ignore ref assignment */}
+        <input ref={inputRef} type="file" accept="image/*" multiple name="photoUpload" onChange={photoSelectHandler} />
       </div>
       <Show when={progress() !== 0}>
         <LinearProgress variant="determinate" value={progress()} />
       </Show>
       <div class="pt-5">
-        <Button variant="contained" onClick={handleUpload}>
+        <Button variant="contained" onClick={handleUpload} disabled={!selectedFiles()?.length}>
           Upload Photo
         </Button>
       </div>

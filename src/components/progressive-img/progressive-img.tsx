@@ -30,6 +30,7 @@ export const ProgressiveImg: Component<Partial<HTMLImageElement>> = (props) => {
           />
         </div>
       </Show>
+      {/** @ts-ignore complex union type */}
       <img
         style={{
           display: !loaded() ? 'none' : 'block',
@@ -38,8 +39,8 @@ export const ProgressiveImg: Component<Partial<HTMLImageElement>> = (props) => {
           'object-fit': 'cover',
           'border-radius': '5%',
         }}
-        src={props.src}
         onLoad={handleLoad}
+        {...props}
       />
     </>
   );

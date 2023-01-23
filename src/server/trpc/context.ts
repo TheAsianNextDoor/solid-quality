@@ -21,7 +21,7 @@ export const createContextInner = async (opts: createSolidAPIHandlerContext) => 
     session: {
       expires: authSession?.expires,
       user: {
-        id: user?.id,
+        id: user?.id as string,
         ...authSession?.user,
       },
     },

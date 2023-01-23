@@ -33,3 +33,9 @@ export const formatCommentTimeStamp = (date: Date, now: Date) => {
 
   return '';
 };
+
+export const wait = async (waitMs = 1000) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, waitMs);
+  });
+};
