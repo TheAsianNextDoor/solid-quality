@@ -14,9 +14,7 @@ import styles from './styles.module.css';
 
 export function routeData({ data, params }: RouteDataArgs<routeDataReturn>) {
   const comments = createRouteData(() => {
-    return trpcClient.comment.getByTaskId.useQuery(() => ({ taskId: params.taskId }), {
-      refetchOnWindowFocus: false,
-    });
+    return trpcClient.comment.getByTaskId.useQuery(() => ({ taskId: params.taskId }));
   });
 
   return {

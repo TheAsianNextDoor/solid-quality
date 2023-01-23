@@ -7,9 +7,7 @@ import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ params }: RouteDataArgs) {
   const tasks = createRouteData(async () => {
-    return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }), {
-      refetchOnWindowFocus: false,
-    });
+    return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
   });
 
   return { tasks };

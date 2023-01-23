@@ -30,7 +30,7 @@ interface TypingUsers {
 export const CommentTypingUser: Component<props> = (props) => {
   const [typingUsers, setTypingUsers] = createStore<TypingUsers[]>([]);
 
-  const userIdQuery = trpcClient.session.userId.useQuery(undefined, { refetchOnWindowFocus: false });
+  const userIdQuery = trpcClient.session.userId.useQuery(undefined);
 
   createEffect(() => {
     pusherClient.bind('typing-users', EventNameFactory.typingUsers(props.task.id), (data: TypingUsers[]) => {
