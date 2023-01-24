@@ -60,7 +60,8 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {
-            argsIgnorePattern: '[?(?_',
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
           },
         ],
         '@typescript-eslint/naming-convention': [
