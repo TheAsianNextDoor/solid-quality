@@ -6,9 +6,12 @@ import { trpcClient } from '~/utils/trpc';
 import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ params }: RouteDataArgs) {
-  const tasks = createRouteData(async () => {
-    return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
-  });
+  const tasks = createRouteData(
+    async () => {
+      return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
+    },
+    { key: () => ['inspection', params.inspectionId] },
+  );
 
   return { tasks };
 }

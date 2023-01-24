@@ -186,6 +186,7 @@ model Comment {
 
 model Photo {
   id        String   @id @default(uuid())
+  name      String
   userId    String
   taskId    String?
   path      String

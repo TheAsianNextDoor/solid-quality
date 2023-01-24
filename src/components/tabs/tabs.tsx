@@ -1,4 +1,4 @@
-import { children, createContext, createSignal, onMount, Show, useContext } from 'solid-js';
+import { children, createContext, createEffect, createSignal, onMount, Show, useContext } from 'solid-js';
 
 import type { Component, JSX } from 'solid-js';
 
@@ -22,16 +22,17 @@ const useTabs = () => {
 
 interface TabsProps {
   children: JSX.Element;
+  index?: number;
 }
 
 const Provider: Component<TabsProps> = (props) => {
-  const [selectedId, setSelectedId] = createSignal(0);
+  const [selectedId, setSelectedId] = createSignal(props?.index || 0);
 
   const [tabs, setTabs] = createSignal<HTMLButtonElement[]>([]);
   const [panels, setPanels] = createSignal<HTMLElement[]>([]);
 
-  onMount(() => {
-    setSelectedId(0);
+  createEffect(() => {
+    setSelectedId(props?.index || 0);
   });
 
   const isSelected = (id: number) => {
@@ -68,6 +69,7 @@ const TabsList: Component<TabsListProps> = (props) => {
 
 interface TabProps {
   children: Element | string;
+  handleClick?: () => void;
 }
 
 const Tab: Component<TabProps> = (props) => {
@@ -81,6 +83,7 @@ const Tab: Component<TabProps> = (props) => {
 
   const handleClick = () => {
     setSelectedId(id());
+    props?.handleClick?.();
   };
 
   const child = children(() => props.children);

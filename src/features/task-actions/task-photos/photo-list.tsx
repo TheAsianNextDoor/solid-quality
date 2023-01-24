@@ -1,8 +1,9 @@
 import { For, Show } from 'solid-js';
-import { useNavigate } from 'solid-start';
+import { useNavigate, useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
 import { ProgressiveImg } from '~/components/progressive-img';
+import { wait } from '~/utils/time-utils';
 import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -14,6 +15,13 @@ interface Props {
 export const PhotoList: Component<Props> = (props) => {
   const signedGetQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }));
   const nav = useNavigate();
+  const [_, setSearchParam] = useSearchParams();
+
+  const handleClick = async (taskId: string, photoId: string) => {
+    setSearchParam({ tab: 'photos' });
+    await wait(1);
+    nav(`/photo?taskId=${taskId}&photoId=${photoId}`);
+  };
 
   return (
     <>
@@ -25,7 +33,7 @@ export const PhotoList: Component<Props> = (props) => {
               <For each={signedGetQuery.data}>
                 {(photo) => (
                   <ProgressiveImg
-                    onclick={() => nav(`/photo?taskId=${photo.taskId}&photoId=${photo.id}`)}
+                    onclick={() => handleClick(photo.taskId as string, photo.id)}
                     width={300}
                     height={300}
                     src={photo.url as string}

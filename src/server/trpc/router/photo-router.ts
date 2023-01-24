@@ -29,7 +29,7 @@ export const photoRouter = router({
       const { fileName, mimeType, taskId } = input;
       const path = S3PathFactory.taskImage(taskId, fileName);
 
-      return PhotoModel.create({ data: { mimeType, taskId, userId, path } });
+      return PhotoModel.create({ data: { mimeType, taskId, userId, path, name: fileName } });
     }),
   signedPutUrlsByTask: protectedProcedure
     .input(
