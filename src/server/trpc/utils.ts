@@ -1,8 +1,11 @@
 import { initTRPC, TRPCError } from '@trpc/server';
+import SuperJSON from 'superjson';
 
 import type { IContext } from './context';
 
-export const t = initTRPC.context<IContext>().create();
+export const t = initTRPC.context<IContext>().create({
+  transformer: SuperJSON,
+});
 
 export const { router } = t;
 export const { procedure } = t;

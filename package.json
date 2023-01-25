@@ -54,6 +54,7 @@
     "solid-start-trpc": "^0.0.16",
     "solid-toast": "^0.4.0",
     "solid-trpc": "^0.0.11-rc.2",
+    "superjson": "^1.12.2",
     "undici": "5.14.0",
     "zod": "^3.20.2"
   },
