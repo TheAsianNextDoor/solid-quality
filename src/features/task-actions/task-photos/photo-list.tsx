@@ -26,7 +26,6 @@ export const PhotoList: Component<Props> = (props) => {
   return (
     <>
       <div class="overflow-y-auto h-1/6 flex items-center flex-col">
-        <img src="https://www.nossconstruction.com/wp-content/uploads/2019/02/iStock-586066898-1.jpg" />
         <div class="pt-10 self-start">Taken Photos</div>
         <Show when={photosWithSignedUrlQuery?.data} fallback={<Spinner />}>
           <div class="w-3/4">
