@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const PhotoList: Component<Props> = (props) => {
-  const signedGetQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }));
+  const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }));
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
 
@@ -26,11 +26,12 @@ export const PhotoList: Component<Props> = (props) => {
   return (
     <>
       <div class="overflow-y-auto h-1/6 flex items-center flex-col">
+        <img src="https://www.nossconstruction.com/wp-content/uploads/2019/02/iStock-586066898-1.jpg" />
         <div class="pt-10 self-start">Taken Photos</div>
-        <Show when={signedGetQuery?.data} fallback={<Spinner />}>
+        <Show when={photosWithSignedUrlQuery?.data} fallback={<Spinner />}>
           <div class="w-3/4">
             <div class="grid grid-cols-3 items-center gap-4">
-              <For each={signedGetQuery.data}>
+              <For each={photosWithSignedUrlQuery.data}>
                 {(photo) => (
                   <ProgressiveImg
                     onclick={() => handleClick(photo.taskId as string, photo.id)}

@@ -1,5 +1,13 @@
 import dayjs from 'dayjs';
 
+export const formatDateTimeForPFP = (date: Date | undefined) => {
+  if (!date) {
+    return '';
+  }
+
+  return dayjs(date).format('MMM D, YYYY [at] h:ma');
+};
+
 export const formatCommentTimeStamp = (date: Date, now: Date) => {
   const diffInMinutes = dayjs(now).diff(date, 'minutes');
 

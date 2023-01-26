@@ -52,7 +52,11 @@ export const photoRouter = router({
     )
     .query(async ({ input, ctx }) => {
       const awsCaller = awsRouter.createCaller(ctx);
-      const photos = await PhotoModel.findMany({ where: { taskId: input.taskId }, orderBy: { createdAt: 'asc' } });
+      const photos = await ctx.prisma.photo.findMany({
+        where: { taskId: input.taskId },
+        orderBy: { createdAt: 'asc' },
+        include: { user: true },
+      });
       const filePaths = photos.map((photo) => photo.path);
       const urls = await awsCaller.signedGetUrls({ filePaths });
 
