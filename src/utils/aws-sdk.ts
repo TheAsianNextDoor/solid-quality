@@ -1,11 +1,15 @@
 import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import dayjs from 'dayjs';
 
 import { serverEnv } from '~/env/server';
 
 const accessKeyId = serverEnv.AWS_ACCESS_KEY_ID;
 const secretAccessKey = serverEnv.AWS_SECRET_ACCESS_KEY;
 const Bucket = serverEnv.AWS_S3_BUCKET;
+
+const signingDate = dayjs().startOf('day').toDate();
+const expiresIn = 60 * 60 * 24 * 2;
 
 const s3Client = new S3Client({
   region: 'us-east-1',
@@ -60,7 +64,10 @@ const generatePreSignedGetUrl = async (pathToFileArray: string[]) => {
       });
 
       // eslint-disable-next-line no-await-in-loop
-      const url = await getSignedUrl(s3Client, command);
+      const url = await getSignedUrl(s3Client, command, {
+        expiresIn,
+        signingDate,
+      });
 
       urlArray[i] = url;
     }
