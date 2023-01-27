@@ -116,7 +116,14 @@ const Panel: Component<PanelProps> = (props) => {
   const child = children(() => props.children);
 
   return (
-    <div class={`${isSelected(id()) && 'w-full h-full'}`} ref={refFunction}>
+    <div
+      style={{
+        display: isSelected(id()) ? 'block' : 'none',
+        width: isSelected(id()) ? '100%' : 0,
+        height: isSelected(id()) ? '100%' : 0,
+      }}
+      ref={refFunction}
+    >
       <Show when={isSelected(id())} fallback={<></>}>
         {child()}
       </Show>

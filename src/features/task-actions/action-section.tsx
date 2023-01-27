@@ -29,7 +29,7 @@ const TabIndexMap = {
 } as const;
 
 export const ActionSection: Component<props> = (props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const getTabIndex = () => {
     return TabIndexMap[(searchParams.tab as keyof typeof TabIndexMap) || 'observations'];

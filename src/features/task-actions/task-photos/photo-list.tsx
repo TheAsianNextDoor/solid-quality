@@ -27,7 +27,7 @@ export const PhotoList: Component<Props> = (props) => {
     <>
       <div class="overflow-y-auto h-1/6 flex items-center flex-col">
         <div class="pt-10 self-start">Taken Photos</div>
-        <Show when={photosWithSignedUrlQuery?.data} fallback={<Spinner />}>
+        <Show when={!photosWithSignedUrlQuery?.isLoading} fallback={<Spinner />}>
           <div class="w-3/4">
             <div class="grid grid-cols-3 items-center gap-4">
               <For each={photosWithSignedUrlQuery.data}>

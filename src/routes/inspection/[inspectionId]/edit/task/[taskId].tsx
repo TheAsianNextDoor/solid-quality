@@ -35,7 +35,7 @@ export default function EditTaskActions() {
 
   return (
     <>
-      <Show when={!comments()?.isLoading && !tasks()?.isLoading} fallback={<Spinner />}>
+      <Show when={!comments()?.isLoading && !tasks()?.isLoading && !!selectedTask()} fallback={<Spinner />}>
         <div class={`${styles.grid} w-full min-h-screen`}>
           <InfoSection task={selectedTask() as TaskWithLinks} />
           <ActionSection task={selectedTask() as TaskWithLinks} comments={comments()?.data as CommentWithUser[]} />

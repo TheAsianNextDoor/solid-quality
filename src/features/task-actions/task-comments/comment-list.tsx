@@ -21,7 +21,9 @@ export const CommentList: Component<props> = (props) => {
   const [pusherComments, setPusherComments] = createStore<CommentWithUser[]>([]);
 
   const comments = () => {
-    return [...props.comments, ...pusherComments];
+    const dbComments = props?.comments?.length ? props.comments : [];
+    const pushComments = pusherComments?.length ? pusherComments : [];
+    return [...dbComments, ...pushComments];
   };
 
   let divRef: HTMLInputElement | undefined;
