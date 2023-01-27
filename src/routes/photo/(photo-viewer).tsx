@@ -2,10 +2,11 @@ import { Show, createSignal, onMount } from 'solid-js';
 import { useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
+import { Protected } from '~/components/protected';
 import { InfoSection, PhotoSection } from '~/features/photo-viewer';
 import { trpcClient } from '~/utils/trpc';
 
-export default function TaskPhoto() {
+const { Page } = Protected(() => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = createSignal(0);
   const [searchParams] = useSearchParams();
 
@@ -32,20 +33,24 @@ export default function TaskPhoto() {
   });
 
   const selectedPhoto = () => {
-    return photosWithSignedUrlQuery?.data && photosWithSignedUrlQuery?.data[selectedPhotoIndex()];
+    return photosWithSignedUrlQuery?.data?.[selectedPhotoIndex() || 0];
   };
 
   return (
-    <Show when={!!selectedPhoto()?.url} fallback={<Spinner />}>
-      <div class="flex w-full h-full">
-        <PhotoSection
-          photosWithSignedUrl={photosWithSignedUrlQuery.data}
-          selectedPhoto={selectedPhoto()}
-          selectedPhotoIndex={selectedPhotoIndex()}
-          setSelectedPhotoIndex={setSelectedPhotoIndex}
-        />
-        <InfoSection selectedPhoto={selectedPhoto()} />
-      </div>
+    <Show when={selectedPhoto()} fallback={<Spinner />} keyed>
+      {(photo) => (
+        <div class="flex w-full h-full">
+          <PhotoSection
+            photosWithSignedUrl={photosWithSignedUrlQuery.data}
+            selectedPhoto={photo}
+            selectedPhotoIndex={selectedPhotoIndex()}
+            setSelectedPhotoIndex={setSelectedPhotoIndex}
+          />
+          <InfoSection selectedPhoto={photo} />
+        </div>
+      )}
     </Show>
   );
-}
+});
+
+export default Page;

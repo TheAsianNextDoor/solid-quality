@@ -9,9 +9,13 @@ export const t = initTRPC.context<IContext>().create({
 
 export const { router } = t;
 export const { procedure } = t;
+
+/**
+ * Requires procedure to have authentication
+ */
 export const protectedProcedure = t.procedure.use(
   t.middleware(async ({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
+    if (!ctx?.session?.user?.id) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'You are not authorized to access this resource',

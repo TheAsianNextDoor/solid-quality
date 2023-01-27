@@ -1,6 +1,8 @@
 import { A } from 'solid-start';
 
-export default function InspectionList() {
+import { Protected } from '~/components/protected';
+
+const { Page } = Protected(() => {
   return (
     <>
       <div>
@@ -11,4 +13,6 @@ export default function InspectionList() {
       </div>
     </>
   );
-}
+});
+
+export default Page;

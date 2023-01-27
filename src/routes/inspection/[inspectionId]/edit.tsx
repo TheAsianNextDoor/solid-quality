@@ -1,6 +1,7 @@
 import { Show } from 'solid-js';
 import { Outlet, createRouteData, useRouteData } from 'solid-start';
 
+import { Protected } from '~/components/protected';
 import { trpcClient } from '~/utils/trpc';
 
 import type { RouteDataArgs } from 'solid-start';
@@ -19,7 +20,7 @@ export function routeData({ params }: RouteDataArgs) {
 export type routeDataType = typeof routeData;
 export type routeDataReturn = ReturnType<routeDataType>;
 
-export default function Inspection() {
+const { Page } = Protected(() => {
   const { tasks } = useRouteData<routeDataType>();
 
   return (
@@ -27,4 +28,6 @@ export default function Inspection() {
       <Outlet />
     </Show>
   );
-}
+});
+
+export default Page;
