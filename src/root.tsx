@@ -3,6 +3,8 @@ import { Suspense } from 'solid-js';
 import { Body, ErrorBoundary, FileRoutes, Head, Html, Link, Meta, Routes, Scripts, Title } from 'solid-start';
 import { Toaster } from 'solid-toast';
 
+import { Spinner } from './components/lib/spinner';
+
 import './root.css';
 
 const errorBoundaryFallback = (err: Error) => {
@@ -24,7 +26,7 @@ export default function Root() {
       <Body class="w-full h-full">
         <Toaster position="top-right" />
         <ErrorBoundary fallback={errorBoundaryFallback}>
-          <Suspense fallback={<div>Loading</div>}>
+          <Suspense fallback={<Spinner />}>
             <Routes>
               <FileRoutes />
             </Routes>

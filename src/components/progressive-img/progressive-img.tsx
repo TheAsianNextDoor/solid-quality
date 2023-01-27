@@ -33,6 +33,7 @@ export const ProgressiveImg: Component<Partial<HTMLImageElement>> = (props) => {
       {/** @ts-ignore complex union type */}
       <img
         style={{
+          cursor: 'pointer',
           display: !loaded() ? 'none' : 'block',
           width: `${props.width}px` || '300px',
           height: `${props.height}px` || '300px',

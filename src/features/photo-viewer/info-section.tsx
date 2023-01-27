@@ -13,7 +13,7 @@ export const InfoSection: Component<props> = (props) => {
     <div class="mt-5 p-5 flex flex-col  bg-stone-100 h-full" style={{ width: '40rem' }}>
       <div class="flex items-center">
         <ProfilePicture src={props.selectedPhoto?.user?.image as string} />
-        <div>
+        <div class="pl-2">
           <div>{props.selectedPhoto?.user?.name}</div>
           <div>{formatDateTimeForPFP(props.selectedPhoto?.createdAt)}</div>
         </div>

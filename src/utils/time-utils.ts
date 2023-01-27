@@ -5,7 +5,7 @@ export const formatDateTimeForPFP = (date: Date | undefined) => {
     return '';
   }
 
-  return dayjs(date).format('MMM D, YYYY [at] h:ma');
+  return dayjs(date).format('MMM D, YYYY [at] h:mma');
 };
 
 export const formatCommentTimeStamp = (date: Date, now: Date) => {
