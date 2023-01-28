@@ -29,6 +29,8 @@ module.exports = {
     'import/no-unresolved': 'error',
     'import/prefer-default-export': 'off',
 
+    'no-param-reassign': 'off', // turned off for immer like produce function
+
     'import/order': [
       'error',
       {
