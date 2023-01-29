@@ -14,6 +14,7 @@ const { Page } = Protected(() => {
     () => ({ taskId: searchParams.taskId }),
     {
       enabled: !!searchParams.taskId,
+      queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
     },
   );
 

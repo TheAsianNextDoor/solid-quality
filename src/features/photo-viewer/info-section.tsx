@@ -1,6 +1,8 @@
 import { ProfilePicture } from '~/components/profile-picture';
 import { formatDateTimeForPFP } from '~/utils/time-utils';
 
+import { MoreButton } from './more-button';
+
 import type { Photo, User } from '@prisma/client';
 import type { Component } from 'solid-js';
 
@@ -16,6 +18,9 @@ export const InfoSection: Component<props> = (props) => {
         <div class="pl-2">
           <div>{props.selectedPhoto?.user?.name}</div>
           <div>{formatDateTimeForPFP(props.selectedPhoto?.createdAt)}</div>
+        </div>
+        <div class="ml-auto">
+          <MoreButton />
         </div>
       </div>
       <div class="mt-5">Photo Name: {props.selectedPhoto?.name}</div>

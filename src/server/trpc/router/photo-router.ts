@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { PhotoModel } from '~/server/db/models/photo-model';
@@ -15,6 +16,28 @@ export const photoRouter = router({
     )
     .query(({ input }) => {
       return PhotoModel.findFirst({ where: { id: input.photoId } });
+    }),
+  deleteById: protectedProcedure
+    .input(
+      z.object({
+        photoId: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const photo = await PhotoModel.findFirst({ where: { id: input.photoId } });
+
+      if (!photo || !photo.taskId) {
+        throw new TRPCError({
+          message: 'photo not found',
+          code: 'NOT_FOUND',
+        });
+      }
+
+      const awsCaller = awsRouter.createCaller(ctx);
+
+      const filePath = S3PathFactory.taskImage(photo.taskId, photo.name);
+      await awsCaller.deleteObject({ filePath });
+      return PhotoModel.deleteFirst({ where: { id: input.photoId } });
     }),
   uploadByTask: protectedProcedure
     .input(

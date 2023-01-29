@@ -1,4 +1,10 @@
-import { GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  ListObjectsV2Command,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import dayjs from 'dayjs';
 
@@ -92,8 +98,15 @@ const generatePreSignedGetUrlFromFolder = async (folderPath: string) => {
   return generatePreSignedGetUrl(pathsToFiles);
 };
 
+const deleteObject = async (filePath: string) => {
+  const data = await s3Client.send(new DeleteObjectCommand({ Bucket, Key: filePath }));
+
+  return data;
+};
+
 export const AWS_SDK = {
   s3: {
+    deleteObject,
     getObjectsFromFolder,
     generatePreSignedGetUrl,
     generatePreSignedPutUrl,

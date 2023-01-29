@@ -13,7 +13,9 @@ interface Props {
 }
 
 export const PhotoList: Component<Props> = (props) => {
-  const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }));
+  const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }), {
+    queryKey: () => ['photo.signedGetUrlsByTask', { taskId: props.taskId }],
+  });
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
 

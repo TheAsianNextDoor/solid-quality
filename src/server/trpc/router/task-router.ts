@@ -6,6 +6,15 @@ import { protectedProcedure, router } from '~/server/trpc/utils';
 import type { TaskStatus } from '@prisma/client';
 
 export const taskRouter = router({
+  byId: protectedProcedure
+    .input(
+      z.object({
+        taskId: z.string(),
+      }),
+    )
+    .query(({ input }) => {
+      return TaskModel.findFirst({ where: { id: input.taskId }, include: { Links: true } });
+    }),
   getTasksByInspection: protectedProcedure
     .input(
       z.object({
