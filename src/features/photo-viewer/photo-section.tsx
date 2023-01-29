@@ -1,3 +1,5 @@
+import { useSearchParams } from 'solid-start';
+
 import { CloseButton } from './close-button';
 import { LeftNavigateButton } from './left-navigate-button';
 import { RightNavigateButton } from './right-navigate-button';
@@ -13,6 +15,8 @@ interface props {
 }
 
 export const PhotoSection: Component<props> = (props) => {
+  const [_, setSearchParams] = useSearchParams();
+
   const isStartOfAlbum = () => {
     if (!props.photosWithSignedUrl?.length) {
       return false;
@@ -29,18 +33,24 @@ export const PhotoSection: Component<props> = (props) => {
     return props.selectedPhotoIndex >= (props.photosWithSignedUrl?.length as number) - 1;
   };
 
+  const handleBackClick = () => {
+    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
+    props.setSelectedPhotoIndex((prev) => prev - 1);
+    setSearchParams({ photoId });
+  };
+
+  const handleForwardClick = () => {
+    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
+    props.setSelectedPhotoIndex((prev) => prev + 1);
+    setSearchParams({ photoId });
+  };
+
   return (
     <div class="flex justify-center relative align-middle w-full h-full bg-neutral-900">
       <CloseButton />
-      <LeftNavigateButton
-        shouldShow={!isStartOfAlbum()}
-        handleClick={() => props.setSelectedPhotoIndex((prev) => prev - 1)}
-      />
+      <LeftNavigateButton shouldShow={!isStartOfAlbum()} handleClick={handleBackClick} />
       <img src={props.selectedPhoto?.url} />
-      <RightNavigateButton
-        shouldShow={!isEndOfAlbum()}
-        handleClick={() => props.setSelectedPhotoIndex((prev) => prev + 1)}
-      />
+      <RightNavigateButton shouldShow={!isEndOfAlbum()} handleClick={handleForwardClick} />
       <div />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Show, createSignal, onMount } from 'solid-js';
+import { Show, createEffect, createSignal, onMount } from 'solid-js';
 import { useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
@@ -22,14 +22,11 @@ const { Page } = Protected(() => {
     photosWithSignedUrlQuery?.data?.forEach(({ url }) => {
       new Image().src = url;
     });
+  });
 
+  createEffect(() => {
     const photoIndex = photosWithSignedUrlQuery?.data?.findIndex((photo) => photo.id === searchParams.photoId);
-
-    if (!photoIndex) {
-      console.error('missing photo: ', searchParams.photoId);
-    } else {
-      setSelectedPhotoIndex(photoIndex);
-    }
+    setSelectedPhotoIndex(photoIndex || 0);
   });
 
   const selectedPhoto = () => {
