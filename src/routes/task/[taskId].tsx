@@ -16,15 +16,20 @@ import type { TaskWithLinks } from '~/server/db/types/task-types';
 import styles from './styles.module.css';
 
 export function routeData({ params }: RouteDataArgs) {
-  const comments = createRouteData(() => {
-    return trpcClient.comment.getByTaskId.useQuery(() => ({ taskId: params.taskId }));
-  });
+  const comments = createRouteData(
+    () => {
+      return trpcClient.comment.getByTaskId.useQuery(() => ({ taskId: params.taskId }));
+    },
+    {
+      key: () => ['comment', params.taskId],
+    },
+  );
 
   const task = createRouteData(
     async () => {
       return trpcClient.task.byId.useQuery(() => ({ taskId: params.taskId }));
     },
-    // { key: () => ['inspection', params.inspectionId] },
+    { key: () => ['task', params.taskId] },
   );
 
   return {

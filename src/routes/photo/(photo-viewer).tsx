@@ -1,9 +1,9 @@
-import { Show, createEffect, createSignal, onMount } from 'solid-js';
+import { Show, createSignal, onMount } from 'solid-js';
 import { useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
 import { Protected } from '~/components/protected';
-import { InfoSection, PhotoSection } from '~/features/photo-viewer';
+import { PhotoInfo, PhotoSection } from '~/features/photo-viewer';
 import { trpcClient } from '~/utils/trpc';
 
 const { Page } = Protected(() => {
@@ -23,9 +23,7 @@ const { Page } = Protected(() => {
     photosWithSignedUrlQuery?.data?.forEach(({ url }) => {
       new Image().src = url;
     });
-  });
 
-  createEffect(() => {
     const photoIndex = photosWithSignedUrlQuery?.data?.findIndex((photo) => photo.id === searchParams.photoId);
     setSelectedPhotoIndex(photoIndex || 0);
   });
@@ -44,7 +42,7 @@ const { Page } = Protected(() => {
             selectedPhotoIndex={selectedPhotoIndex()}
             setSelectedPhotoIndex={setSelectedPhotoIndex}
           />
-          <InfoSection selectedPhoto={photo} />
+          <PhotoInfo selectedPhoto={photo} />
         </div>
       )}
     </Show>
