@@ -1,6 +1,6 @@
 import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
-import { useLocation, useNavigate, useRouteData } from 'solid-start';
+import { useNavigate, useRouteData } from 'solid-start';
 
 import { Typography } from '~/components/lib/typography';
 import { Select } from '~/components/select';
@@ -11,7 +11,6 @@ import type { routeDataType } from '../edit';
 export default function InspectionEdit() {
   const { tasks } = useRouteData<routeDataType>();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const orderedTasks = () =>
     tasks()
@@ -32,7 +31,7 @@ export default function InspectionEdit() {
                     width="min-content"
                     class="cursor-pointer hover:underline"
                     variant="h4"
-                    onClick={() => navigate(`${pathname}/task/${task.id}`)}
+                    onClick={() => navigate(`/task/${task.id}`)}
                   >
                     {task.title}
                   </Typography>
