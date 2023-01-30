@@ -62,7 +62,7 @@ export const CommentList: Component<props> = (props) => {
   });
 
   return (
-    <div ref={divRef} class="overflow-y-auto" style={{ height: '700px' }}>
+    <div ref={divRef} class="overflow-y-auto" style={{ height: '600px' }}>
       <For each={comments()}>
         {(comment, index) => (
           <div class="bg-red-300 p-2 m-5 flex items-center">
