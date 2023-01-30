@@ -26,26 +26,24 @@ export const PhotoList: Component<Props> = (props) => {
   };
 
   return (
-    <>
-      <div class="overflow-y-auto h-1/6 flex items-center flex-col">
-        <div class="pt-10 self-start">Taken Photos</div>
-        <Show when={!photosWithSignedUrlQuery?.isLoading} fallback={<Spinner />}>
-          <div class="w-3/4">
-            <div class="grid grid-cols-3 items-center gap-4">
-              <For each={photosWithSignedUrlQuery.data}>
-                {(photo) => (
-                  <ProgressiveImg
-                    onclick={() => handleClick(photo.taskId as string, photo.id)}
-                    width={300}
-                    height={300}
-                    src={photo.url as string}
-                  />
-                )}
-              </For>
-            </div>
+    <div class="overflow-y-auto h-1/6 flex items-center flex-col">
+      <div class="pt-10 self-start">Taken Photos</div>
+      <Show when={photosWithSignedUrlQuery.isSuccess} fallback={<Spinner />}>
+        <div class="w-3/4">
+          <div class="grid grid-cols-3 items-center gap-4">
+            <For each={photosWithSignedUrlQuery.data}>
+              {(photo) => (
+                <ProgressiveImg
+                  onclick={() => handleClick(photo.taskId as string, photo.id)}
+                  width={300}
+                  height={300}
+                  src={photo.url as string}
+                />
+              )}
+            </For>
           </div>
-        </Show>
-      </div>
-    </>
+        </div>
+      </Show>
+    </div>
   );
 };
