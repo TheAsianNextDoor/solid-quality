@@ -34,14 +34,14 @@ export const PhotoSection: Component<props> = (props) => {
   };
 
   const handleBackClick = () => {
-    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
     props.setSelectedPhotoIndex((prev) => prev - 1);
+    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
     setSearchParams({ photoId });
   };
 
   const handleForwardClick = () => {
-    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
     props.setSelectedPhotoIndex((prev) => prev + 1);
+    const photoId = props?.photosWithSignedUrl?.[props.selectedPhotoIndex].id || 'unknown';
     setSearchParams({ photoId });
   };
 

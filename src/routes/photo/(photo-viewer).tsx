@@ -1,4 +1,4 @@
-import { Show, createSignal, onMount } from 'solid-js';
+import { Show, createEffect, createSignal, onMount } from 'solid-js';
 import { useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
@@ -24,6 +24,11 @@ const { Page } = Protected(() => {
       new Image().src = url;
     });
 
+    const photoIndex = photosWithSignedUrlQuery?.data?.findIndex((photo) => photo.id === searchParams.photoId);
+    setSelectedPhotoIndex(photoIndex || 0);
+  });
+
+  createEffect(() => {
     const photoIndex = photosWithSignedUrlQuery?.data?.findIndex((photo) => photo.id === searchParams.photoId);
     setSelectedPhotoIndex(photoIndex || 0);
   });
