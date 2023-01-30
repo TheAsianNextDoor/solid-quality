@@ -33,20 +33,19 @@ export const EditDescription: Component<props> = (props) => {
       <Show when={!showEdit()}>
         <div>{props.selectedPhoto.description}</div>
         <div class="pt-2">
-          <Button class="w-10" onClick={() => setShowEdit(true)}>
+          <Button type="button" class="w-10" onClick={() => setShowEdit(true)}>
             Edit
           </Button>
         </div>
       </Show>
       <Show when={showEdit()}>
-        <TextField
-          multiline
-          maxRows={4}
-          value={description()}
-          onChange={(e) => setDescription(e.currentTarget.value)}
-        />
-        <Button onClick={handleSave}>Done Editing</Button>
-        <Button onClick={() => setShowEdit(false)}>Cancel</Button>
+        <TextField multiline rows={4} value={description()} onChange={(e) => setDescription(e.currentTarget.value)} />
+        <Button type="submit" onClick={handleSave}>
+          Done Editing
+        </Button>
+        <Button type="reset" onClick={() => setShowEdit(false)}>
+          Cancel
+        </Button>
       </Show>
     </div>
   );
