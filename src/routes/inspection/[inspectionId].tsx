@@ -1,15 +1,26 @@
 import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
-import { useNavigate, useRouteData } from 'solid-start';
+import { createRouteData, useNavigate, useRouteData } from 'solid-start';
 
 import { Typography } from '~/components/lib/typography';
 import { Select } from '~/components/select';
 import { trpcClient } from '~/utils/trpc';
 
-import type { routeDataType } from '../edit';
+import type { RouteDataArgs } from 'solid-start';
+
+export function routeData({ params }: RouteDataArgs) {
+  const tasks = createRouteData(
+    async () => {
+      return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
+    },
+    { key: () => ['inspection', params.inspectionId] },
+  );
+
+  return { tasks };
+}
 
 export default function InspectionEdit() {
-  const { tasks } = useRouteData<routeDataType>();
+  const { tasks } = useRouteData<typeof routeData>();
   const navigate = useNavigate();
 
   const orderedTasks = () =>

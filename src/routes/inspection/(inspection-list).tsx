@@ -6,10 +6,10 @@ const { Page } = Protected(() => {
   return (
     <>
       <div>
-        <A href="/inspection/1/edit">Inspection 1</A>
+        <A href="/inspection/1">Inspection 1</A>
       </div>
       <div>
-        <A href="/inspection/2/edit">Inspection 2</A>
+        <A href="/inspection/2">Inspection 2</A>
       </div>
     </>
   );
