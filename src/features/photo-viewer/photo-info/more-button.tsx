@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from 'solid-start';
 
 import { Button } from '~/components/lib/button';
 import { Menu, MenuItem } from '~/components/lib/menu';
-import { wait } from '~/utils/time-utils';
 import { queryClient, trpcClient } from '~/utils/trpc';
 
 export const MoreButton = () => {
@@ -23,7 +22,9 @@ export const MoreButton = () => {
     const { photoId } = searchParams;
     await deletePhotoMutation.mutateAsync({ photoId });
     // @ts-ignore query invalidate
-    queryClient.invalidateQueries({ queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }] });
+    await queryClient.invalidateQueries({
+      queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
+    });
     nav(`/task/${searchParams.taskId}?tab=photos`);
   };
 
@@ -35,6 +36,7 @@ export const MoreButton = () => {
         aria-haspopup="true"
         aria-expanded={open() ? 'true' : undefined}
         onClick={(event) => setAnchorEl(event.currentTarget)}
+        style={{ color: 'black' }}
       >
         <MoreVertRoundedIcon />
       </Button>
