@@ -39,6 +39,16 @@ export const photoRouter = router({
       await awsCaller.deleteObject({ filePath });
       return PhotoModel.deleteFirst({ where: { id: input.photoId } });
     }),
+  updateDescription: protectedProcedure
+    .input(
+      z.object({
+        photoId: z.string(),
+        description: z.string(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return PhotoModel.update({ where: { id: input.photoId }, data: { description: input.description } });
+    }),
   uploadByTask: protectedProcedure
     .input(
       z.object({
