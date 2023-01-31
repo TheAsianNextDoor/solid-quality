@@ -29,6 +29,7 @@ const { Page } = Protected(() => {
   });
 
   createEffect(() => {
+    // select correct image on forward and nav browser buttons
     const photoIndex = photosWithSignedUrlQuery?.data?.findIndex((photo) => photo.id === searchParams.photoId);
     setSelectedPhotoIndex(photoIndex || 0);
   });
