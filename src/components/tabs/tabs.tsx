@@ -59,7 +59,7 @@ const Provider: Component<TabsProps> = (props) => {
 
 interface TabsListProps {
   children: JSX.Element;
-  class: string;
+  class?: string;
 }
 
 const TabsList: Component<TabsListProps> = (props) => {
@@ -117,6 +117,7 @@ const Panel: Component<PanelProps> = (props) => {
 
   return (
     <div
+      class="pt-4"
       style={{
         display: isSelected(id()) ? 'block' : 'none',
         width: isSelected(id()) ? '100%' : 0,

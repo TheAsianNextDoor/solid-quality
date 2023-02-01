@@ -16,9 +16,9 @@ export const CommentsPanel: Component<props> = (props) => {
     <>
       <div class="flex h-full flex-col content-between justify-between">
         <CommentList task={props.task} comments={props.comments} />
-        <div class="mb-10">
+        <div>
           <CommentInput task={props.task} comments={props.comments} />
-          <div class="mt-3">
+          <div class="pb-10">
             <CommentTypingUser task={props.task} />
           </div>
         </div>

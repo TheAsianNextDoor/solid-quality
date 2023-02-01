@@ -40,10 +40,10 @@ export const ActionSection: Component<props> = (props) => {
 
   return (
     <div class="flex h-full w-full flex-col bg-orange-300 p-8">
-      <div class="pb-4 text-2xl">Actions</div>
+      <div class="text-2xl">Actions</div>
       <div class="h-full w-full">
         <Tabs.Provider index={getTabIndex()}>
-          <Tabs.TabsList class="pb-4">
+          <Tabs.TabsList>
             <Tabs.Tab>{ActionTypes.observations}</Tabs.Tab>
             <Tabs.Tab>{ActionTypes.attachments}</Tabs.Tab>
             <Tabs.Tab>{ActionTypes.comments}</Tabs.Tab>
