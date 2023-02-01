@@ -39,8 +39,8 @@ export const ActionSection: Component<props> = (props) => {
   };
 
   return (
-    <div class="flex flex-col p-8 bg-orange-300 w-full h-full">
-      <div class="text-2xl pb-4">Actions</div>
+    <div class="flex h-full w-full flex-col bg-orange-300 p-8">
+      <div class="pb-4 text-2xl">Actions</div>
       <div class="h-full w-full">
         <Tabs.Provider index={getTabIndex()}>
           <Tabs.TabsList class="pb-4">

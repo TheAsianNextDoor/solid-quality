@@ -12,7 +12,7 @@ export const LeftNavigateButton: Component<props> = (props) => {
   return (
     <Show when={props.shouldShow}>
       <div
-        class="top-1/2 left-0 ml-14 absolute cursor-pointer"
+        class="absolute top-1/2 left-0 ml-14 cursor-pointer"
         style={{
           width: '70px',
           background: 'rgba(0, 0, 0, 0.20)',

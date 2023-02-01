@@ -30,8 +30,8 @@ export const AttachmentList: Component<Props> = (props) => {
 
   return (
     <>
-      <div class="overflow-y-auto h-5/6 flex items-center flex-col">
-        <div class="pt-10 self-start">Attachments</div>
+      <div class="flex h-5/6 flex-col items-center overflow-y-auto">
+        <div class="self-start pt-10">Attachments</div>
         <Show when={attachmentsWithSignedUrlQuery.isSuccess} fallback={<Spinner />}>
           <div class="w-3/4">
             <div class="grid grid-cols-3 items-center gap-4">

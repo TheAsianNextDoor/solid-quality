@@ -8,8 +8,6 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "workbench.tree.indent": 25,
   "javascript.updateImportsOnFileMove.enabled": "always",
-"typescript.updateImportsOnFileMove.enabled": "always",
-"cSpell.words": [
-    "trpc"
-]
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "cSpell.words": ["trpc"]
 }

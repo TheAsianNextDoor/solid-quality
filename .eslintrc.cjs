@@ -22,6 +22,7 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:vitest-globals/recommended',
+    'plugin:tailwindcss/recommended',
     'plugin:prettier/recommended', // must be at bottom of list
   ],
   rules: {

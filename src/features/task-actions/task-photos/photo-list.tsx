@@ -26,8 +26,8 @@ export const PhotoList: Component<Props> = (props) => {
   };
 
   return (
-    <div class="overflow-y-auto h-1/6 flex items-center flex-col">
-      <div class="pt-10 self-start">Taken Photos</div>
+    <div class="flex h-1/6 flex-col items-center overflow-y-auto">
+      <div class="self-start pt-10">Taken Photos</div>
       <Show when={photosWithSignedUrlQuery.isSuccess} fallback={<Spinner />}>
         <div class="w-3/4">
           <div class="grid grid-cols-3 items-center gap-4">

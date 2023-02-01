@@ -14,7 +14,7 @@ interface props {
 export const CommentsPanel: Component<props> = (props) => {
   return (
     <>
-      <div class="flex justify-between content-between flex-col h-full">
+      <div class="flex h-full flex-col content-between justify-between">
         <CommentList task={props.task} comments={props.comments} />
         <div class="mb-10">
           <CommentInput task={props.task} comments={props.comments} />

@@ -47,9 +47,9 @@ export const PhotoSection: Component<props> = (props) => {
   };
 
   return (
-    <div class="flex justify-center relative align-middle w-full h-full bg-neutral-900">
+    <div class="relative flex h-full w-full justify-center bg-neutral-900 align-middle">
       <div
-        class="top-0 left-0 ml-10 mt-10 absolute cursor-pointer"
+        class="absolute top-0 left-0 ml-10 mt-10 cursor-pointer"
         style={{
           width: '40px',
           background: 'rgba(0, 0, 0, 0.20)',

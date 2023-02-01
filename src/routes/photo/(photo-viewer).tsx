@@ -41,7 +41,7 @@ const { Page } = Protected(() => {
   return (
     <Show when={selectedPhoto()} fallback={<Spinner />} keyed>
       {(photo) => (
-        <div class="flex w-full h-full">
+        <div class="flex h-full w-full">
           <PhotoSection
             photosWithSignedUrl={photosWithSignedUrlQuery.data}
             selectedPhoto={photo}

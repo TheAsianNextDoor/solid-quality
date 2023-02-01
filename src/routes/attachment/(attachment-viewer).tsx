@@ -19,7 +19,7 @@ const { Page } = Protected(() => {
   );
 
   return (
-    <div class="flex flex-col justify-center items-center w-full h-full bg-slate-900">
+    <div class="flex h-full w-full flex-col items-center justify-center bg-slate-900">
       <CloseButton handleClick={() => nav(`/task/${searchParams.taskId}?tab=attachments`)} />
       <Show when={attachmentWithSignedUrlQuery.data} keyed>
         {(attachment) => (

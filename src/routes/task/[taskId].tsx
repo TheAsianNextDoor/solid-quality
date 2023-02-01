@@ -44,7 +44,7 @@ const { Page } = Protected(() => {
   return (
     <>
       <Show when={comments()?.isSuccess && task()?.isSuccess} fallback={<Spinner />}>
-        <div class={`${styles.grid} w-full min-h-screen`}>
+        <div class={`${styles.grid} min-h-screen w-full`}>
           <InfoSection task={task()?.data as TaskWithLinks} />
           <ActionSection task={task()?.data as TaskWithLinks} comments={comments()?.data as CommentWithUser[]} />
         </div>

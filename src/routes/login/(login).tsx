@@ -27,9 +27,9 @@ const Home: VoidComponent = () => {
     <>
       <Title>Create JD App</Title>
       <div>
-        <Switch fallback={<pre class="font-bold text-2xl text-gray-500">{JSON.stringify(res.data, null, 2)}</pre>}>
+        <Switch fallback={<pre class="text-2xl font-bold text-gray-500">{JSON.stringify(res.data, null, 2)}</pre>}>
           <Match when={res.isLoading}>
-            <div class="font-bold text-2xl text-gray-500">{res.isFetching ? 'Loading' : 'Not Logged In'}</div>
+            <div class="text-2xl font-bold text-gray-500">{res.isFetching ? 'Loading' : 'Not Logged In'}</div>
           </Match>
         </Switch>
         <Switch
@@ -37,13 +37,13 @@ const Home: VoidComponent = () => {
             <>
               <button
                 onClick={() => signIn('github')}
-                class="bg-purple-700 mx-3 my-3 rounded-lg w-56 p-2.5 text-white font-bold flex items-center justify-center"
+                class="m-3 flex w-56 items-center justify-center rounded-lg bg-purple-700 p-2.5 font-bold text-white"
               >
                 Login Github
               </button>
               <button
                 onClick={() => signIn('google')}
-                class="bg-purple-700 mx-3 my-3 rounded-lg w-56 p-2.5 text-white font-bold flex items-center justify-center"
+                class="m-3 flex w-56 items-center justify-center rounded-lg bg-purple-700 p-2.5 font-bold text-white"
               >
                 Login Google
               </button>
@@ -56,7 +56,7 @@ const Home: VoidComponent = () => {
           <Match when={session()}>
             <button
               onClick={() => signOut()}
-              class="bg-purple-700 mx-3 my-3 rounded-lg w-56 p-2.5 text-white font-bold flex items-center justify-center"
+              class="m-3 flex w-56 items-center justify-center rounded-lg bg-purple-700 p-2.5 font-bold text-white"
             >
               Logout
             </button>

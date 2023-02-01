@@ -8,6 +8,6 @@ interface props {
 
 export const CloseButton: Component<props> = (props) => {
   return (
-    <CloseIcon class="text-neutral-300 cursor-pointer" onClick={props.handleClick} style={{ 'font-size': '40px' }} />
+    <CloseIcon class="cursor-pointer text-neutral-300" onClick={props.handleClick} style={{ 'font-size': '40px' }} />
   );
 };

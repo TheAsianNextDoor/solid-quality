@@ -31,7 +31,7 @@ export const InfoSection: Component<props> = (props) => {
   });
 
   return (
-    <div class="bg-cyan-100 border-r-black border-r-2 h-full w-full p-8 flex justify-around flex-col">
+    <div class="flex h-full w-full flex-col justify-around border-r-2 border-r-black bg-cyan-100 p-8">
       <div class="text-2xl">{props.task.title}</div>
       <InfoItem title="Description" content={props.task.description} />
       <InfoItem

@@ -17,7 +17,7 @@
       "userDataDir": "${workspaceFolder}/.vscode/chrome-userdatadir",
       "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
       "presentation": {
-        "group": "app",
+        "group": "app"
       }
     },
     {
@@ -33,7 +33,7 @@
       "userDataDir": "${workspaceFolder}/.vscode/chrome-userdatadir",
       "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
       "presentation": {
-        "group": "app",
+        "group": "app"
       }
     },
     {
@@ -44,7 +44,7 @@
       "runtimeExecutable": "npm",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "test",
+        "group": "test"
       }
     }
   ]

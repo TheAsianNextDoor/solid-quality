@@ -5,5 +5,5 @@ interface props {
 }
 
 export const ProfilePicture: Component<props> = (props) => {
-  return <img class="w-16 h-16 rounded-full" src={props.src} />;
+  return <img class="h-16 w-16 rounded-full" src={props.src} />;
 };

@@ -51,9 +51,9 @@ export const Select: Component<SelectProps> = (props) => {
   const placeholder = props.placeholder || 'Select an option...';
 
   return (
-    <div class={`w-60 justify-between font-medium h-19 ${props.class}`}>
+    <div class={`h-19 w-60 justify-between font-medium ${props.class}`}>
       <div
-        class={`bg-white w-full p-2 flex items-center justify-between rounded  ${!selected() && 'text-gray-700'}`}
+        class={`flex w-full items-center justify-between rounded bg-white p-2  ${!selected() && 'text-gray-700'}`}
         onClick={() => {
           setIsOpen((prev) => !prev);
         }}
@@ -74,11 +74,11 @@ export const Select: Component<SelectProps> = (props) => {
         </span>
       </div>
       <Show when={isOpen()}>
-        <ul class="bg-white mt-2 overflow-y-auto max-h-60 ">
-          <div class="flex items-center px-2 sticky top-0 bg-white">
+        <ul class="mt-2 max-h-60 overflow-y-auto bg-white ">
+          <div class="sticky top-0 flex items-center bg-white px-2">
             <Search class="text-gray-700" />
             <input
-              class="placeholder:text-gray-700 p-2 outline-none"
+              class="p-2 outline-none placeholder:text-gray-700"
               type="text"
               placeholder="Search options..."
               onInput={(evt) => setSearchValue(evt.currentTarget.value)}
@@ -87,7 +87,7 @@ export const Select: Component<SelectProps> = (props) => {
           <For each={filteredOptions()}>
             {(option) => (
               <li
-                class={`text-black p-2 text-sm hover:bg-sky-600 hover:text-white ${
+                class={`p-2 text-sm text-black hover:bg-sky-600 hover:text-white ${
                   isSelected(option.value) && 'bg-sky-600 text-white'
                 }`}
                 onClick={(evt) => handleChange(evt, option.value)}

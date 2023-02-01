@@ -65,7 +65,7 @@ export const CommentList: Component<props> = (props) => {
     <div ref={divRef} class="overflow-y-auto" style={{ height: '600px' }}>
       <For each={comments()}>
         {(comment, index) => (
-          <div class="bg-red-300 p-2 m-5 flex items-center">
+          <div class="m-5 flex items-center bg-red-300 p-2">
             <Avatar>h</Avatar>
             <div class="pl-3">
               <div class="flex items-center space-x-2 pb-3">

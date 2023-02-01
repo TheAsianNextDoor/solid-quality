@@ -35,7 +35,7 @@ export default function InspectionEdit() {
       {
         <For each={orderedTasks()}>
           {(task) => (
-            <div class="bg-cyan-700 h-40 p-7 m-7 text-white flex items-center justify-between">
+            <div class="m-7 flex h-40 items-center justify-between bg-cyan-700 p-7 text-white">
               <div class="flex flex-col justify-center">
                 <div>
                   <Typography
