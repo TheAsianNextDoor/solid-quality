@@ -10,6 +10,8 @@ import dayjs from 'dayjs';
 
 import { serverEnv } from '~/env/server';
 
+import type { GetObjectCommandInput } from '@aws-sdk/client-s3';
+
 const accessKeyId = serverEnv.AWS_ACCESS_KEY_ID;
 const secretAccessKey = serverEnv.AWS_SECRET_ACCESS_KEY;
 const Bucket = serverEnv.AWS_S3_BUCKET;
@@ -53,7 +55,9 @@ const generatePreSignedPutUrl = async (pathToFileArray: string[]) => {
   return urlArray;
 };
 
-const generatePreSignedGetUrl = async (pathToFileArray: string[]) => {
+export type GetCommandInput = Omit<Omit<GetObjectCommandInput, 'Bucket'>, 'Key'>;
+
+const generatePreSignedGetUrl = async (pathToFileArray: string[], getCommandInput?: GetCommandInput) => {
   if (!pathToFileArray || !pathToFileArray.length) {
     return [];
   }
@@ -67,6 +71,7 @@ const generatePreSignedGetUrl = async (pathToFileArray: string[]) => {
       const command = new GetObjectCommand({
         Bucket,
         Key: filePath,
+        ...getCommandInput,
       });
 
       // eslint-disable-next-line no-await-in-loop

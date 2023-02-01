@@ -26,9 +26,10 @@ export const awsRouter = router({
     .input(
       z.object({
         filePaths: z.string().array(),
+        getCommandOptions: z.any(),
       }),
     )
     .query(({ input }) => {
-      return AWS_SDK.s3.generatePreSignedGetUrl(input.filePaths);
+      return AWS_SDK.s3.generatePreSignedGetUrl(input.filePaths, input.getCommandOptions);
     }),
 });
