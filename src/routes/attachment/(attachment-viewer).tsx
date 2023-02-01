@@ -21,17 +21,13 @@ const { Page } = Protected(() => {
   return (
     <div class="flex h-full w-full flex-col items-center justify-center bg-slate-900">
       <CloseButton handleClick={() => nav(`/task/${searchParams.taskId}?tab=attachments`)} />
-      <Show when={attachmentWithSignedUrlQuery.data} keyed>
-        {(attachment) => (
-          <>
-            <div>
-              <Typography class="text-slate-200" variant="h4" width="min-content">
-                {attachment.name.trim()}
-              </Typography>
-            </div>
-            <iframe src={attachment.url} width="90%" height="90%" />
-          </>
-        )}
+      <Show when={attachmentWithSignedUrlQuery.isSuccess}>
+        <div>
+          <Typography class="text-slate-200" variant="h4" width="min-content">
+            {attachmentWithSignedUrlQuery?.data?.name?.trim()}
+          </Typography>
+        </div>
+        <iframe src={attachmentWithSignedUrlQuery?.data?.url} width="90%" height="90%" />
       </Show>
     </div>
   );
