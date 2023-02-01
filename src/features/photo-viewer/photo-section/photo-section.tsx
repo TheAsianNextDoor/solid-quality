@@ -1,8 +1,8 @@
-import { useSearchParams } from 'solid-start';
+import { useNavigate, useSearchParams } from 'solid-start';
 
-import { CloseButton } from './close-button';
 import { LeftNavigateButton } from './left-navigate-button';
 import { RightNavigateButton } from './right-navigate-button';
+import { CloseButton } from '../../../components/icons/close-button';
 
 import type { Photo, User } from '@prisma/client';
 import type { Component, Setter } from 'solid-js';
@@ -15,7 +15,8 @@ interface props {
 }
 
 export const PhotoSection: Component<props> = (props) => {
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const nav = useNavigate();
 
   const isStartOfAlbum = () => {
     if (!props.photosWithSignedUrl?.length) {
@@ -47,7 +48,16 @@ export const PhotoSection: Component<props> = (props) => {
 
   return (
     <div class="flex justify-center relative align-middle w-full h-full bg-neutral-900">
-      <CloseButton />
+      <div
+        class="top-0 left-0 ml-10 mt-10 absolute cursor-pointer"
+        style={{
+          width: '40px',
+          background: 'rgba(0, 0, 0, 0.20)',
+          'border-radius': '50%',
+        }}
+      >
+        <CloseButton handleClick={() => nav(`/task/${searchParams.taskId}?tab=photos`)} />
+      </div>
       <LeftNavigateButton shouldShow={!isStartOfAlbum()} handleClick={handleBackClick} />
       <img src={props.selectedPhoto?.url} />
       <RightNavigateButton shouldShow={!isEndOfAlbum()} handleClick={handleForwardClick} />

@@ -2,10 +2,13 @@ import { useSearchParams } from 'solid-start';
 
 import { Tabs } from '~/components/tabs';
 
+import { AttachmentPanel } from './task-attachments/attachment-panel';
 import { CommentsPanel } from './task-comments/comments-panel';
-import { PhotosPanel } from './task-photos/photos-panel';
 
 import type { Component } from 'solid-js';
+
+import { PhotosPanel } from './task-photos/photos-panel';
+
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
 
@@ -47,7 +50,9 @@ export const ActionSection: Component<props> = (props) => {
             <Tabs.Tab>{ActionTypes.photos}</Tabs.Tab>
           </Tabs.TabsList>
           <Tabs.Panel> Panel observations</Tabs.Panel>
-          <Tabs.Panel> Panel attachments</Tabs.Panel>
+          <Tabs.Panel>
+            <AttachmentPanel task={props.task} />
+          </Tabs.Panel>
           <Tabs.Panel>
             <CommentsPanel task={props.task} comments={props.comments} />
           </Tabs.Panel>
