@@ -7,7 +7,7 @@ export default function Index() {
         <A href="/login">Login</A>
       </div>
       <div>
-        <A href="/inspection">Inspection</A>
+        <A href="/site/1">Site 1</A>
       </div>
     </>
   );

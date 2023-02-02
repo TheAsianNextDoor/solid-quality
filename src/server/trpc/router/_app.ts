@@ -1,6 +1,7 @@
 import { attachmentRouter } from './attachment-router';
 import { awsRouter } from './aws-router';
 import { commentRouter } from './comment-router';
+import { inspectionRouter } from './inspection-router';
 import { photoRouter } from './photo-router';
 import { sessionRouter } from './session-router';
 import { taskRouter } from './task-router';
@@ -10,6 +11,7 @@ export const appRouter = router({
   attachment: attachmentRouter,
   aws: awsRouter,
   comment: commentRouter,
+  inspection: inspectionRouter,
   photo: photoRouter,
   session: sessionRouter,
   task: taskRouter,

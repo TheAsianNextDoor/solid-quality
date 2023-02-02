@@ -41,6 +41,7 @@ async function main() {
   if (!getSite) {
     site = await prisma.site.create({
       data: {
+        id: '1',
         name: 'East Point Location',
         organizationId: organization.id,
         addressId: address.id,
@@ -152,6 +153,7 @@ async function main() {
         inspectionId: inspection1?.id || '',
         userId: user.id,
         order: 3,
+        status: 'SKIPPED',
       },
     });
   }
