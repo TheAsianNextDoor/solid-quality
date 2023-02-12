@@ -3,24 +3,27 @@ import { randomUUID } from 'crypto';
 import { z } from 'zod';
 
 import { CommentModel } from '~/server/db/models/comment-model';
+import { MissingResourceError } from '~/server/errors/bad-request';
 import { pusherClient } from '~/server/pusher';
 import { protectedProcedure, router } from '~/server/trpc/utils';
 
 const typingUsers: Record<string, { uuid: string; userName: string; userId: string }> = {};
 
 export const commentRouter = router({
-  getByTaskId: protectedProcedure.input(z.object({ taskId: z.string() })).query(({ input }) => {
+  getByTaskId: protectedProcedure.input(z.object({ taskId: z.string() })).query(async ({ input, ctx }) => {
     const { taskId } = input;
 
-    if (!taskId) {
-      return [];
-    }
-
-    return CommentModel.findMany({
+    const comments = await ctx.prisma.comment.findMany({
       where: { taskId },
       include: { user: true },
       orderBy: { createdAt: 'asc' },
     });
+
+    if (!comments) {
+      MissingResourceError();
+    }
+
+    return comments;
   }),
   userTyping: protectedProcedure
     .input(

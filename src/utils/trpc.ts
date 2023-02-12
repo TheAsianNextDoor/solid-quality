@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/solid-query';
-import { httpBatchLink } from '@trpc/client';
+import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCSolid } from 'solid-trpc';
 import SuperJSON from 'superjson';
 
@@ -18,6 +18,7 @@ export const TrpcProvider = trpcClient.Provider;
 export const client = trpcClient.createClient({
   transformer: SuperJSON,
   links: [
+    loggerLink(),
     httpBatchLink({
       url: `${getBaseUrl()}/api/trpc`,
     }),

@@ -1,7 +1,6 @@
 import { Show } from 'solid-js';
 import { createRouteData, useRouteData } from 'solid-start';
 
-import { Spinner } from '~/components/lib/spinner';
 import { Protected } from '~/components/protected';
 import { ActionSection } from '~/features/task-actions';
 import { InfoSection } from '~/features/task-info';
@@ -43,7 +42,7 @@ const { Page } = Protected(() => {
 
   return (
     <>
-      <Show when={comments()?.isSuccess && task()?.isSuccess} fallback={<Spinner />}>
+      <Show when={comments()?.isSuccess && task()?.isSuccess}>
         <div class={`${styles.grid} min-h-screen w-full`}>
           <InfoSection task={task()?.data as TaskWithLinks} />
           <ActionSection task={task()?.data as TaskWithLinks} comments={comments()?.data as CommentWithUser[]} />
