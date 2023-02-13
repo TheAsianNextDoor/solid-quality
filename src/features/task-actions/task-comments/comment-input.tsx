@@ -1,6 +1,7 @@
 import { createSignal } from 'solid-js';
 
 import { TextField } from '~/components/lib/text-field';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -18,6 +19,8 @@ const throttleTime = 1000; // 1 second
 export const CommentInput: Component<props> = (props) => {
   const createCommentMutation = trpcClient.comment.create.useMutation();
   const typingUserMutation = trpcClient.comment.userTyping.useMutation();
+
+  handleMutationAndQueryErrors([typingUserMutation, createCommentMutation]);
 
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 

@@ -5,11 +5,10 @@ import { createRouteData, useRouteData, useNavigate } from 'solid-start';
 import { Chip } from '~/components/lib/chip';
 import { Typography } from '~/components/lib/typography';
 import { Protected } from '~/components/protected';
+import { trpcClient } from '~/utils/trpc';
 
 import type { Task } from '@prisma/client';
 import type { RouteDataArgs } from 'solid-start';
-
-import { trpcClient } from '../../utils/trpc';
 
 export function routeData({ params }: RouteDataArgs) {
   const inspections = createRouteData(() => {

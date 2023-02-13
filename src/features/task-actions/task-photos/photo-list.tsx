@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
 import { ProgressiveImg } from '~/components/progressive-img';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { wait } from '~/utils/time-utils';
 import { trpcClient } from '~/utils/trpc';
 
@@ -16,6 +17,8 @@ export const PhotoList: Component<Props> = (props) => {
   const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }), {
     queryKey: () => ['photo.signedGetUrlsByTask', { taskId: props.taskId }],
   });
+  handleMutationAndQueryErrors([photosWithSignedUrlQuery]);
+
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
 

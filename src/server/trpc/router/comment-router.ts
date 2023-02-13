@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { z } from 'zod';
 
 import { CommentModel } from '~/server/db/models/comment-model';
-import { MissingResourceError } from '~/server/errors/bad-request';
+import { MissingResourceError } from '~/server/errors/missing-resource-error';
 import { pusherClient } from '~/server/pusher';
 import { protectedProcedure, router } from '~/server/trpc/utils';
 
@@ -20,7 +20,7 @@ export const commentRouter = router({
     });
 
     if (!comments) {
-      MissingResourceError();
+      throw new MissingResourceError({ missingResource: `comment with taskId: ${taskId}` });
     }
 
     return comments;

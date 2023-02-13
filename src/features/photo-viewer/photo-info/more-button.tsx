@@ -4,6 +4,7 @@ import { useSearchParams, useNavigate } from 'solid-start';
 
 import { Button } from '~/components/lib/button';
 import { Menu, MenuItem } from '~/components/lib/menu';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { queryClient, trpcClient } from '~/utils/trpc';
 
 export const MoreButton = () => {
@@ -12,6 +13,7 @@ export const MoreButton = () => {
   const nav = useNavigate();
 
   const deletePhotoMutation = trpcClient.photo.deleteById.useMutation();
+  handleMutationAndQueryErrors([deletePhotoMutation]);
 
   const open = () => Boolean(anchorEl());
   const handleClose = () => {

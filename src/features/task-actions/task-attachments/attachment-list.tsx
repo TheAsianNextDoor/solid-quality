@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'solid-start';
 
 import PDFIcon from '~/assets/pdf-icon.png';
 import { Spinner } from '~/components/lib/spinner';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { wait } from '~/utils/time-utils';
 import { trpcClient } from '~/utils/trpc';
 
@@ -19,6 +20,9 @@ export const AttachmentList: Component<Props> = (props) => {
       queryKey: () => ['attachment.signedGetUrlsByTask', { taskId: props.taskId }],
     },
   );
+
+  handleMutationAndQueryErrors([attachmentsWithSignedUrlQuery]);
+
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
 

@@ -4,6 +4,7 @@ import { For, Show, createSignal } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
 import { Button } from '~/components/lib/button';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { wait } from '~/utils/time-utils';
 
 import type { Component } from 'solid-js';
@@ -48,6 +49,8 @@ export const FileUpload: Component<props> = (props) => {
       enabled: false,
     },
   );
+
+  handleMutationAndQueryErrors([signedPutQuery]);
 
   const photoSelectHandler = (event: Event) => {
     const target = event.target as HTMLInputElement;

@@ -1,4 +1,5 @@
 import { FileUpload } from '~/components/file-upload';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { queryClient, trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -10,6 +11,9 @@ interface props {
 export const PhotoUpload: Component<props> = (props) => {
   const uploadPhotoMutation = trpcClient.photo.uploadByTask.useMutation();
   const signedPutQuery = trpcClient.photo.signedPutUrlsByTask;
+
+  handleMutationAndQueryErrors([uploadPhotoMutation]);
+
   const invalidateQuery = () =>
     // @ts-ignore bad types
     queryClient.invalidateQueries({ queryKey: () => ['photo.signedGetUrlsByTask', { taskId: props.taskId }] });

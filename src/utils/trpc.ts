@@ -18,7 +18,7 @@ export const TrpcProvider = trpcClient.Provider;
 export const client = trpcClient.createClient({
   transformer: SuperJSON,
   links: [
-    loggerLink(),
+    // loggerLink(),
     httpBatchLink({
       url: `${getBaseUrl()}/api/trpc`,
     }),

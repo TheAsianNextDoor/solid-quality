@@ -4,6 +4,7 @@ import { useSearchParams, useNavigate } from 'solid-start';
 import { CloseButton } from '~/components/icons';
 import { Typography } from '~/components/lib/typography';
 import { Protected } from '~/components/protected';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { trpcClient } from '~/utils/trpc';
 
 const { Page } = Protected(() => {
@@ -17,6 +18,7 @@ const { Page } = Protected(() => {
       queryKey: () => ['attachment.signedGetUrlById', { attachmentId: searchParams.attachmentId }],
     },
   );
+  handleMutationAndQueryErrors([attachmentWithSignedUrlQuery]);
 
   return (
     <div class="flex h-full w-full flex-col items-center justify-center bg-slate-900">

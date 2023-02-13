@@ -47,6 +47,7 @@ export const attachmentRouter = router({
         orderBy: { createdAt: 'asc' },
         include: { user: true },
       });
+
       const filePaths = attachments.map((attachment) => attachment.path);
       const urls = await awsCaller.signedGetUrls({ filePaths });
 

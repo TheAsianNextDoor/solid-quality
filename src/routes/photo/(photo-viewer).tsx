@@ -4,6 +4,7 @@ import { useSearchParams } from 'solid-start';
 import { Spinner } from '~/components/lib/spinner';
 import { Protected } from '~/components/protected';
 import { PhotoInfo, PhotoSection } from '~/features/photo-viewer';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { trpcClient } from '~/utils/trpc';
 
 const { Page } = Protected(() => {
@@ -17,6 +18,8 @@ const { Page } = Protected(() => {
       queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
     },
   );
+
+  handleMutationAndQueryErrors([photosWithSignedUrlQuery]);
 
   onMount(() => {
     // preload images

@@ -3,6 +3,7 @@ import { useSearchParams } from 'solid-start';
 
 import { Button } from '~/components/lib/button';
 import { TextField } from '~/components/lib/text-field';
+import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { queryClient, trpcClient } from '~/utils/trpc';
 
 import type { Photo, User } from '@prisma/client';
@@ -14,10 +15,12 @@ interface props {
 
 export const EditDescription: Component<props> = (props) => {
   const [showEdit, setShowEdit] = createSignal(false);
+  // eslint-disable-next-line solid/reactivity
   const [description, setDescription] = createSignal(props.selectedPhoto.description || '');
   const [searchParams] = useSearchParams();
 
   const updateDescriptionMutation = trpcClient.photo.updateDescription.useMutation();
+  handleMutationAndQueryErrors([updateDescriptionMutation]);
 
   const handleSave = async () => {
     await updateDescriptionMutation.mutateAsync({ description: description(), photoId: props.selectedPhoto.id });
