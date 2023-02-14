@@ -64,7 +64,7 @@ export const photoRouter = router({
 
       return PhotoModel.create({ data: { mimeType, taskId, userId, path, name: fileName } });
     }),
-  signedPutUrlsByTask: protectedProcedure
+  getSignedPutUrlsByTask: protectedProcedure
     .input(
       z.object({
         taskId: z.string(),
@@ -77,7 +77,7 @@ export const photoRouter = router({
 
       return awsCaller.signedPutUrls({ filePaths });
     }),
-  signedGetUrlsByTask: protectedProcedure
+  getSignedGetUrlsByTask: protectedProcedure
     .input(
       z.object({
         taskId: z.string(),

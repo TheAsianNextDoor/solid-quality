@@ -21,7 +21,7 @@ export const attachmentRouter = router({
 
       return ctx.prisma.attachment.create({ data: { userId, mimeType, taskId, path, name: fileName } });
     }),
-  signedPutUrlsByTask: protectedProcedure
+  getSignedPutUrlsByTask: protectedProcedure
     .input(
       z.object({
         taskId: z.string(),
@@ -34,7 +34,7 @@ export const attachmentRouter = router({
 
       return awsCaller.signedPutUrls({ filePaths });
     }),
-  signedGetUrlsByTask: protectedProcedure
+  getSignedGetUrlsByTask: protectedProcedure
     .input(
       z.object({
         taskId: z.string(),
@@ -53,7 +53,7 @@ export const attachmentRouter = router({
 
       return attachments.map((attachment, i) => ({ ...attachment, url: urls[i] }));
     }),
-  signedGetUrlById: protectedProcedure
+  getSignedGetUrlsById: protectedProcedure
     .input(
       z.object({
         attachmentId: z.string(),
