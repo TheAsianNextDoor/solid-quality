@@ -4,11 +4,9 @@ import { Tabs } from '~/components/tabs';
 
 import { AttachmentPanel } from './task-attachments/attachment-panel';
 import { CommentsPanel } from './task-comments/comments-panel';
-
-import type { Component } from 'solid-js';
-
 import { PhotosPanel } from './task-photos/photos-panel';
 
+import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
 
