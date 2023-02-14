@@ -4,15 +4,14 @@ import { createRouteData, useNavigate, useRouteData } from 'solid-start';
 
 import { Typography } from '~/components/lib/typography';
 import { Select } from '~/components/select';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { trpcClient } from '~/utils/trpc';
+import { taskResource } from '~/requests/task-resource';
 
 import type { RouteDataArgs } from 'solid-start';
 
 export function routeData({ params }: RouteDataArgs) {
   const tasks = createRouteData(
     async () => {
-      return trpcClient.task.getTasksByInspection.useQuery(() => ({ inspectionId: params.inspectionId }));
+      return taskResource.queries.useGetTasksByInspection(() => ({ inspectionId: params.inspectionId }));
     },
     { key: () => ['inspection', params.inspectionId] },
   );
@@ -29,9 +28,7 @@ export default function InspectionEdit() {
       ?.data?.slice()
       ?.sort((a, b) => a.order - b.order);
 
-  const updateTaskStatusMutation = trpcClient.task.updateTaskStatus.useMutation();
-  handleMutationAndQueryErrors([updateTaskStatusMutation]);
-
+  const updateTaskStatusMutation = taskResource.mutations.useUpdateTaskStatus();
   return (
     <>
       {
