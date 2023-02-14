@@ -7,7 +7,9 @@ import { CommentsPanel } from './task-comments/comments-panel';
 import { PhotosPanel } from './task-photos/photos-panel';
 
 import type { Component } from 'solid-js';
+import type { AttachmentWithUrl } from '~/server/db/types/attachment-types';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
+import type { PhotoWithUrl } from '~/server/db/types/photo-types';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
 
 enum ActionTypes {
@@ -20,6 +22,8 @@ enum ActionTypes {
 interface props {
   task: TaskWithLinks;
   comments: CommentWithUser[];
+  photos: PhotoWithUrl[];
+  attachments: AttachmentWithUrl[];
 }
 
 const TabIndexMap = {
@@ -49,13 +53,13 @@ export const ActionSection: Component<props> = (props) => {
           </Tabs.TabsList>
           <Tabs.Panel> Panel observations</Tabs.Panel>
           <Tabs.Panel>
-            <AttachmentPanel task={props.task} />
+            <AttachmentPanel task={props.task} attachments={props.attachments} />
           </Tabs.Panel>
           <Tabs.Panel>
             <CommentsPanel task={props.task} comments={props.comments} />
           </Tabs.Panel>
           <Tabs.Panel>
-            <PhotosPanel task={props.task} />
+            <PhotosPanel task={props.task} photos={props.photos} />
           </Tabs.Panel>
         </Tabs.Provider>
       </div>
