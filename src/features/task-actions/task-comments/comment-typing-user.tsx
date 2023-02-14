@@ -1,9 +1,8 @@
 import { createEffect } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
+import { sessionResource } from '~/requests/session-resource';
 import { EventNameFactory, pusherClient } from '~/utils/pusher';
-import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
 import type { TaskWithLinks } from '~/server/db/types/task-types';
@@ -31,9 +30,7 @@ interface TypingUsers {
 export const CommentTypingUser: Component<props> = (props) => {
   const [typingUsers, setTypingUsers] = createStore<TypingUsers[]>([]);
 
-  const userIdQuery = trpcClient.session.userId.useQuery(undefined);
-
-  handleMutationAndQueryErrors([userIdQuery]);
+  const userIdQuery = sessionResource.queries.useUserId();
 
   createEffect(() => {
     pusherClient.bind('typing-users', EventNameFactory.typingUsers(props.task.id), (data: TypingUsers[]) => {

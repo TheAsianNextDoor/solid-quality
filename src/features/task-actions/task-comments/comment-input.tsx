@@ -1,8 +1,7 @@
 import { createSignal } from 'solid-js';
 
 import { TextField } from '~/components/lib/text-field';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { trpcClient } from '~/utils/trpc';
+import { commentResource } from '~/requests/comment-resource';
 
 import type { Component } from 'solid-js';
 import type { CommentWithUser } from '~/server/db/types/comment-types';
@@ -17,10 +16,8 @@ let canPublish = true;
 const throttleTime = 1000; // 1 second
 
 export const CommentInput: Component<props> = (props) => {
-  const createCommentMutation = trpcClient.comment.create.useMutation();
-  const typingUserMutation = trpcClient.comment.userTyping.useMutation();
-
-  handleMutationAndQueryErrors([typingUserMutation, createCommentMutation]);
+  const createComment = commentResource.mutations.useCreateComment();
+  const typingUser = commentResource.mutations.useUserTyping();
 
   const [inputRef, setInputRef] = createSignal<HTMLInputElement | Record<string, unknown>>({});
 
@@ -30,7 +27,7 @@ export const CommentInput: Component<props> = (props) => {
 
     if (e.key !== 'Enter') {
       if (canPublish) {
-        typingUserMutation.mutate({
+        typingUser.mutate({
           taskId: props.task.id,
         });
         canPublish = false;
@@ -40,13 +37,13 @@ export const CommentInput: Component<props> = (props) => {
       }
     }
     if (e.key === 'Enter') {
-      createCommentMutation.mutate({
+      createComment.mutate({
         message: target.value,
         taskId: props.task.id,
         ...(lastComment() && { parentId: lastComment() }),
       });
 
-      if (!createCommentMutation.error) {
+      if (!typingUser.error) {
         inputRef().value = '';
       }
     }
