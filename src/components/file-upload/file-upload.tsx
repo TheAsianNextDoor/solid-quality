@@ -4,16 +4,14 @@ import { For, Show, createSignal } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
 import { Button } from '~/components/lib/button';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
 import { wait } from '~/utils/time-utils';
 
 import type { Component } from 'solid-js';
 
 interface props {
   saveToDB: any;
-  signedUrlFunction: any;
+  getSignedPutUrlsFunction: any;
   queryProps: Record<string, unknown>;
-  invalidateQuery?: () => void;
   fileTypes?: string;
 }
 
@@ -40,7 +38,7 @@ export const FileUpload: Component<props> = (props) => {
 
   // function is always declarative
   // eslint-disable-next-line solid/reactivity
-  const signedPutQuery = props.signedUrlFunction.useQuery(
+  const signedPutQuery = props.getSignedPutUrlsFunction(
     () => ({
       ...(props?.queryProps && props.queryProps),
       fileNames: fileNames(),
@@ -49,8 +47,6 @@ export const FileUpload: Component<props> = (props) => {
       enabled: false,
     },
   );
-
-  handleMutationAndQueryErrors([signedPutQuery]);
 
   const photoSelectHandler = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -98,8 +94,6 @@ export const FileUpload: Component<props> = (props) => {
     });
 
     await Promise.all(urlPromises);
-
-    props?.invalidateQuery?.();
   };
 
   return (
