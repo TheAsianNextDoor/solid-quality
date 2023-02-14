@@ -5,7 +5,7 @@ import { ProgressiveImg } from '~/components/progressive-img';
 import { wait } from '~/utils/time-utils';
 
 import type { Component } from 'solid-js';
-import type { PhotoWithUrl } from '~/server/db/types/photo-types';
+import type { PhotoWithUrl } from '~/server/prisma/types/photo-types';
 
 interface Props {
   taskId: string;

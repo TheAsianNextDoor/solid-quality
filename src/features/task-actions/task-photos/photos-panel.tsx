@@ -2,8 +2,8 @@ import { PhotoList } from './photo-list';
 import { PhotoUpload } from './photo-upload';
 
 import type { Component } from 'solid-js';
-import type { PhotoWithUrl } from '~/server/db/types/photo-types';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { PhotoWithUrl } from '~/server/prisma/types/photo-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 interface props {
   task: TaskWithLinks;

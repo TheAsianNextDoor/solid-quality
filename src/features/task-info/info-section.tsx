@@ -6,7 +6,7 @@ import { createServerAction$ } from 'solid-start/server';
 import { Select } from '~/components/select';
 
 import type { Component, JSX } from 'solid-js';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 type InfoItemProps = { title: string; content: JSX.Element };
 

@@ -13,10 +13,10 @@ import { taskResource } from '~/requests/task-resource';
 import styles from './styles.module.css';
 
 import type { RouteDataArgs } from 'solid-start';
-import type { AttachmentWithUrl } from '~/server/db/types/attachment-types';
-import type { CommentWithUser } from '~/server/db/types/comment-types';
-import type { PhotoWithUrl } from '~/server/db/types/photo-types';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { AttachmentWithUrl } from '~/server/prisma/types/attachment-types';
+import type { CommentWithUser } from '~/server/prisma/types/comment-types';
+import type { PhotoWithUrl } from '~/server/prisma/types/photo-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 export function routeData({ params }: RouteDataArgs) {
   const task = createRouteData(

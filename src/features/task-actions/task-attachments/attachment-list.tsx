@@ -5,7 +5,7 @@ import PDFIcon from '~/assets/pdf-icon.png';
 import { wait } from '~/utils/time-utils';
 
 import type { Component } from 'solid-js';
-import type { AttachmentWithUrl } from '~/server/db/types/attachment-types';
+import type { AttachmentWithUrl } from '~/server/prisma/types/attachment-types';
 
 interface Props {
   taskId: string;

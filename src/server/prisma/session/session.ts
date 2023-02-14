@@ -3,7 +3,7 @@
 import { redirect } from 'solid-start/server';
 import { createCookieSessionStorage } from 'solid-start/session';
 
-import { prisma } from '~/server/db/client';
+import { prisma } from '~/server/prisma/client';
 
 type LoginForm = {
   email: string;

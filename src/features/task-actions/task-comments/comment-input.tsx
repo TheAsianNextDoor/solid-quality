@@ -4,8 +4,8 @@ import { TextField } from '~/components/lib/text-field';
 import { commentResource } from '~/requests/comment-resource';
 
 import type { Component } from 'solid-js';
-import type { CommentWithUser } from '~/server/db/types/comment-types';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { CommentWithUser } from '~/server/prisma/types/comment-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 interface props {
   task: TaskWithLinks;

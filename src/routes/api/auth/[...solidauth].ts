@@ -4,7 +4,7 @@ import { SolidAuth, type SolidAuthConfig } from '@auth/solid-start';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 import { serverEnv } from '~/env/server';
-import { prisma } from '~/server/db/client';
+import { prisma } from '~/server/prisma/client';
 
 export const authOpts: SolidAuthConfig = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

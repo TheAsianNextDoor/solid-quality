@@ -1,7 +1,7 @@
 import { getSession } from '@auth/solid-start';
 
 import { authOpts } from '~/routes/api/auth/[...solidauth]';
-import { prisma } from '~/server/db/client';
+import { prisma } from '~/server/prisma/client';
 
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { createSolidAPIHandlerContext } from 'solid-start-trpc';

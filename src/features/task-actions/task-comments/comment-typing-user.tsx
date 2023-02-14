@@ -5,7 +5,7 @@ import { sessionResource } from '~/requests/session-resource';
 import { EventNameFactory, pusherClient } from '~/utils/pusher';
 
 import type { Component } from 'solid-js';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 interface props {
   task: TaskWithLinks;

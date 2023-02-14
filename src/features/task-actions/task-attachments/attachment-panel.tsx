@@ -2,8 +2,8 @@ import { AttachmentList } from './attachment-list';
 import { AttachmentUpload } from './attachment-upload';
 
 import type { Component } from 'solid-js';
-import type { AttachmentWithUrl } from '~/server/db/types/attachment-types';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
+import type { AttachmentWithUrl } from '~/server/prisma/types/attachment-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 interface props {
   task: TaskWithLinks;

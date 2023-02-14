@@ -5,11 +5,11 @@ import { Avatar } from '~/components/lib/avatar';
 import { computeFullName } from '~/server/user/user-utils';
 import { EventNameFactory, pusherClient } from '~/utils/pusher';
 
-import type { Component } from 'solid-js';
-import type { CommentWithUser } from '~/server/db/types/comment-types';
-import type { TaskWithLinks } from '~/server/db/types/task-types';
-
 import { formatCommentTimeStamp } from '../../../utils/time-utils';
+
+import type { Component } from 'solid-js';
+import type { CommentWithUser } from '~/server/prisma/types/comment-types';
+import type { TaskWithLinks } from '~/server/prisma/types/task-types';
 
 interface props {
   task: TaskWithLinks;

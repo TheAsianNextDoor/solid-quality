@@ -8,8 +8,8 @@ import { FormError } from 'solid-start/data/Form';
 import { createServerData$, createServerAction$ } from 'solid-start/server';
 
 import { authOpts } from '~/routes/api/auth/[...solidauth]';
-import { prisma } from '~/server/db/client';
-import { register, login, createUserSession } from '~/server/db/session/session';
+import { prisma } from '~/server/prisma/client';
+import { register, login, createUserSession } from '~/server/prisma/session/session';
 // import { trpcClient } from '~/utils/trpc';
 
 export const routeData = () => {
