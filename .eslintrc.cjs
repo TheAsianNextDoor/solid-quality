@@ -58,6 +58,7 @@ module.exports = {
         '@typescript-eslint/consistent-type-imports': 'error',
 
         '@typescript-eslint/no-throw-literal': 'off', // turn off for solid server response errors
+        '@typescript-eslint/indent': 'off',
 
         // disable rules for '_'
         '@typescript-eslint/no-unused-vars': [
