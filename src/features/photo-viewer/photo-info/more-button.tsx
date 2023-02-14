@@ -4,16 +4,14 @@ import { useSearchParams, useNavigate } from 'solid-start';
 
 import { Button } from '~/components/lib/button';
 import { Menu, MenuItem } from '~/components/lib/menu';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { queryClient, trpcClient } from '~/utils/trpc';
+import { photoResource } from '~/requests/photo-resource';
 
 export const MoreButton = () => {
   const [anchorEl, setAnchorEl] = createSignal<null | HTMLElement>(null);
   const [searchParams] = useSearchParams();
   const nav = useNavigate();
 
-  const deletePhotoMutation = trpcClient.photo.deleteById.useMutation();
-  handleMutationAndQueryErrors([deletePhotoMutation]);
+  const deletePhoto = photoResource.mutations.useDeleteById();
 
   const open = () => Boolean(anchorEl());
   const handleClose = () => {
@@ -22,11 +20,7 @@ export const MoreButton = () => {
 
   const handleDelete = async () => {
     const { photoId } = searchParams;
-    await deletePhotoMutation.mutateAsync({ photoId });
-    // @ts-ignore query invalidate
-    await queryClient.invalidateQueries({
-      queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
-    });
+    deletePhoto.mutate({ photoId });
     nav(`/task/${searchParams.taskId}?tab=photos`);
   };
 

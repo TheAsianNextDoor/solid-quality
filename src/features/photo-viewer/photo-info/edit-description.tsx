@@ -1,10 +1,8 @@
 import { createSignal, Show } from 'solid-js';
-import { useSearchParams } from 'solid-start';
 
 import { Button } from '~/components/lib/button';
 import { TextField } from '~/components/lib/text-field';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { queryClient, trpcClient } from '~/utils/trpc';
+import { photoResource } from '~/requests/photo-resource';
 
 import type { Photo, User } from '@prisma/client';
 import type { Component } from 'solid-js';
@@ -17,17 +15,11 @@ export const EditDescription: Component<props> = (props) => {
   const [showEdit, setShowEdit] = createSignal(false);
   // eslint-disable-next-line solid/reactivity
   const [description, setDescription] = createSignal(props.selectedPhoto.description || '');
-  const [searchParams] = useSearchParams();
 
-  const updateDescriptionMutation = trpcClient.photo.updateDescription.useMutation();
-  handleMutationAndQueryErrors([updateDescriptionMutation]);
+  const updateDescription = photoResource.mutations.useUpdateDescription();
 
   const handleSave = async () => {
-    await updateDescriptionMutation.mutateAsync({ description: description(), photoId: props.selectedPhoto.id });
-    // @ts-ignore
-    await queryClient.invalidateQueries({
-      queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
-    });
+    updateDescription.mutate({ description: description(), photoId: props.selectedPhoto.id });
     setShowEdit(false);
   };
 

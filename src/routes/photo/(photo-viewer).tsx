@@ -4,22 +4,15 @@ import { useSearchParams } from 'solid-start';
 import { Spinner } from '~/components/lib/spinner';
 import { Protected } from '~/components/protected';
 import { PhotoInfo, PhotoSection } from '~/features/photo-viewer';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { trpcClient } from '~/utils/trpc';
+import { photoResource } from '~/requests/photo-resource';
 
 const { Page } = Protected(() => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = createSignal(0);
   const [searchParams] = useSearchParams();
 
-  const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(
-    () => ({ taskId: searchParams.taskId }),
-    {
-      enabled: !!searchParams.taskId,
-      queryKey: () => ['photo.signedGetUrlsByTask', { taskId: searchParams.taskId }],
-    },
-  );
-
-  handleMutationAndQueryErrors([photosWithSignedUrlQuery]);
+  const photosWithSignedUrlQuery = photoResource.queries.useGetSignedGetUrlsByTask(() => ({
+    taskId: searchParams.taskId,
+  }));
 
   onMount(() => {
     // preload images

@@ -3,9 +3,8 @@ import { useNavigate, useSearchParams } from 'solid-start';
 
 import { Spinner } from '~/components/lib/spinner';
 import { ProgressiveImg } from '~/components/progressive-img';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
+import { photoResource } from '~/requests/photo-resource';
 import { wait } from '~/utils/time-utils';
-import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
 
@@ -14,10 +13,7 @@ interface Props {
 }
 
 export const PhotoList: Component<Props> = (props) => {
-  const photosWithSignedUrlQuery = trpcClient.photo.signedGetUrlsByTask.useQuery(() => ({ taskId: props?.taskId }), {
-    queryKey: () => ['photo.signedGetUrlsByTask', { taskId: props.taskId }],
-  });
-  handleMutationAndQueryErrors([photosWithSignedUrlQuery]);
+  const photosWithSignedUrlQuery = photoResource.queries.useGetSignedGetUrlsByTask(() => ({ taskId: props.taskId }));
 
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
