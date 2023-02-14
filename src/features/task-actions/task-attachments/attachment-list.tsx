@@ -3,9 +3,8 @@ import { useNavigate, useSearchParams } from 'solid-start';
 
 import PDFIcon from '~/assets/pdf-icon.png';
 import { Spinner } from '~/components/lib/spinner';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
+import { attachmentResource } from '~/requests/attachment-resource';
 import { wait } from '~/utils/time-utils';
-import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
 
@@ -14,14 +13,9 @@ interface Props {
 }
 
 export const AttachmentList: Component<Props> = (props) => {
-  const attachmentsWithSignedUrlQuery = trpcClient.attachment.signedGetUrlsByTask.useQuery(
-    () => ({ taskId: props?.taskId }),
-    {
-      queryKey: () => ['attachment.signedGetUrlsByTask', { taskId: props.taskId }],
-    },
-  );
-
-  handleMutationAndQueryErrors([attachmentsWithSignedUrlQuery]);
+  const attachmentsWithSignedUrl = attachmentResource.queries.useGetSignedGetUrlsByTask(() => ({
+    taskId: props?.taskId,
+  }));
 
   const nav = useNavigate();
   const [_, setSearchParam] = useSearchParams();
@@ -36,10 +30,10 @@ export const AttachmentList: Component<Props> = (props) => {
     <>
       <div class="flex h-5/6 flex-col items-center overflow-y-auto">
         <div class="self-start pt-10">Attachments</div>
-        <Show when={attachmentsWithSignedUrlQuery.isSuccess} fallback={<Spinner />}>
+        <Show when={attachmentsWithSignedUrl.isSuccess} fallback={<Spinner />}>
           <div class="w-3/4">
             <div class="grid grid-cols-3 items-center gap-4">
-              <For each={attachmentsWithSignedUrlQuery.data}>
+              <For each={attachmentsWithSignedUrl.data}>
                 {(attachment) => (
                   <div onClick={() => handleClick(attachment.taskId as string, attachment.id)}>
                     <img class="cursor-pointer" src={PDFIcon} />

@@ -4,21 +4,15 @@ import { useSearchParams, useNavigate } from 'solid-start';
 import { CloseButton } from '~/components/icons';
 import { Typography } from '~/components/lib/typography';
 import { Protected } from '~/components/protected';
-import { handleMutationAndQueryErrors } from '~/utils/error-utils';
-import { trpcClient } from '~/utils/trpc';
+import { attachmentResource } from '~/requests/attachment-resource';
 
 const { Page } = Protected(() => {
   const [searchParams] = useSearchParams();
   const nav = useNavigate();
 
-  const attachmentWithSignedUrlQuery = trpcClient.attachment.signedGetUrlById.useQuery(
-    () => ({ attachmentId: searchParams.attachmentId }),
-    {
-      enabled: !!searchParams.attachmentId,
-      queryKey: () => ['attachment.signedGetUrlById', { attachmentId: searchParams.attachmentId }],
-    },
-  );
-  handleMutationAndQueryErrors([attachmentWithSignedUrlQuery]);
+  const attachmentWithSignedUrlQuery = attachmentResource.queries.useGetSignedGetUrlById(() => ({
+    attachmentId: searchParams.attachmentId,
+  }));
 
   return (
     <div class="flex h-full w-full flex-col items-center justify-center bg-slate-900">
