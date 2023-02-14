@@ -15,6 +15,7 @@ const getBaseUrl = () => {
 export const trpcClient = createTRPCSolid<IAppRouter>();
 export const trpcContext = trpcClient.useContext();
 export const TrpcProvider = trpcClient.Provider;
+
 export const client = trpcClient.createClient({
   transformer: SuperJSON,
   links: [
@@ -24,6 +25,10 @@ export const client = trpcClient.createClient({
     }),
   ],
 });
+
 export const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false, useErrorBoundary: true },
+    mutations: { useErrorBoundary: true },
+  },
 });
