@@ -3,7 +3,7 @@
 import { redirect } from 'solid-start/server';
 import { createCookieSessionStorage } from 'solid-start/session';
 
-import { UserModel } from '~/server/db/models/user-model';
+import { prisma } from '~/server/db/client';
 
 type LoginForm = {
   email: string;
@@ -33,13 +33,13 @@ export function getUserSession(request: Request) {
 export async function register({ email, password, firstName, lastName }: LoginForm) {
   const name = `${firstName} ${lastName}`;
 
-  return UserModel.create({
+  return prisma.user.create({
     data: { email, password, firstName, lastName, name },
   });
 }
 
 export async function login({ email, password }: LoginForm) {
-  const user = await UserModel.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return null;
   const isCorrectPassword = password === user.password;
   if (!isCorrectPassword) return null;
@@ -79,7 +79,7 @@ export async function getUser(request: Request) {
   }
 
   try {
-    const user = await UserModel.findUnique({ where: { id: Number(userId) } });
+    const user = await prisma.user.findUnique({ where: { id: Number(userId) } });
     return user;
   } catch {
     throw logout(request);

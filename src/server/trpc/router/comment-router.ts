@@ -2,7 +2,6 @@ import { randomUUID } from 'crypto';
 
 import { z } from 'zod';
 
-import { CommentModel } from '~/server/db/models/comment-model';
 import { MissingResourceError } from '~/server/errors/missing-resource-error';
 import { pusherClient } from '~/server/pusher';
 import { protectedProcedure, router } from '~/server/trpc/utils';
@@ -63,7 +62,7 @@ export const commentRouter = router({
     .mutation(async ({ input, ctx }) => {
       const userId = ctx.session.user.id as string;
 
-      const comment = await CommentModel.create({ data: { ...input, userId }, include: { user: true } });
+      const comment = await ctx.prisma.comment.create({ data: { ...input, userId }, include: { user: true } });
 
       const typingUsersKey = `${userId}-${input.taskId}`;
       delete typingUsers[typingUsersKey];

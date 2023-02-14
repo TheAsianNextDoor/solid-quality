@@ -1,7 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { PhotoModel } from '~/server/db/models/photo-model';
 import { router, protectedProcedure } from '~/server/trpc/utils';
 import { S3PathFactory } from '~/server/utils/s3Paths';
 
@@ -14,8 +13,8 @@ export const photoRouter = router({
         photoId: z.string(),
       }),
     )
-    .query(({ input }) => {
-      return PhotoModel.findFirst({ where: { id: input.photoId } });
+    .query(({ input, ctx }) => {
+      return ctx.prisma.photo.findFirst({ where: { id: input.photoId } });
     }),
   deleteById: protectedProcedure
     .input(
@@ -24,7 +23,7 @@ export const photoRouter = router({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const photo = await PhotoModel.findFirst({ where: { id: input.photoId } });
+      const photo = await ctx.prisma.photo.findFirst({ where: { id: input.photoId } });
 
       if (!photo || !photo.taskId) {
         throw new TRPCError({
@@ -37,7 +36,7 @@ export const photoRouter = router({
 
       const filePath = S3PathFactory.taskImage(photo.taskId, photo.name);
       await awsCaller.deleteObject({ filePath });
-      return PhotoModel.deleteFirst({ where: { id: input.photoId } });
+      return ctx.prisma.photo.delete({ where: { id: input.photoId } });
     }),
   updateDescription: protectedProcedure
     .input(
@@ -46,8 +45,8 @@ export const photoRouter = router({
         description: z.string(),
       }),
     )
-    .mutation(({ input }) => {
-      return PhotoModel.update({ where: { id: input.photoId }, data: { description: input.description } });
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.photo.update({ where: { id: input.photoId }, data: { description: input.description } });
     }),
   uploadByTask: protectedProcedure
     .input(
@@ -62,7 +61,7 @@ export const photoRouter = router({
       const { fileName, mimeType, taskId } = input;
       const path = S3PathFactory.taskImage(taskId, fileName);
 
-      return PhotoModel.create({ data: { mimeType, taskId, userId, path, name: fileName } });
+      return ctx.prisma.photo.create({ data: { mimeType, taskId, userId, path, name: fileName } });
     }),
   getSignedPutUrlsByTask: protectedProcedure
     .input(

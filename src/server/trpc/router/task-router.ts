@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-import { TaskModel } from '~/server/db/models/task-model';
 import { protectedProcedure, router } from '~/server/trpc/utils';
 
 import type { TaskStatus } from '@prisma/client';
@@ -12,8 +11,8 @@ export const taskRouter = router({
         taskId: z.string(),
       }),
     )
-    .query(({ input }) => {
-      return TaskModel.findFirst({ where: { id: input.taskId }, include: { Links: true } });
+    .query(({ input, ctx }) => {
+      return ctx.prisma.task.findFirst({ where: { id: input.taskId }, include: { Links: true } });
     }),
   getTasksByInspection: protectedProcedure
     .input(
@@ -21,9 +20,9 @@ export const taskRouter = router({
         inspectionId: z.string(),
       }),
     )
-    .query(({ input }) => {
+    .query(({ input, ctx }) => {
       const { inspectionId } = input;
-      return TaskModel.findMany({
+      return ctx.prisma.task.findMany({
         where: { inspectionId },
         include: { Links: true },
       });
@@ -35,11 +34,11 @@ export const taskRouter = router({
         status: z.union([z.literal('PASSED'), z.literal('ACCEPTABLE'), z.literal('FAILED'), z.literal('SKIPPED')]),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const { taskId } = input;
       const status = input.status as TaskStatus;
 
-      await TaskModel.update({
+      await ctx.prisma.task.update({
         where: { id: taskId },
         data: {
           status,

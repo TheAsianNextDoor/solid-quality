@@ -2,7 +2,6 @@ import { getSession } from '@auth/solid-start';
 
 import { authOpts } from '~/routes/api/auth/[...solidauth]';
 import { prisma } from '~/server/db/client';
-import { UserModel } from '~/server/db/models/user-model';
 
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { createSolidAPIHandlerContext } from 'solid-start-trpc';
@@ -12,7 +11,7 @@ export const createContextInner = async (opts: createSolidAPIHandlerContext) => 
   let user;
 
   if (authSession?.user?.email) {
-    user = await UserModel.findUnique({ select: { id: true }, where: { email: authSession.user.email } });
+    user = await prisma.user.findUnique({ select: { id: true }, where: { email: authSession.user.email } });
   }
 
   return {

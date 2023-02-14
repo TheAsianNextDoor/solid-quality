@@ -1,7 +1,5 @@
-import type { Prisma } from '@prisma/client';
+import type { Comment, User } from '@prisma/client';
 
-export type CommentWithUser = Prisma.CommentGetPayload<{
-  include: { user: true };
-}>;
-
-export type CommentCreateData = Prisma.CommentUncheckedCreateInput;
+export type CommentWithUser = Comment & {
+  user: User;
+};
