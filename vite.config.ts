@@ -5,6 +5,7 @@ import path from 'path';
 import suidPlugin from '@suid/vite-plugin';
 // import { visualizer } from 'rollup-plugin-visualizer';
 import solid from 'solid-start/vite';
+import vercel from 'solid-start-vercel';
 import { defineConfig } from 'vite';
 // import checker from 'vite-plugin-checker'; // add when solid start adds strict ts config
 import EnvironmentPlugin from 'vite-plugin-environment';
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   plugins: [
     solid({ ssr: false }),
+    vercel({ edge: false }),
     suidPlugin(),
     // visualizer(),
     tsconfigPaths(),
