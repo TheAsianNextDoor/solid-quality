@@ -10,7 +10,8 @@
     "clean": "rm -rf ./node_modules & rm ./pnpm-lock.yaml",
     "coverage": "NODE_ENV=test node_modules/.bin/vitest run --coverage",
     "coverage:view": "NODE_ENV=test npm run coverage && open ./reports/index.html",
-    "db:reset": "dotenv -e .env.development -- prisma db push --force-reset && npx prisma generate && npx prisma db seed",
+    "db:reset-dev": "dotenv -e .env.development -- prisma db push --force-reset && npx prisma generate && npx prisma db seed",
+    "db:reset-prod": "dotenv -e .env.production -- prisma db push --force-reset && npx prisma generate && npx prisma db seed",
     "db:studio": "dotenv -e env.development -- prisma studio",
     "dev": "dotenv -e .env.development -- run-p -l dev:*",
     "dev:db": "docker compose -f ./configs/docker/docker-compose.yml up",
@@ -28,8 +29,7 @@
     "test": "NODE_ENV=test vitest run",
     "test:watch": "NODE_ENV=test vitest watch",
     "test:ui": "vitest --ui",
-    "postinstall": "prisma generate",
-    "postbuild": "cp node_modules/prisma/*engine*.node .vercel/output/functions/render.func/ && cp prisma/schema.prisma .vercel/output/functions/render.func/"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/core": "^0.4.0",
@@ -106,6 +106,6 @@
     "vitest": "^0.28.4"
   },
   "prisma": {
-    "seed": "dotenv -e .env.development -- tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   }
 }
