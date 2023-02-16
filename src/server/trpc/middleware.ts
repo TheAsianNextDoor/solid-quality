@@ -1,6 +1,5 @@
-import { TRPCError } from '@trpc/server';
-
 import { t } from './singleton';
+import { NotAuthorizedError } from '../errors/not-authorized-error';
 
 /**
  * Logs important information regarding the request
@@ -34,10 +33,7 @@ export const loggerMiddleware = t.middleware(async ({ input, rawInput, meta, pat
  */
 export const authMiddleware = t.middleware(async ({ ctx, next }) => {
   if (!ctx?.session?.user?.id) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'You are not authorized to access this resource',
-    });
+    throw new NotAuthorizedError();
   }
-  return next({ ctx: { ...ctx, session: { ...ctx.session, user: ctx.session.user } } });
+  return next({ ctx });
 });

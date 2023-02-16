@@ -1,13 +1,13 @@
-import { protectedProcedure, router } from '~/server/trpc/utils';
+import { procedure, router } from '~/server/trpc/utils';
 
 export const sessionRouter = router({
-  get: protectedProcedure.query(({ ctx }) => {
-    return ctx.session;
+  get: procedure.query(({ ctx }) => {
+    return ctx?.session;
   }),
-  userName: protectedProcedure.query(({ ctx }) => {
+  userName: procedure.query(({ ctx }) => {
     return ctx?.session?.user?.name || '';
   }),
-  userId: protectedProcedure.query(({ ctx }) => {
+  userId: procedure.query(({ ctx }) => {
     return ctx?.session?.user?.id || '';
   }),
 });

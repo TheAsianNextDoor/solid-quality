@@ -1,48 +1,63 @@
-import { getSession } from '@auth/solid-start';
-import { Show } from 'solid-js';
-import { createServerData$, redirect } from 'solid-start/server';
+// import { getSession } from '@auth/solid-start';
+import { Show, createEffect } from 'solid-js';
+import { useNavigate, useRouteData } from 'solid-start';
+// import { createServerData$, redirect } from 'solid-start/server';
 
-import { authOpts } from '~/routes/api/auth/[...solidauth]';
+// import { authOpts } from '~/routes/api/auth/[...solidauth]';
+import { trpcClient } from '~/utils/trpc';
 
-import type { Session } from '@auth/core/types';
 import type { Component } from 'solid-js';
 
-export const Protected = (Comp: IProtectedComponent) => {
+export const Protected = (Comp: ProtectedComponent) => {
   const routeData = () => {
-    return createServerData$(
-      async (_, event) => {
-        const session = await getSession(event.request, authOpts);
-        if (!session || !session.user) {
-          throw redirect('/login');
-        }
-        return session;
-      },
-      { key: () => ['auth_user'] },
-    );
+    // return createServerData$(
+    //   async (_, event) => {
+    //     const session = await getSession(event.request, authOpts);
+    //     console.log('blah: ', session);
+    //     if (!session || !session.user) {
+    //       throw redirect('/login');
+    //     }
+    //     return session;
+    //   },
+    //   { key: () => ['auth_user'] },
+    // );
   };
 
   return {
     routeData,
     Page: () => {
-      // const session = useRouteData<typeof routeData>();
-      const session = createServerData$(
-        async (_, event) => {
-          const serverSession = await getSession(event.request, authOpts);
-          if (!serverSession || !serverSession.user) {
-            throw redirect('/login');
-          }
-          return serverSession;
-        },
-        { key: () => ['auth_user'] },
-      );
+      // const getSessionQuery = useRouteData<typeof routeData>();
+      const getSessionQuery = trpcClient.session.get.useQuery();
+
+      const nav = useNavigate();
+
+      createEffect(() => {
+        if (getSessionQuery.isSuccess && !getSessionQuery.data?.user?.id) {
+          nav('/login');
+        }
+      });
 
       return (
-        <Show when={session()} keyed>
-          {(sess) => <Comp {...sess} />}
+        <Show when={getSessionQuery?.isSuccess}>
+          <Comp session={getSessionQuery.data} />
         </Show>
       );
     },
   };
 };
 
-type IProtectedComponent = Component<Session>;
+interface session {
+  session:
+    | {
+        expires: string | undefined;
+        user: {
+          name?: string | null | undefined;
+          email?: string | null | undefined;
+          image?: string | null | undefined;
+          id?: string | undefined;
+        };
+      }
+    | undefined;
+}
+
+type ProtectedComponent = Component<session>;
