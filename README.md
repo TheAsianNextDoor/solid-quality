@@ -89,7 +89,7 @@ pnpm run db:reset-dev
 
 Kill all terminals
 
-Start dev environment:
+Start dev environment (starts docker, frontend, and backend):
 
 ```shell
 pnpm run dev
