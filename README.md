@@ -84,7 +84,7 @@ pnpm run dev:db
 Populate MySQL tables:
 
 ```shell
-pnpm run db:reset
+pnpm run db:reset-dev
 ```
 
 Kill all terminals

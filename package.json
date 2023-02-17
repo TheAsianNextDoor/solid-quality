@@ -5,7 +5,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "build": "NODE_ENV=production solid-start build",
+    "build": "solid-start build",
     "check-updates": "ncu",
     "clean": "rm -rf ./node_modules & rm ./pnpm-lock.yaml",
     "coverage": "NODE_ENV=test node_modules/.bin/vitest run --coverage",
