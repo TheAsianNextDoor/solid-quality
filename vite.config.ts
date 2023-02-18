@@ -18,8 +18,8 @@ export default defineConfig({
     outDir: path.join(__dirname, 'dist'),
   },
   plugins: [
-    solid({ ssr: false }),
-    vercel({ edge: false }),
+    // solid({ ssr: false }),
+    solid({ ssr: false, adapter: vercel({ edge: false }) }),
     suidPlugin(),
     // visualizer(),
     tsconfigPaths(),
