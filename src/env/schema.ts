@@ -34,11 +34,11 @@ export const serverSchema = z.object({
 });
 
 export const clientSchema = z.object({
-  WEB_NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  WEB_PORT: z
+  NEXT_PUBLIC_NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  NEXT_PUBLIC_PORT: z
     .string()
     .default('3000')
     .transform((v) => parseInt(v, 10)),
-  WEB_PUSHER_APP_KEY: z.string(),
-  WEB_PUSHER_CLUSTER: z.string(),
+  NEXT_PUBLIC_PUSHER_APP_KEY: z.string(),
+  NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
 });

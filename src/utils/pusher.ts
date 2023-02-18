@@ -5,7 +5,7 @@ import { clientEnv } from '~/env/client';
 
 import type { Channel } from 'pusher-js';
 
-const pusher = new PusherJs(clientEnv.WEB_PUSHER_APP_KEY, { cluster: clientEnv.WEB_PUSHER_CLUSTER });
+const pusher = new PusherJs(clientEnv.NEXT_PUBLIC_PUSHER_APP_KEY, { cluster: clientEnv.NEXT_PUBLIC_PUSHER_CLUSTER });
 
 type ChannelNames = 'typing-users' | 'create-comment-task';
 
