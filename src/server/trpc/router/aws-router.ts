@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { protectedProcedure, router } from '~/server/trpc/utils';
-import { AWS_SDK } from '~/utils/aws-sdk';
+import { AWS_SDK } from '~/server/utils/aws-sdk';
 
 export const awsRouter = router({
   deleteObject: protectedProcedure
