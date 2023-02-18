@@ -31,3 +31,5 @@ Thumbs.db
 .eslintcache
 stats.html
 .vscode/chrome-userdatadir
+
+.vercel

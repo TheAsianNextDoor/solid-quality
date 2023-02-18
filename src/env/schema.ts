@@ -2,19 +2,20 @@ import { z } from 'zod';
 
 export const serverSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-
-  // Auth Config
   ENABLE_VC_BUILD: z
     .string()
     .default('1')
     .transform((v) => parseInt(v, 10)),
+
+  // Auth Config
+  AUTH_SECRET: z.string(),
+  AUTH_TRUST_HOST: z.string().optional(),
+  AUTH_URL: z.string().optional(),
+
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
-  AUTH_SECRET: z.string(),
-  AUTH_TRUST_HOST: z.string().optional(),
-  NEXTAUTH_URL: z.string().optional(),
 
   // Database Config
   DATABASE_URL: z.string(),
