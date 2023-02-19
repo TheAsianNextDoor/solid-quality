@@ -1,4 +1,3 @@
-import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
 import { refetchRouteData } from 'solid-start';
 import { createServerAction$ } from 'solid-start/server';
@@ -52,14 +51,15 @@ export const InfoSection: Component<props> = (props) => {
       <InfoItem
         title="Status"
         content={
-          <Select
-            onChange={(evt, val) => {
-              const status = val as TaskStatus;
-              updateStatus({ id: props.task.id, status });
-            }}
-            options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
-            value={props.task.status as string}
-          />
+          <>ok</>
+          // <Select
+          //   onChange={(evt, val) => {
+          //     const status = val as string;
+          //     updateStatus({ id: props.task.id, status });
+          //   }}
+          //   options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
+          //   value={props.task.status as string}
+          // />
         }
       />
     </div>

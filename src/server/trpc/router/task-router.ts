@@ -2,8 +2,6 @@ import { z } from 'zod';
 
 import { protectedProcedure, router } from '~/server/trpc/utils';
 
-import type { TaskStatus } from '@prisma/client';
-
 export const taskRouter = router({
   byId: protectedProcedure
     .input(
@@ -36,7 +34,7 @@ export const taskRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const { taskId } = input;
-      const status = input.status as TaskStatus;
+      const { status } = input;
 
       await ctx.prisma.task.update({
         where: { id: taskId },

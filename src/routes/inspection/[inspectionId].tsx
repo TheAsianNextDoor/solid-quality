@@ -1,4 +1,3 @@
-import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
 import { createRouteData, useNavigate, useRouteData } from 'solid-start';
 
@@ -50,14 +49,14 @@ export default function InspectionEdit() {
                   <Typography variant="h6">{task.description}</Typography>
                 </div>
               </div>
-              <Select
+              {/* <Select
                 onChange={(evt, val) => {
-                  const status = val as TaskStatus;
+                  const status = val as string;
                   updateTaskStatusMutation.mutate({ taskId: task.id, status });
                 }}
                 options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
                 value={task.status as string}
-              />
+              /> */}
             </div>
           )}
         </For>

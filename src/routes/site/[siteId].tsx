@@ -1,4 +1,3 @@
-import { TaskStatus } from '@prisma/client';
 import { For } from 'solid-js';
 import { createRouteData, useRouteData, useNavigate } from 'solid-start';
 
@@ -50,9 +49,9 @@ const { Page } = Protected(() => {
                     {inspection.title}
                   </Typography>
                   <div class="flex gap-4">
-                    <Chip color="success" label={`passed ${taskStatusCount(inspection.Task, TaskStatus.PASSED)}`} />
-                    <Chip color="error" label={`failed ${taskStatusCount(inspection.Task, TaskStatus.FAILED)}`} />
-                    <Chip color="secondary" label={`skipped ${taskStatusCount(inspection.Task, TaskStatus.SKIPPED)}`} />
+                    <Chip color="success" label={`passed ${taskStatusCount(inspection.Task, 'PASSED')}`} />
+                    <Chip color="error" label={`failed ${taskStatusCount(inspection.Task, 'FAILED')}`} />
+                    <Chip color="secondary" label={`skipped ${taskStatusCount(inspection.Task, 'SKIPPED')}`} />
                   </div>
                 </div>
                 <div>
