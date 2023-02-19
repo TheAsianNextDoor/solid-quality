@@ -23,7 +23,7 @@ export default defineConfig({
     suidPlugin(),
     // visualizer(),
     tsconfigPaths(),
-    EnvironmentPlugin('all', { prefix: 'NEXT_PUBLIC_', defineOn: 'import.meta.env' }),
+    // EnvironmentPlugin('all', { prefix: 'VITE_', defineOn: 'import.meta.env' }),
     // checker({
     //   eslint: {
     //     lintCommand: 'eslint --ignore-pattern "**/*.test.*"  --cache --ext ts,tsx "./src/"',

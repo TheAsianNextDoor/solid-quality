@@ -34,11 +34,15 @@ export const serverSchema = z.object({
 });
 
 export const clientSchema = z.object({
-  NEXT_PUBLIC_NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  NEXT_PUBLIC_PORT: z
+  VITE_NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  VITE_PORT: z
     .string()
     .default('3000')
     .transform((v) => parseInt(v, 10)),
-  NEXT_PUBLIC_PUSHER_APP_KEY: z.string(),
-  NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
+  VITE_TRPC_URL: z.string().default('http://localhost'),
+  VITE_PUSHER_APP_KEY: z.string(),
+  VITE_PUSHER_CLUSTER: z.string(),
+
+  // Vercel env variables
+  VITE_VERCEL_URL: z.string().optional(),
 });

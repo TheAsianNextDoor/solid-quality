@@ -9,7 +9,7 @@ import type { IAppRouter } from '~/server/trpc/router/_app';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return '';
-  return `http://localhost:${clientEnv.NEXT_PUBLIC_PORT}`;
+  return clientEnv.VITE_VERCEL_URL || `${clientEnv.VITE_TRPC_URL}:${clientEnv.VITE_PORT}`;
 };
 
 export const trpcClient = createTRPCSolid<IAppRouter>();
