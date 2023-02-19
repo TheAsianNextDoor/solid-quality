@@ -39,7 +39,7 @@ export const clientSchema = z.object({
     .string()
     .default('3000')
     .transform((v) => parseInt(v, 10)),
-  VITE_TRPC_URL: z.string().default('http://localhost'),
+  VITE_URL: z.string().default('http://localhost'),
   VITE_PUSHER_APP_KEY: z.string(),
   VITE_PUSHER_CLUSTER: z.string(),
 
