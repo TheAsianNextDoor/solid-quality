@@ -4,6 +4,7 @@ import { Body, ErrorBoundary, FileRoutes, Head, Html, Link, Meta, Routes, Script
 import { Toaster } from 'solid-toast';
 
 import { Spinner } from './components/lib/spinner';
+import { client, TrpcProvider, queryClient } from './utils/trpc';
 
 import './root.css';
 
@@ -24,15 +25,17 @@ export default function Root() {
         <Link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
       </Head>
       <Body>
-        <Toaster position="top-right" />
-        <ErrorBoundary fallback={errorBoundaryFallback}>
-          <Suspense fallback={<Spinner />}>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-        <Scripts />
+        <TrpcProvider client={client} queryClient={queryClient}>
+          <Toaster position="top-right" />
+          <ErrorBoundary fallback={errorBoundaryFallback}>
+            <Suspense fallback={<Spinner />}>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+          <Scripts />
+        </TrpcProvider>
       </Body>
     </Html>
   );

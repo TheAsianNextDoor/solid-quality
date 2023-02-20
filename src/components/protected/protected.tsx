@@ -27,12 +27,12 @@ export const Protected = (Comp: ProtectedComponent) => {
     routeData,
     Page: () => {
       // const getSessionQuery = useRouteData<typeof routeData>();
-      const getSessionQuery = trpcClient.session.get.useQuery();
+      const getSessionQuery = trpcClient.session.getSession.useQuery();
 
       const nav = useNavigate();
 
       createEffect(() => {
-        if (getSessionQuery.isSuccess && !getSessionQuery.data?.user?.id) {
+        if (getSessionQuery.isSuccess && !getSessionQuery.data?.user) {
           nav('/login');
         }
       });

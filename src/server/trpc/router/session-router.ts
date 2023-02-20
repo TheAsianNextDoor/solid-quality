@@ -1,13 +1,16 @@
+import { getSession } from '@auth/solid-start';
+
+import { authOpts } from '~/routes/api/auth/[...solidauth]';
 import { procedure, router } from '~/server/trpc/utils';
 
 export const sessionRouter = router({
-  get: procedure.query(({ ctx }) => {
-    return ctx?.session;
+  getSession: procedure.query(({ ctx }) => {
+    return getSession(ctx.req, authOpts);
   }),
-  userName: procedure.query(({ ctx }) => {
+  getUserName: procedure.query(({ ctx }) => {
     return ctx?.session?.user?.name || '';
   }),
-  userId: procedure.query(({ ctx }) => {
+  getUserId: procedure.query(({ ctx }) => {
     return ctx?.session?.user?.id || '';
   }),
 });
