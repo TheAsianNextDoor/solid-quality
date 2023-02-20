@@ -7,18 +7,18 @@ import { trpcClient } from '~/utils/trpc';
 import type { VoidComponent } from 'solid-js';
 
 export const routeData = () => {
-  return trpcClient.session.get.useQuery();
+  return trpcClient.session.getSession.useQuery();
 };
 
 const Home: VoidComponent = () => {
-  const session = useRouteData<typeof routeData>();
+  const getSessionQuery = useRouteData<typeof routeData>();
 
   return (
     <>
       <Title>Create JD App</Title>
       <div>
         <Switch fallback={<div class="text-2xl font-bold text-gray-500">Loading</div>}>
-          <Match when={!session.isLoading && !session?.data?.user?.id}>
+          <Match when={!getSessionQuery.isLoading && !getSessionQuery?.data?.user}>
             <>
               <div class="text-2xl font-bold text-gray-500">Not Logged In</div>
 
@@ -38,9 +38,9 @@ const Home: VoidComponent = () => {
               </>
             </>
           </Match>
-          <Match when={!session.isLoading && session.data?.user?.id}>
+          <Match when={!getSessionQuery.isLoading && getSessionQuery.data?.user}>
             <>
-              <pre class="text-2xl font-bold text-gray-500">{JSON.stringify(session.data, null, 2)}</pre>
+              <pre class="text-2xl font-bold text-gray-500">{JSON.stringify(getSessionQuery.data, null, 2)}</pre>
               <button
                 onClick={() => signOut()}
                 class="m-3 flex w-56 items-center justify-center rounded-lg bg-purple-700 p-2.5 font-bold text-white"
