@@ -2,6 +2,8 @@ import { For } from 'solid-js';
 import { refetchRouteData } from 'solid-start';
 import { createServerAction$ } from 'solid-start/server';
 
+import { TaskStatusSelect } from '~/components/task-status-select';
+
 import { Select } from '~/components/select';
 
 import type { Component, JSX } from 'solid-js';
@@ -48,20 +50,7 @@ export const InfoSection: Component<props> = (props) => {
           </>
         }
       />
-      <InfoItem
-        title="Status"
-        content={
-          <>ok</>
-          // <Select
-          //   onChange={(evt, val) => {
-          //     const status = val as string;
-          //     updateStatus({ id: props.task.id, status });
-          //   }}
-          //   options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
-          //   value={props.task.status as string}
-          // />
-        }
-      />
+      <TaskStatusSelect taskStatus={props.task.status} taskId={props.task.id} />
     </div>
   );
 };

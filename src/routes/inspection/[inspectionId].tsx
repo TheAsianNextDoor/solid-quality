@@ -1,8 +1,10 @@
+import { FormControl, InputLabel } from '@suid/material';
 import { For } from 'solid-js';
 import { createRouteData, useNavigate, useRouteData } from 'solid-start';
 
+import { Select, SelectItem } from '~/components/lib/select';
 import { Typography } from '~/components/lib/typography';
-import { Select } from '~/components/select';
+import { TaskStatusSelect } from '~/components/task-status-select';
 import { taskResource } from '~/requests/task-resource';
 
 import type { RouteDataArgs } from 'solid-start';
@@ -27,7 +29,6 @@ export default function InspectionEdit() {
       ?.data?.slice()
       ?.sort((a, b) => a.order - b.order);
 
-  const updateTaskStatusMutation = taskResource.mutations.useUpdateTaskStatus();
   return (
     <>
       {
@@ -49,14 +50,7 @@ export default function InspectionEdit() {
                   <Typography variant="h6">{task.description}</Typography>
                 </div>
               </div>
-              {/* <Select
-                onChange={(evt, val) => {
-                  const status = val as string;
-                  updateTaskStatusMutation.mutate({ taskId: task.id, status });
-                }}
-                options={Object.keys(TaskStatus).map((status) => ({ value: status, label: status }))}
-                value={task.status as string}
-              /> */}
+              <TaskStatusSelect taskStatus={task.status} taskId={task.id} />
             </div>
           )}
         </For>

@@ -36,7 +36,7 @@ export const taskRouter = router({
       const { taskId } = input;
       const { status } = input;
 
-      await ctx.prisma.task.update({
+      return ctx.prisma.task.update({
         where: { id: taskId },
         data: {
           status,
