@@ -1,9 +1,8 @@
-import { FormControl, InputLabel } from '@suid/material';
 import { For } from 'solid-js';
 import { createRouteData, useNavigate, useRouteData } from 'solid-start';
 
-import { Select, SelectItem } from '~/components/lib/select';
 import { Typography } from '~/components/lib/typography';
+import { Protected } from '~/components/protected';
 import { TaskStatusSelect } from '~/components/task-status-select';
 import { taskResource } from '~/requests/task-resource';
 
@@ -20,7 +19,7 @@ export function routeData({ params }: RouteDataArgs) {
   return { tasks };
 }
 
-export default function InspectionEdit() {
+const { Page } = Protected(() => {
   const { tasks } = useRouteData<typeof routeData>();
   const navigate = useNavigate();
 
@@ -57,4 +56,6 @@ export default function InspectionEdit() {
       }
     </>
   );
-}
+});
+
+export default Page;
