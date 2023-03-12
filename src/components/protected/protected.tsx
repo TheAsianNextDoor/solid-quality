@@ -4,6 +4,7 @@ import { useNavigate, useRouteData } from 'solid-start';
 // import { createServerData$, redirect } from 'solid-start/server';
 
 // import { authOpts } from '~/routes/api/auth/[...solidauth]';
+import { Toolbar } from '~/features/toolbar';
 import { trpcClient } from '~/utils/trpc';
 
 import type { Component } from 'solid-js';
@@ -39,7 +40,10 @@ export const Protected = (Comp: ProtectedComponent) => {
 
       return (
         <Show when={getSessionQuery?.isSuccess}>
-          <Comp session={getSessionQuery.data} />
+          <>
+            <Toolbar />
+            <Comp session={getSessionQuery.data} />
+          </>
         </Show>
       );
     },
