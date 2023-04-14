@@ -15,7 +15,7 @@ interface props {
 
 export const PhotoInfo: Component<props> = (props) => {
   return (
-    <div class="mt-5 flex h-full flex-col  bg-stone-100 p-5" style={{ width: '40rem' }}>
+    <div class="flex h-full flex-col  bg-stone-100 p-5" style={{ width: '40rem' }}>
       <Show when={props.selectedPhoto} keyed>
         {(photo) => (
           <>
