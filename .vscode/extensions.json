@@ -2,7 +2,6 @@
   "recommendations": [
     "steoates.autoimport",
     "streetsidesoftware.code-spell-checker",
-    "kisstkondoros.vscode-codemetrics",
     "mikestead.dotenv",
     "dbaeumer.vscode-eslint",
     "mhutchie.git-graph",
