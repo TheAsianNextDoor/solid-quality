@@ -4,6 +4,7 @@ import { Tabs } from '~/components/tabs';
 
 import { AttachmentPanel } from './task-attachments/attachment-panel';
 import { CommentsPanel } from './task-comments/comments-panel';
+import { ObservationPanel } from './task-observation/observation-panel';
 import { PhotosPanel } from './task-photos/photos-panel';
 
 import type { Component } from 'solid-js';
@@ -51,7 +52,9 @@ export const ActionSection: Component<props> = (props) => {
             <Tabs.Tab>{ActionTypes.comments}</Tabs.Tab>
             <Tabs.Tab>{ActionTypes.photos}</Tabs.Tab>
           </Tabs.TabsList>
-          <Tabs.Panel> Panel observations</Tabs.Panel>
+          <Tabs.Panel>
+            <ObservationPanel />
+          </Tabs.Panel>
           <Tabs.Panel>
             <AttachmentPanel task={props.task} attachments={props.attachments} />
           </Tabs.Panel>
